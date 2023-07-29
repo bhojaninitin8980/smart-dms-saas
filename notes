@@ -1,0 +1,57 @@
+1.Dashboard
+
+2.User
+	1.Name
+	2.Email
+	3.Password 
+	4.Role 
+
+
+3.All Documents
+	1 Name
+	2 Category
+	3 Sub Category
+	4 Document 
+	5 Description
+	6 Tags
+	
+
+3.Own Document
+	1 Name
+	2 Category
+	3 Sub Category
+	4 Document 
+	5 Description
+	6 Tags
+
+4.All Reminder
+	1.Subject
+	2.Message
+	3.Reminder Date
+	4.Assign Users
+	5.Send Email
+	6.Document (not required)
+
+5.Own Reminder
+	1.Subject
+	2.Message
+	3.Reminder Date
+	5.Send Email
+	6.Document (not required)	
+
+6.Document History
+	1.Document
+	2.Action
+	3.Action Date
+	4.Category
+	5.Action User
+
+7.User Logged History
+	1.User
+	2.Email
+	3.Date & Time
+	4.Country
+	5.IP Address
+	6.Latitude
+	7.Longitude
+
