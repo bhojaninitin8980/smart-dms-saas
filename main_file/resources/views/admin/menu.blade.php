@@ -140,50 +140,52 @@
                         </a>
                     </li>
                 @endif
-                {{--                @if(Gate::check('manage property') || Gate::check('manage tenant') || Gate::check('manage invoice') || Gate::check('manage expense') || Gate::check('manage maintainer') || Gate::check('manage maintenance request'))--}}
-                <li class="cdxmenu-title">
-                    <h5>{{__('Business Management')}}</h5>
-                </li>
-                {{--                    @if(Gate::check('manage property'))--}}
-                <li class="menu-item {{(Request::route()->getName() == 'property.index' || Request::route()->getName() == 'property.create' || Request::route()->getName() == 'property.edit' || Request::route()->getName() == 'property.show')?'active':''}}">
-                    <a href="#">
-                        <div class="icon-item"><i data-feather="file-text"></i></div>
-                        <span>{{__('All Documents')}}</span>
-                    </a>
-                </li>
-                <li class="menu-item {{(Request::route()->getName() == 'property.index' || Request::route()->getName() == 'property.create' || Request::route()->getName() == 'property.edit' || Request::route()->getName() == 'property.show')?'active':''}}">
-                    <a href="#">
-                        <div class="icon-item"><i data-feather="file"></i></div>
-                        <span>{{__('My Documents')}}</span>
-                    </a>
-                </li>
-                <li class="menu-item {{(Request::route()->getName() == 'property.index' || Request::route()->getName() == 'property.create' || Request::route()->getName() == 'property.edit' || Request::route()->getName() == 'property.show')?'active':''}}">
-                    <a href="#">
-                        <div class="icon-item"><i data-feather="cpu"></i></div>
-                        <span>{{__('All Reminders')}}</span>
-                    </a>
-                </li>
-                <li class="menu-item {{(Request::route()->getName() == 'property.index' || Request::route()->getName() == 'property.create' || Request::route()->getName() == 'property.edit' || Request::route()->getName() == 'property.show')?'active':''}}">
-                    <a href="#">
-                        <div class="icon-item"><i data-feather="aperture"></i></div>
-                        <span>{{__('My Reminders')}}</span>
-                    </a>
-                </li>
-                <li class="menu-item {{(Request::route()->getName() == 'property.index' || Request::route()->getName() == 'property.create' || Request::route()->getName() == 'property.edit' || Request::route()->getName() == 'property.show')?'active':''}}">
-                    <a href="#">
-                        <div class="icon-item"><i data-feather="wind"></i></div>
-                        <span>{{__('Document History')}}</span>
-                    </a>
-                </li>
-                <li class="menu-item {{(Request::route()->getName() == 'property.index' || Request::route()->getName() == 'property.create' || Request::route()->getName() == 'property.edit' || Request::route()->getName() == 'property.show')?'active':''}}">
-                    <a href="#">
-                        <div class="icon-item"><i data-feather="check-square"></i></div>
-                        <span>{{__('User Logged History')}}</span>
-                    </a>
-                </li>
-                {{--                    @endif--}}
+                @if(Gate::check('manage document') )
+                    <li class="cdxmenu-title">
+                        <h5>{{__('Business Management')}}</h5>
+                    </li>
+                    @if(Gate::check('manage document'))
+                        <li class="menu-item {{(Request::route()->getName() == 'document.index' || Request::route()->getName() == 'document.show')?'active':''}}">
+                            <a href="{{route('document.index')}}">
+                                <div class="icon-item"><i data-feather="file-text"></i></div>
+                                <span>{{__('All Documents')}}</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if(Gate::check('manage my document'))
+                        <li class="menu-item {{(Request::route()->getName() == 'document.my-document')?'active':''}}">
+                            <a href="{{route('document.my-document')}}">
+                                <div class="icon-item"><i data-feather="file"></i></div>
+                                <span>{{__('My Documents')}}</span>
+                            </a>
+                        </li>
+                    @endif
+                    <li class="menu-item {{(Request::route()->getName() == 'property.index')?'active':''}}">
+                        <a href="#">
+                            <div class="icon-item"><i data-feather="cpu"></i></div>
+                            <span>{{__('All Reminders')}}</span>
+                        </a>
+                    </li>
+                    <li class="menu-item {{(Request::route()->getName() == 'property.index')?'active':''}}">
+                        <a href="#">
+                            <div class="icon-item"><i data-feather="aperture"></i></div>
+                            <span>{{__('My Reminders')}}</span>
+                        </a>
+                    </li>
+                    <li class="menu-item {{(Request::route()->getName() == 'property.index')?'active':''}}">
+                        <a href="#">
+                            <div class="icon-item"><i data-feather="wind"></i></div>
+                            <span>{{__('Document History')}}</span>
+                        </a>
+                    </li>
+                    <li class="menu-item {{(Request::route()->getName() == 'property.index')?'active':''}}">
+                        <a href="#">
+                            <div class="icon-item"><i data-feather="check-square"></i></div>
+                            <span>{{__('User Logged History')}}</span>
+                        </a>
+                    </li>
 
-                {{--                @endif--}}
+                @endif
                 @if(Gate::check('manage contact') || Gate::check('manage support') || Gate::check('manage note'))
                     <li class="cdxmenu-title">
                         <h5>{{__('Additional')}}</h5>

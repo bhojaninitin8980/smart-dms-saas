@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    use HasFactory;
     public $fillable=[
         'title',
         'parent_id',
     ];
-    use HasFactory;
+
 }

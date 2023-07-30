@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('document')->nullable();
             $table->text('description')->nullable();
             $table->string('tages')->nullable();
-            $table->integer('parent_id')->nullable();
+            $table->integer('created_by')->default(0);
+            $table->integer('parent_id')->default(0);
             $table->timestamps();
         });
     }

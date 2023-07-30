@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -103,5 +104,12 @@ class CategoryController extends Controller
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
         }
+    }
+
+
+    public function getSubcategory($category_id)
+    {
+        $subCategory = SubCategory::where('category_id', $category_id)->get()->pluck('title', 'id');
+        return response()->json($subCategory);
     }
 }

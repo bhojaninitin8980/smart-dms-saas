@@ -168,14 +168,20 @@ Route::resource('support', SupportController::class)->middleware(
 
 //-------------------------------Document-------------------------------------------
 
-Route::resource('document', DocumentController::class)->middleware(
+Route::group(
     [
-        'auth',
-        'XSS',
-    ]
-);
+        'middleware' => [
+            'auth',
+            'XSS',
+        ],
+    ], function () {
+    Route::resource('document', DocumentController::class);
+    Route::get('my-document', [DocumentController::class,'myDocument'])->name('document.my-document');
+});
+
 //-------------------------------Category, Sub Category & Tag-------------------------------------------
 
+Route::get('category/{id}/sub-category', [CategoryController::class,'getSubcategory'])->name('category.sub-category');
 Route::resource('category', CategoryController::class)->middleware(
     [
         'auth',
