@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Document;
+use App\Models\DocumentComment;
+use App\Models\Reminder;
 use App\Models\SubCategory;
 use App\Models\Tag;
 use App\Models\User;
@@ -153,5 +155,30 @@ class DocumentController extends Controller
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
         }
+    }
+    public function comment($ids){
+        $id=Crypt::decrypt($ids);
+        $document=Document::find($id);
+        $comments=DocumentComment::where('document_id',$id)->get();
+        return view('document.comment', compact('document','comments'));
+    }
+
+    public function commentData(Request $request,$ids){
+        $id=Crypt::decrypt($ids);
+        $document=Document::find($id);
+        $comment=new DocumentComment();
+        $comment->comment=$request->comment;
+        $comment->user_id=\Auth::user()->id;
+        $comment->document_id=$document->id;
+        $comment->parent_id=\Auth::user()->parentId();
+        $comment->save();
+        return redirect()->back()->with('success', 'Document comment successfully created!');
+    }
+
+    public function reminder($ids){
+        $id=Crypt::decrypt($ids);
+        $document=Document::find($id);
+        $reminders=Reminder::where('document_id',$id)->get();
+        return view('document.reminder', compact('document','reminders'));
     }
 }

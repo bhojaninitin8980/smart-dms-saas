@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('page-title')
-    {{__('Support')}}
+    {{__('Document Details')}}
 @endsection
 
 @section('breadcrumb')
@@ -20,70 +20,17 @@
     <div class="row">
         <div class="col-12">
             <div class="cdxemail-contain">
-                <div class="email-sidebar cdxapp-sidebar">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 >{{__('Document Overview')}}</h4>
-                        </div>
-                        <div class="card-body">
-                            <ul class="sidebarmenu-list custom-sidebarmenu-list">
-                                <li>
-                                    <a class="menu-item" href="#">
-                                        <div class="icons"><i data-feather="mail"></i></div>
-                                        {{__('Basic Details')}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="menu-item" href="#">
-                                        <div class="icons"><i data-feather="mail"></i></div>
-                                        {{__('Comment')}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="menu-item" href="#">
-                                        <div class="icons"><i data-feather="mail"></i></div>
-                                        {{__('Reminder')}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="menu-item" href="#">
-                                        <div class="icons"><i data-feather="mail"></i></div>
-                                        {{__('Version History')}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="menu-item" href="#">
-                                        <div class="icons"><i data-feather="mail"></i></div>
-                                        {{__('Share')}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="menu-item" href="#">
-                                        <div class="icons"><i data-feather="mail"></i></div>
-                                        {{__('Send Email')}}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                @include('document.main')
                 <div class="email-body">
                     <div class="card">
                         <div class="card-header">
-                            <ul class="mailreact-list">
-                                <li>
-                                    <a class="btn btn-primary" href="javascript:void(0)"><i data-feather="edit"></i></a>
-                                </li>
-                                <li>
-                                    <a class="btn btn-primary" href="javascript:void(0)"><i data-feather="trash-2"></i></a>
-                                </li>
-                                <li>
-                                    <a class="btn btn-primary" href="javascript:void(0)"><i data-feather="maximize"> </i></a>
-                                </li>
-                                <li>
-                                    <a class="btn btn-primary" href="javascript:void(0)"><i data-feather="download"> </i></a>
-                                </li>
-                            </ul>
+                           <h4>{{__('Basic Details')}}</h4>
+                           <div class="float-right">
+                               <a class="btn btn-primary" href="javascript:void(0)"><i data-feather="maximize"> </i></a>
+                               <a class="btn btn-primary" href="javascript:void(0)"><i data-feather="download"> </i></a>
+                               <a class="btn btn-primary" href="javascript:void(0)"><i data-feather="edit"></i></a>
+                               <a class="btn btn-danger" href="javascript:void(0)"><i data-feather="trash-2"></i></a>
+                           </div>
                         </div>
                         <div class="card-body">
                             <div class="tab-content">

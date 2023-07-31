@@ -177,6 +177,10 @@ Route::group(
     ], function () {
     Route::resource('document', DocumentController::class);
     Route::get('my-document', [DocumentController::class,'myDocument'])->name('document.my-document');
+    Route::get('document/{id}/comment', [DocumentController::class,'comment'])->name('document.comment');
+    Route::post('document/{id}/comment', [DocumentController::class,'commentData'])->name('document.comment');
+    Route::get('document/{id}/reminder', [DocumentController::class,'reminder'])->name('document.reminder');
+
 });
 
 //-------------------------------Category, Sub Category & Tag-------------------------------------------
