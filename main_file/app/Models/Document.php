@@ -12,7 +12,6 @@ class Document extends Model
         'name',
         'category_id',
         'sub_category_id',
-        'document',
         'description',
         'tages',
         'parent_id',

@@ -24,14 +24,14 @@
                     </a>
                 </li>
                 <li>
-                    <a class="menu-item" href="#">
-                        <div class="icons"><i data-feather="mail"></i></div>
+                    <a class="menu-item" href="{{route('document.version.history',\Illuminate\Support\Facades\Crypt::encrypt($document->id))}}">
+                        <div class="icons"><i data-feather="briefcase"></i></div>
                         {{__('Version History')}}
                     </a>
                 </li>
                 <li>
                     <a class="menu-item" href="#">
-                        <div class="icons"><i data-feather="mail"></i></div>
+                        <div class="icons"><i data-feather="share-2"></i></div>
                         {{__('Share')}}
                     </a>
                 </li>

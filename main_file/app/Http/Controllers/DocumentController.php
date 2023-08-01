@@ -9,6 +9,7 @@ use App\Models\Reminder;
 use App\Models\SubCategory;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\VersionHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -55,20 +56,6 @@ class DocumentController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
-            if (!empty($request->document)) {
-                $documentFilenameWithExt = $request->file('document')->getClientOriginalName();
-                $documentFilename = pathinfo($documentFilenameWithExt, PATHINFO_FILENAME);
-                $documentExtension = $request->file('document')->getClientOriginalExtension();
-                $documentFileName = $documentFilename . '_' . time() . '.' . $documentExtension;
-
-                $dir = storage_path('upload/document');
-
-
-                if (!file_exists($dir)) {
-                    mkdir($dir, 0777, true);
-                }
-                $request->file('document')->storeAs('upload/document/', $documentFileName);
-            }
 
             $document = new Document();
             $document->name = $request->name;
@@ -79,6 +66,26 @@ class DocumentController extends Controller
             $document->created_by = \Auth::user()->id;
             $document->parent_id = \Auth::user()->parentId();
             $document->save();
+
+            if (!empty($request->document)) {
+                $documentFilenameWithExt = $request->file('document')->getClientOriginalName();
+                $documentFilename = pathinfo($documentFilenameWithExt, PATHINFO_FILENAME);
+                $documentExtension = $request->file('document')->getClientOriginalExtension();
+                $documentFileName = time() . '.' . $documentExtension;
+
+                $dir = storage_path('upload/document');
+                if (!file_exists($dir)) {
+                    mkdir($dir, 0777, true);
+                }
+                $request->file('document')->storeAs('upload/document/', $documentFileName);
+                $version=new VersionHistory();
+                $version->document=$documentFileName;
+                $version->current_version=1;
+                $version->document_id=$document->id;
+                $version->created_by= \Auth::user()->id;
+                $version->parent_id= \Auth::user()->parentId();
+                $version->save();
+            }
 
             return redirect()->back()->with('success', __('Document successfully created!'));
         } else {
@@ -164,6 +171,18 @@ class DocumentController extends Controller
     }
 
     public function commentData(Request $request,$ids){
+        $validator = \Validator::make(
+            $request->all(), [
+            'comment' => 'required',
+
+        ]
+        );
+        if ($validator->fails()) {
+            $messages = $validator->getMessageBag();
+
+            return redirect()->back()->with('error', $messages->first());
+        }
+
         $id=Crypt::decrypt($ids);
         $document=Document::find($id);
         $comment=new DocumentComment();
@@ -181,5 +200,51 @@ class DocumentController extends Controller
         $reminders=Reminder::where('document_id',$id)->get();
         $users=User::where('parent_id',\Auth::user()->parentId())->get()->pluck('name','id');
         return view('document.reminder', compact('document','reminders','users'));
+    }
+
+    public function versionHistory($ids){
+        $id=Crypt::decrypt($ids);
+        $document=Document::find($id);
+        $versions=VersionHistory::where('document_id',$id)->get();
+
+        return view('document.version_history', compact('document','versions'));
+    }
+
+    public function newVersion(Request $request,$ids){
+        $validator = \Validator::make(
+            $request->all(), [
+                'document' => 'required',
+            ]
+        );
+        if ($validator->fails()) {
+            $messages = $validator->getMessageBag();
+            return redirect()->back()->with('error', $messages->first());
+        }
+
+        $id=Crypt::decrypt($ids);
+
+        VersionHistory::where('document_id',$id)->update(['current_version'=>0]);
+        if (!empty($request->document)) {
+            $documentFilenameWithExt = $request->file('document')->getClientOriginalName();
+            $documentFilename = pathinfo($documentFilenameWithExt, PATHINFO_FILENAME);
+            $documentExtension = $request->file('document')->getClientOriginalExtension();
+            $documentFileName = time() . '.' . $documentExtension;
+
+            $dir = storage_path('upload/document');
+            if (!file_exists($dir)) {
+                mkdir($dir, 0777, true);
+            }
+            $request->file('document')->storeAs('upload/document/', $documentFileName);
+            $version=new VersionHistory();
+            $version->document=$documentFileName;
+            $version->current_version=1;
+            $version->document_id=$id;
+            $version->created_by= \Auth::user()->id;
+            $version->parent_id= \Auth::user()->parentId();
+            $version->save();
+        }
+
+        return redirect()->back()->with('success', __('New version successfully uploaded!'));
+
     }
 }

@@ -181,6 +181,8 @@ Route::group(
     Route::get('document/{id}/comment', [DocumentController::class,'comment'])->name('document.comment');
     Route::post('document/{id}/comment', [DocumentController::class,'commentData'])->name('document.comment');
     Route::get('document/{id}/reminder', [DocumentController::class,'reminder'])->name('document.reminder');
+    Route::get('document/{id}/version-history', [DocumentController::class,'versionHistory'])->name('document.version.history');
+    Route::post('document/{id}/version-history', [DocumentController::class,'newVersion'])->name('document.new.version');
 
 });
 
