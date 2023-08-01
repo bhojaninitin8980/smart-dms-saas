@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('assign_user')->nullable();
             $table->integer('send_email')->default(0);
             $table->integer('document_id')->default(0);
+            $table->integer('created_by')->default(0);
             $table->integer('parent_id')->default(0);
             $table->timestamps();
         });

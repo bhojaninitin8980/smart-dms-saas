@@ -17,5 +17,6 @@ class Reminder extends Model
         'send_email',
         'document_id',
         'parent_id',
+        'created_by',
     ];
 }

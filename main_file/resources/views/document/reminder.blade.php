@@ -22,10 +22,48 @@
             <div class="cdxemail-contain">
                 @include('document.main')
                 <div class="email-body">
-                    <div class="card">
+                    <div class="card buttons">
                         <div class="card-header">
                             <h4>{{__('Reminder')}}</h4>
+                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse1" role="button"
+                               aria-expanded="false" aria-controls="collapse1"> <i
+                                    class="ti-plus mr-5"></i>{{__('Create Reminder')}}</a>
                         </div>
+                        <div class="card-body">
+                            <div class="collapse" id="collapse1">
+                                {{Form::open(array('url'=>'reminder','method'=>'post'))}}
+                                {{Form::hidden('document_id',$document->id,array('class'=>'form-control'))}}
+                                <div class="row">
+                                    <div class="form-group  col-md-6">
+                                        {{Form::label('date',__('Date'),array('class'=>'form-label'))}}
+                                        {{Form::date('date',null,array('class'=>'form-control'))}}
+                                    </div>
+                                    <div class="form-group  col-md-6">
+                                        {{Form::label('time',__('Time'),array('class'=>'form-label'))}}
+                                        {{Form::time('time',null,array('class'=>'form-control'))}}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        {{Form::label('assign_user',__('Assign Users'),array('class'=>'form-label'))}}
+                                        {{Form::select('assign_user[]',$users,null,array('class'=>'form-control hidesearch','multiple'))}}
+                                    </div>
+                                    <div class="form-group  col-md-6">
+                                        {{Form::label('subject',__('Subject'),array('class'=>'form-label'))}}
+                                        {{Form::text('subject',null,array('class'=>'form-control','placeholder'=>__('Enter reminder subject')))}}
+                                    </div>
+                                    <div class="form-group  col-md-12">
+                                        {{Form::label('message',__('Message'),array('class'=>'form-label'))}}
+                                        {{Form::textarea('message',null,array('class'=>'form-control','placeholder'=>__('Enter reminder message'),'rows'=>2))}}
+                                    </div>
+                                    <div class="form-group  col-md-12 text-end">
+                                        {{Form::submit(__('Create'),array('class'=>'btn btn-primary btn-rounded'))}}
+                                    </div>
+                                </div>
+
+                                {{ Form::close() }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
                         <div class="card-body">
                             <table class="display dataTable cell-border datatbl-advance">
                                 <thead>
@@ -34,58 +72,23 @@
                                     <th>{{__('Time')}}</th>
                                     <th>{{__('Subject')}}</th>
                                     <th>{{__('Message')}}</th>
-                                    <th>{{__('Created At')}}</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
-{{--                                @foreach($documents as $document)--}}
-{{--                                    <tr role="row">--}}
-{{--                                        <td>{{$document->name}}</td>--}}
-{{--                                        <td>--}}
-{{--                                            {{ !empty($document->category)?$document->category->title:'-' }}--}}
-{{--                                        </td>--}}
-{{--                                        <td>--}}
-{{--                                            {{ !empty($document->subCategory)?$document->subCategory->title:'-' }}--}}
-{{--                                        </td>--}}
-{{--                                        <td>--}}
-{{--                                            @foreach($document->tags() as $tag)--}}
-{{--                                                {{$tag->title}} <br>--}}
-{{--                                            @endforeach--}}
-{{--                                        </td>--}}
-{{--                                        <td>{{!empty($document->createdBy)?$document->createdBy->name:''}}</td>--}}
-{{--                                        <td>{{\Auth::user()->dateFormat($document->created_at)}}</td>--}}
-{{--                                        <td>{{\Auth::user()->dateFormat($document->created_at)}}</td>--}}
-{{--                                        @if(Gate::check('edit my document') ||  Gate::check('delete my document') ||  Gate::check('show my document'))--}}
-{{--                                            <td class="text-right">--}}
-{{--                                                <div class="cart-action">--}}
-{{--                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['document.destroy', $document->id]]) !!}--}}
-{{--                                                    @if(Gate::check('show my document'))--}}
-{{--                                                        <a class="text-warning" data-bs-toggle="tooltip"--}}
-{{--                                                           data-bs-original-title="{{__('Show Details')}}" href="{{ route('document.show',\Illuminate\Support\Facades\Crypt::encrypt($document->id)) }}" > <i data-feather="eye"></i></a>--}}
-{{--                                                    @endcan--}}
-{{--                                                    @if(Gate::check('edit my document'))--}}
-{{--                                                        <a class="text-success customModal" data-bs-toggle="tooltip"--}}
-{{--                                                           data-bs-original-title="{{__('Edit')}}" href="#"--}}
-{{--                                                           data-url="{{ route('document.edit',$document->id) }}"--}}
-{{--                                                           data-title="{{__('Edit Support')}}"> <i data-feather="edit"></i></a>--}}
-{{--                                                    @endcan--}}
-{{--                                                    @if( Gate::check('delete my document'))--}}
-{{--                                                        <a class=" text-danger confirm_dialog" data-bs-toggle="tooltip"--}}
-{{--                                                           data-bs-original-title="{{__('Detete')}}" href="#"> <i--}}
-{{--                                                                data-feather="trash-2"></i></a>--}}
-{{--                                                    @endcan--}}
-{{--                                                    {!! Form::close() !!}--}}
-{{--                                                </div>--}}
-{{--                                            </td>--}}
-{{--                                        @endif--}}
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
+                                @foreach($reminders as $reminder)
+                                    <tr role="row">
+                                        <td>{{\Auth::user()->dateFormat($reminder->date)}}</td>
+                                        <td>{{\Auth::user()->timeFormat($reminder->time)}}</td>
+                                        <td> {{ $reminder->subject }} </td>
+                                        <td> {{ $reminder->message }} </td>
 
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

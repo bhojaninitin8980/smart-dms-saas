@@ -179,6 +179,7 @@ class DocumentController extends Controller
         $id=Crypt::decrypt($ids);
         $document=Document::find($id);
         $reminders=Reminder::where('document_id',$id)->get();
-        return view('document.reminder', compact('document','reminders'));
+        $users=User::where('parent_id',\Auth::user()->parentId())->get()->pluck('name','id');
+        return view('document.reminder', compact('document','reminders','users'));
     }
 }

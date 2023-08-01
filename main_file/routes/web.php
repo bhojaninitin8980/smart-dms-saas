@@ -14,6 +14,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\ReminderController;
 
 
 /*
@@ -183,6 +184,18 @@ Route::group(
 
 });
 
+//-------------------------------Reminder-------------------------------------------
+
+Route::group(
+    [
+        'middleware' => [
+            'auth',
+            'XSS',
+        ],
+    ], function () {
+    Route::resource('reminder', ReminderController::class);
+
+});
 //-------------------------------Category, Sub Category & Tag-------------------------------------------
 
 Route::get('category/{id}/sub-category', [CategoryController::class,'getSubcategory'])->name('category.sub-category');
