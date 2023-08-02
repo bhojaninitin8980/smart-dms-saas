@@ -30,13 +30,13 @@
                     </a>
                 </li>
                 <li>
-                    <a class="menu-item" href="#">
+                    <a class="menu-item" href="{{route('document.share',\Illuminate\Support\Facades\Crypt::encrypt($document->id))}}">
                         <div class="icons"><i data-feather="share-2"></i></div>
                         {{__('Share')}}
                     </a>
                 </li>
                 <li>
-                    <a class="menu-item" href="#">
+                    <a class="menu-item" href="{{route('document.send.email',\Illuminate\Support\Facades\Crypt::encrypt($document->id))}}">
                         <div class="icons"><i data-feather="mail"></i></div>
                         {{__('Send Email')}}
                     </a>

@@ -183,6 +183,12 @@ Route::group(
     Route::get('document/{id}/reminder', [DocumentController::class,'reminder'])->name('document.reminder');
     Route::get('document/{id}/version-history', [DocumentController::class,'versionHistory'])->name('document.version.history');
     Route::post('document/{id}/version-history', [DocumentController::class,'newVersion'])->name('document.new.version');
+    Route::get('document/{id}/share', [DocumentController::class,'shareDocument'])->name('document.share');
+    Route::post('document/{id}/share', [DocumentController::class,'shareDocumentData'])->name('document.share');
+    Route::delete('document/{id}/share/destroy', [DocumentController::class,'shareDocumentDelete'])->name('document.share.destroy');
+    Route::get('document/{id}/send-email', [DocumentController::class,'sendEmail'])->name('document.send.email');
+    Route::post('document/{id}/send-email', [DocumentController::class,'sendEmailData'])->name('document.send.email');
+
 
 });
 

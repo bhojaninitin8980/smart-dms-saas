@@ -605,6 +605,7 @@ class ComposerStaticInit8342c07d9161854d53f44a94c2ace5e8
         'App\\Models\\Tag' => __DIR__ . '/../..' . '/app/Models/Tag.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\VersionHistory' => __DIR__ . '/../..' . '/app/Models/VersionHistory.php',
+        'App\\Models\\shareDocument' => __DIR__ . '/../..' . '/app/Models/shareDocument.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

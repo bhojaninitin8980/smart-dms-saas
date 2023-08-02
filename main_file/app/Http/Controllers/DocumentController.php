@@ -6,12 +6,14 @@ use App\Models\Category;
 use App\Models\Document;
 use App\Models\DocumentComment;
 use App\Models\Reminder;
+use App\Models\shareDocument;
 use App\Models\SubCategory;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\VersionHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Mail;
 
 class DocumentController extends Controller
 {
@@ -245,6 +247,94 @@ class DocumentController extends Controller
         }
 
         return redirect()->back()->with('success', __('New version successfully uploaded!'));
-
     }
+
+    public function shareDocument($ids){
+        $id=Crypt::decrypt($ids);
+        $document=Document::find($id);
+        $shareDocuments=shareDocument::where('document_id',$id)->get();
+        $users=User::where('parent_id',\Auth::user()->parentId())->get()->pluck('name','id');
+        return view('document.share', compact('document','shareDocuments','users'));
+    }
+
+    public function shareDocumentData(Request $request,$ids){
+
+        $validator = \Validator::make(
+            $request->all(), [
+                'assign_user' => 'required',
+            ]
+        );
+        if(isset($request->time_duration)){
+            $validator = \Validator::make(
+                $request->all(), [
+                    'start_date' => 'required',
+                    'end_date' => 'required',
+                ]
+            );
+        }
+        if ($validator->fails()) {
+            $messages = $validator->getMessageBag();
+            return redirect()->back()->with('error', $messages->first());
+        }
+
+        foreach ($request->assign_user as $user){
+            $share=new shareDocument();
+            $share->user_id=$user;
+            $share->document_id=$request->document_id;
+            if(!empty($request->start_date) && !empty($request->end_date)){
+                $share->start_date=$request->start_date;
+                $share->end_date=$request->end_date;
+            }
+            $share->parent_id=\Auth::user()->parentId();
+            $share->save();
+        }
+        return redirect()->back()->with('success', 'Document successfully assigned!');
+    }
+
+    public function shareDocumentDelete($id){
+        $shareDoc=shareDocument::find($id);
+        $shareDoc->delete();
+        return redirect()->back()->with('success', 'Assigned document successfully removed!');
+    }
+
+    public function sendEmail($ids){
+        $id=Crypt::decrypt($ids);
+        $document=Document::find($id);
+
+        return view('document.send_email', compact('document'));
+    }
+
+    public function sendEmailData(Request $request,$ids){
+        $validator = \Validator::make(
+            $request->all(), [
+                'email' => 'required',
+                'subject' => 'required',
+                'message' => 'required',
+            ]
+        );
+        if ($validator->fails()) {
+            $messages = $validator->getMessageBag();
+            return redirect()->back()->with('error', $messages->first());
+        }
+        $data=[
+            'to'=>$request->email,
+            'from'=>env('MAIL_FROM_ADDRESS'),
+            'from_name'=>env('MAIL_FROM_NAME'),
+            'subject'=>$request->subject,
+            'message'=>$request->message,
+        ];
+
+        try
+        {
+            \Mail::to($request->email)->send(new \App\Mail\Document($data));
+        }
+        catch(\Exception $e)
+        {
+            $error = $e->getMessage();
+            return redirect()->back()->with('error', $error);
+        }
+
+        return redirect()->back()->with('success', 'Mail successfully sent!');
+    }
+
 }

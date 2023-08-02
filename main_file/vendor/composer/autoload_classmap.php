@@ -59,6 +59,7 @@ return array(
     'App\\Models\\Tag' => $baseDir . '/app/Models/Tag.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\VersionHistory' => $baseDir . '/app/Models/VersionHistory.php',
+    'App\\Models\\shareDocument' => $baseDir . '/app/Models/shareDocument.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',
