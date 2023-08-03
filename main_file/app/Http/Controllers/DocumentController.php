@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Document;
 use App\Models\DocumentComment;
+use App\Models\DocumentHistory;
 use App\Models\Reminder;
 use App\Models\shareDocument;
 use App\Models\SubCategory;
@@ -335,6 +336,11 @@ class DocumentController extends Controller
         }
 
         return redirect()->back()->with('success', 'Mail successfully sent!');
+    }
+
+    public function history(){
+        $histories=DocumentHistory::where('parent_id',\Auth::user()->parentId())->get();
+        return view('document.history', compact('histories'));
     }
 
 }

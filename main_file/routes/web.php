@@ -176,6 +176,7 @@ Route::group(
             'XSS',
         ],
     ], function () {
+    Route::get('document/history', [DocumentController::class,'history'])->name('document.history');
     Route::resource('document', DocumentController::class);
     Route::get('my-document', [DocumentController::class,'myDocument'])->name('document.my-document');
     Route::get('document/{id}/comment', [DocumentController::class,'comment'])->name('document.comment');
@@ -190,6 +191,7 @@ Route::group(
     Route::post('document/{id}/send-email', [DocumentController::class,'sendEmailData'])->name('document.send.email');
 
 
+
 });
 
 //-------------------------------Reminder-------------------------------------------
@@ -202,6 +204,7 @@ Route::group(
         ],
     ], function () {
     Route::resource('reminder', ReminderController::class);
+    Route::get('my-reminder', [ReminderController::class,'myReminder'])->name('my-reminder');
 
 });
 //-------------------------------Category, Sub Category & Tag-------------------------------------------

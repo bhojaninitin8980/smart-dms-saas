@@ -160,24 +160,30 @@
                             </a>
                         </li>
                     @endif
-                    <li class="menu-item {{(Request::route()->getName() == 'property.index')?'active':''}}">
-                        <a href="#">
+                    @if(Gate::check('manage reminder'))
+                    <li class="menu-item {{(Request::route()->getName() == 'reminder.index')?'active':''}}">
+                        <a href="{{route('reminder.index')}}">
                             <div class="icon-item"><i data-feather="cpu"></i></div>
                             <span>{{__('All Reminders')}}</span>
                         </a>
                     </li>
-                    <li class="menu-item {{(Request::route()->getName() == 'property.index')?'active':''}}">
-                        <a href="#">
+                    @endif
+                    @if(Gate::check('manage my reminder'))
+                    <li class="menu-item {{(Request::route()->getName() == 'my-reminder')?'active':''}}">
+                        <a href="{{route('my-reminder')}}">
                             <div class="icon-item"><i data-feather="aperture"></i></div>
                             <span>{{__('My Reminders')}}</span>
                         </a>
                     </li>
-                    <li class="menu-item {{(Request::route()->getName() == 'property.index')?'active':''}}">
-                        <a href="#">
+                    @endif
+                    @if(Gate::check('manage document history'))
+                    <li class="menu-item {{(Request::route()->getName() == 'document.history')?'active':''}}">
+                        <a href="{{route('document.history')}}">
                             <div class="icon-item"><i data-feather="wind"></i></div>
                             <span>{{__('Document History')}}</span>
                         </a>
                     </li>
+                    @endif
                     <li class="menu-item {{(Request::route()->getName() == 'property.index')?'active':''}}">
                         <a href="#">
                             <div class="icon-item"><i data-feather="check-square"></i></div>

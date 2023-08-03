@@ -15,9 +15,7 @@ class   Document extends Mailable
     public $data;
     public function __construct($data)
     {
-
         $this->data = $data;
-
     }
     /**
      * Build the message.

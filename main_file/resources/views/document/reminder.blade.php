@@ -71,8 +71,8 @@
                                     <th>{{__('Date')}}</th>
                                     <th>{{__('Time')}}</th>
                                     <th>{{__('Subject')}}</th>
-                                    <th>{{__('Message')}}</th>
-
+                                    <th>{{__('Created By')}}</th>
+                                    <th>{{__('Action')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -81,8 +81,13 @@
                                         <td>{{\Auth::user()->dateFormat($reminder->date)}}</td>
                                         <td>{{\Auth::user()->timeFormat($reminder->time)}}</td>
                                         <td> {{ $reminder->subject }} </td>
-                                        <td> {{ $reminder->message }} </td>
-
+                                        <td> {{ !empty($reminder->createdBy)?$reminder->createdBy->name:'-' }} </td>
+                                        <td>
+                                            <a class="text-warning customModal" data-size="lg" data-bs-toggle="tooltip"
+                                               data-bs-original-title="{{__('Show')}}" href="#"
+                                               data-url="{{ route('reminder.show',$reminder->id) }}"
+                                               data-title="{{__('Details')}}"> <i data-feather="eye"></i></a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
