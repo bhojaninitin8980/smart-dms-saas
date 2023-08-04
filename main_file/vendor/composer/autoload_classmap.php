@@ -50,6 +50,7 @@ return array(
     'App\\Models\\Document' => $baseDir . '/app/Models/Document.php',
     'App\\Models\\DocumentComment' => $baseDir . '/app/Models/DocumentComment.php',
     'App\\Models\\DocumentHistory' => $baseDir . '/app/Models/DocumentHistory.php',
+    'App\\Models\\LoggedHistory' => $baseDir . '/app/Models/LoggedHistory.php',
     'App\\Models\\NoticeBoard' => $baseDir . '/app/Models/NoticeBoard.php',
     'App\\Models\\Order' => $baseDir . '/app/Models/Order.php',
     'App\\Models\\Reminder' => $baseDir . '/app/Models/Reminder.php',

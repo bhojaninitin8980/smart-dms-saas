@@ -127,6 +127,7 @@
       <path value="$PROJECT_DIR$/main_file/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/main_file/vendor/symfony/http-foundation" />
       <path value="$PROJECT_DIR$/main_file/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/main_file/vendor/whichbrowser/parser" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

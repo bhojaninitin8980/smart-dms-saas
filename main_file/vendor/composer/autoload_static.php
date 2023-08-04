@@ -596,6 +596,7 @@ class ComposerStaticInit8342c07d9161854d53f44a94c2ace5e8
         'App\\Models\\Document' => __DIR__ . '/../..' . '/app/Models/Document.php',
         'App\\Models\\DocumentComment' => __DIR__ . '/../..' . '/app/Models/DocumentComment.php',
         'App\\Models\\DocumentHistory' => __DIR__ . '/../..' . '/app/Models/DocumentHistory.php',
+        'App\\Models\\LoggedHistory' => __DIR__ . '/../..' . '/app/Models/LoggedHistory.php',
         'App\\Models\\NoticeBoard' => __DIR__ . '/../..' . '/app/Models/NoticeBoard.php',
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
         'App\\Models\\Reminder' => __DIR__ . '/../..' . '/app/Models/Reminder.php',
