@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\DocumentHistory;
 use App\Models\Reminder;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class ReminderController extends Controller
 {
@@ -59,6 +61,13 @@ class ReminderController extends Controller
             $reminder->parent_id = \Auth::user()->parentId();
             $reminder->save();
 
+            $document=Document::find($request->document_id);
+            $data['document_id']=!empty($document)?$document->id:0;
+            $data['action']=__('Create reminder');
+            $data['description']=__('Create reminder for').' '.!empty($document)?$document->name:''.' '.__('created by').' '.\Auth::user()->name;
+            $data['document_id']=$document->id;
+            DocumentHistory::history($data);
+
             return redirect()->back()->with('success', __('Reminder successfully created!'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -107,6 +116,13 @@ class ReminderController extends Controller
             $reminder->assign_user = !empty($request->assign_user)?implode(',',$request->assign_user):'';
             $reminder->save();
 
+            $document=Document::find($request->document_id);
+            $data['document_id']=!empty($document)?$document->id:0;
+            $data['action']=__('Create reminder');
+            $data['description']=__('Update reminder for').' '.!empty($document)?$document->name:''.' '.__('updated by').' '.\Auth::user()->name;
+            $data['document_id']=$document->id;
+            DocumentHistory::history($data);
+
             return redirect()->back()->with('success', __('Reminder successfully updated!'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -116,7 +132,16 @@ class ReminderController extends Controller
 
     public function destroy(Reminder $reminder)
     {
+
+        $document=Document::find($reminder->document_id);
+
         $reminder->delete();
+
+        $data['document_id']=!empty($document)?$document->id:0;
+        $data['action']=__('Delete reminder');
+        $data['description']=__('Delete reminder for').' '.!empty($document)?$document->name:''.' '.__('deleted by').' '.\Auth::user()->name;
+        $data['document_id']=$document->id;
+        DocumentHistory::history($data);
         return redirect()->back()->with('success', 'Reminder successfully deleted!');
     }
 

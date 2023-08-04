@@ -22,19 +22,19 @@
                     <table class="display dataTable cell-border datatbl-advance">
                         <thead>
                         <tr>
-                            <th>{{__('Date')}}</th>
                             <th>{{__('Document')}}</th>
                             <th>{{__('Action')}}</th>
-                            <th>{{__('User')}}</th>
+                            <th>{{__('Action Time')}}</th>
+                            <th>{{__('Action User')}}</th>
                             <th>{{__('Description')}}</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($histories as $history)
                             <tr role="row">
-                                <td>{{\Auth::user()->dateFormat($history->date)}} {{\Auth::user()->timeFormat($history->time)}}</td>
                                 <td> {{ !empty($history->documents)?$history->documents->name:'-' }} </td>
-                                <td> {{$history->action }} </td>
+                                <td> {{ucfirst($history->action) }} </td>
+                                <td>{{\Auth::user()->dateFormat($history->created_at)}} {{\Auth::user()->timeFormat($history->created_at)}}</td>
                                 <td> {{ !empty($history->actionUser)?$history->actionUser->name:'-' }} </td>
                                 <td> {{$history->description }} </td>
                             </tr>

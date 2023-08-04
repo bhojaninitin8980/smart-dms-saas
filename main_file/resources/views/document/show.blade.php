@@ -26,10 +26,12 @@
                         <div class="card-header">
                            <h4>{{__('Basic Details')}}</h4>
                            <div class="float-right">
-                               <a class="btn btn-primary" href="javascript:void(0)"><i data-feather="maximize"> </i></a>
-                               <a class="btn btn-primary" href="javascript:void(0)"><i data-feather="download"> </i></a>
-                               <a class="btn btn-primary" href="javascript:void(0)"><i data-feather="edit"></i></a>
-                               <a class="btn btn-danger" href="javascript:void(0)"><i data-feather="trash-2"></i></a>
+                               <a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-original-title="{{__('Preview')}}" href="{{!empty($latestVersion->document)? asset(Storage::url('upload/document/')).'/'.$latestVersion->document : '#'}}" target="_blank"><i data-feather="maximize"> </i></a>
+                               <a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-original-title="{{__('Download')}}" href="{{!empty($latestVersion->document)? asset(Storage::url('upload/document/')).'/'.$latestVersion->document : '#'}}"><i data-feather="download"> </i></a>
+                               <a class="btn btn-primary customModal" data-bs-toggle="tooltip"
+                                  data-bs-original-title="{{__('Edit')}}" href="#"
+                                  data-url="{{ route('document.edit',$document->id) }}"
+                                  data-title="{{__('Edit Support')}}"> <i data-feather="edit"></i></a>
                            </div>
                         </div>
                         <div class="card-body">

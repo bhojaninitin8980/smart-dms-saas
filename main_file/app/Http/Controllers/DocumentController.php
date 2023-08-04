@@ -90,6 +90,11 @@ class DocumentController extends Controller
                 $version->save();
             }
 
+            $data['document_id']=$document->id;
+            $data['action']=__('Document Create');
+            $data['description']=__('New document').' '.$document->name.' '.__('created by').' '.\Auth::user()->name;
+            $data['document_id']=$document->id;
+            DocumentHistory::history($data);
             return redirect()->back()->with('success', __('Document successfully created!'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -101,7 +106,8 @@ class DocumentController extends Controller
     {
         $id=Crypt::decrypt($cid);
         $document=Document::find($id);
-        return view('document.show',compact('document'));
+        $latestVersion=VersionHistory::where('document_id',$id)->where('current_version',1)->first();
+        return view('document.show',compact('document','latestVersion'));
     }
 
 
@@ -140,6 +146,12 @@ class DocumentController extends Controller
             $document->tages = !empty($request->tages)?implode(',',$request->tages):'';
             $document->save();
 
+            $data['document_id']=$document->id;
+            $data['action']=__('Document Update');
+            $data['description']=__('Document update').' '.$document->name.' '.__('updated by').' '.\Auth::user()->name;
+            $data['document_id']=$document->id;
+            DocumentHistory::history($data);
+
             return redirect()->back()->with('success', __('Document successfully created!'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -151,6 +163,13 @@ class DocumentController extends Controller
     {
         if (\Auth::user()->can('delete document')) {
             $document->delete();
+
+            $data['document_id']=$document->id;
+            $data['action']=__('Document Delete');
+            $data['description']=__('Document delete').' '.$document->name.' '.__('deleted by').' '.\Auth::user()->name;
+            $data['document_id']=$document->id;
+            DocumentHistory::history($data);
+
             return redirect()->back()->with('success', 'Document successfully deleted!');
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -194,6 +213,13 @@ class DocumentController extends Controller
         $comment->document_id=$document->id;
         $comment->parent_id=\Auth::user()->parentId();
         $comment->save();
+
+        $data['document_id']=$document->id;
+        $data['action']=__('Comment Create');
+        $data['description']=__('Comment create for').' '.$document->name.' '.__('commented by').' '.\Auth::user()->name;
+        $data['document_id']=$document->id;
+        DocumentHistory::history($data);
+
         return redirect()->back()->with('success', 'Document comment successfully created!');
     }
 
@@ -246,6 +272,12 @@ class DocumentController extends Controller
             $version->parent_id= \Auth::user()->parentId();
             $version->save();
         }
+        $document=Document::find($id);
+        $data['document_id']=$id;
+        $data['action']=__('New version');
+        $data['description']=__('Upload new version for').' '.$document->name.' '.__('uploaded by').' '.\Auth::user()->name;
+        $data['document_id']=$document->id;
+        DocumentHistory::history($data);
 
         return redirect()->back()->with('success', __('New version successfully uploaded!'));
     }
@@ -289,12 +321,28 @@ class DocumentController extends Controller
             $share->parent_id=\Auth::user()->parentId();
             $share->save();
         }
+        $id=Crypt::decrypt($ids);
+        $document=Document::find($id);
+        $data['document_id']=$id;
+        $data['action']=__('Share document');
+        $data['description']=__('Share document').' '.$document->name.' '.__('shared by').' '.\Auth::user()->name;
+        $data['document_id']=$document->id;
+        DocumentHistory::history($data);
+
         return redirect()->back()->with('success', 'Document successfully assigned!');
     }
 
     public function shareDocumentDelete($id){
+        $document=Document::find($id);
         $shareDoc=shareDocument::find($id);
         $shareDoc->delete();
+
+        $data['document_id']=$id;
+        $data['action']=__('Share document delete');
+        $data['description']=__('Share document').' '.$document->name.' '.__('delete,deleted by').' '.\Auth::user()->name;
+        $data['document_id']=$document->id;
+        DocumentHistory::history($data);
+
         return redirect()->back()->with('success', 'Assigned document successfully removed!');
     }
 
@@ -334,6 +382,14 @@ class DocumentController extends Controller
             $error = $e->getMessage();
             return redirect()->back()->with('error', $error);
         }
+
+        $id=Crypt::decrypt($ids);
+        $document=Document::find($id);
+        $data['document_id']=$id;
+        $data['action']=__('Mail send');
+        $data['description']=__('Mail send for').' '.$document->name.' '.__('sended by').' '.\Auth::user()->name;
+        $data['document_id']=$document->id;
+        DocumentHistory::history($data);
 
         return redirect()->back()->with('success', 'Mail successfully sent!');
     }

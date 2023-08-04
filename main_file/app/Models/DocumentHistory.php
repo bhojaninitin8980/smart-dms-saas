@@ -24,12 +24,12 @@ class DocumentHistory extends Model
         return $this->hasOne('App\Models\Document','id','document');
     }
 
-    public function history($request){
+    public static function history($request){
         $history=new DocumentHistory();
-        $history->document=$request->document_id;
-        $history->action=$request->action;
-        $history->action_user=$request->action_user;
-        $history->description=$request->description;
+        $history->document=$request['document_id'];
+        $history->action=$request['action'];
+        $history->action_user=\Auth::user()->id;
+        $history->description=$request['description'];
         $history->parent_id=\Auth::user()->parentId();
         $history->save();
         return $history;
