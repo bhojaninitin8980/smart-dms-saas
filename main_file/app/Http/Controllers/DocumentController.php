@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Document;
 use App\Models\DocumentComment;
 use App\Models\DocumentHistory;
+use App\Models\LoggedHistory;
 use App\Models\Reminder;
 use App\Models\shareDocument;
 use App\Models\SubCategory;
@@ -398,5 +399,24 @@ class DocumentController extends Controller
         $histories=DocumentHistory::where('parent_id',\Auth::user()->parentId())->get();
         return view('document.history', compact('histories'));
     }
+
+    public function loggedHistory(){
+        $histories=LoggedHistory::where('parent_id',\Auth::user()->parentId())->get();
+        return view('logged_history.index', compact('histories'));
+    }
+
+    public function loggedHistoryShow($id){
+
+        $histories=LoggedHistory::find($id);
+        return view('logged_history.show', compact('histories'));
+    }
+
+    public function loggedHistoryDestroy($id){
+        $histories=LoggedHistory::find($id);
+        $histories->delete();
+        return redirect()->back()->with('success', 'Logged history succefully deleted!');
+    }
+
+
 
 }

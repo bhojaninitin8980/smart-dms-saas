@@ -189,6 +189,9 @@ Route::group(
     Route::delete('document/{id}/share/destroy', [DocumentController::class,'shareDocumentDelete'])->name('document.share.destroy');
     Route::get('document/{id}/send-email', [DocumentController::class,'sendEmail'])->name('document.send.email');
     Route::post('document/{id}/send-email', [DocumentController::class,'sendEmailData'])->name('document.send.email');
+    Route::get('logged/history', [DocumentController::class,'loggedHistory'])->name('logged.history');
+    Route::get('logged/{id}/history/show', [DocumentController::class,'loggedHistoryShow'])->name('logged.history.show');
+    Route::delete('logged/{id}/history', [DocumentController::class,'loggedHistoryDestroy'])->name('logged.history.destroy');
 
 
 

@@ -125,6 +125,9 @@
       <excludeFolder url="file://$MODULE_DIR$/main_file/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/main_file/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/main_file/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/main_file/vendor/league/flysystem-local" />
+      <excludeFolder url="file://$MODULE_DIR$/main_file/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/main_file/vendor/symfony/polyfill-php83" />
       <excludeFolder url="file://$MODULE_DIR$/main_file/vendor/whichbrowser/parser" />
     </content>
     <orderEntry type="inheritedJdk" />

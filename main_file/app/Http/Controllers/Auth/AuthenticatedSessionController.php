@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\LoggedHistory;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,7 +54,7 @@ class AuthenticatedSessionController extends Controller
             $query['browser_name'] = $whichbrowser->browser->name ?? null;
             $query['os_name'] = $whichbrowser->os->name ?? null;
             $query['browser_language'] = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? mb_substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : null;
-            $query['device_type'] = GetDeviceType($_SERVER['HTTP_USER_AGENT']);
+            $query['device_type'] = User::GetDeviceType($_SERVER['HTTP_USER_AGENT']);
             $query['referrer_host'] = !empty($referrer['host']);
             $query['referrer_path'] = !empty($referrer['path']);
 
@@ -65,7 +66,7 @@ class AuthenticatedSessionController extends Controller
             $details->date = date('Y-m-d H:i:s');
             $details->Details = $json;
             $details->type = Auth::user()->type;
-            $details->created_by = Auth::user()->parentId();
+            $details->parent_id = Auth::user()->parentId();
             $details->save();
         }
         return redirect()->intended(RouteServiceProvider::HOME);

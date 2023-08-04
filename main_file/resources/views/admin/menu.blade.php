@@ -184,8 +184,8 @@
                         </a>
                     </li>
                     @endif
-                    <li class="menu-item {{(Request::route()->getName() == 'property.index')?'active':''}}">
-                        <a href="#">
+                    <li class="menu-item {{(Request::route()->getName() == 'logged.history')?'active':''}}">
+                        <a href="{{route('logged.history')}}">
                             <div class="icon-item"><i data-feather="check-square"></i></div>
                             <span>{{__('User Logged History')}}</span>
                         </a>

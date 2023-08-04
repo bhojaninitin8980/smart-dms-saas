@@ -148,5 +148,24 @@ class User extends Authenticatable
     {
         return User::where('type', $role)->where('parent_id',\Auth::user()->parentId())->count();
     }
+    public static function GetDeviceType($user_agent)
+    {
+        $mobile_regex = '/(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera mini|avantgo|mobilesafari|docomo)/i';
+        $tablet_regex = '/(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))/i';
+        if(preg_match_all($mobile_regex, $user_agent))
+        {
+            return 'mobile';
+        }
+        else
+        {
+            if(preg_match_all($tablet_regex, $user_agent)) {
+                return 'tablet';
+            } else {
+                return 'desktop';
+            }
+
+        }
+    }
+
 
 }
