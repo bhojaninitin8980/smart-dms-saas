@@ -1,6 +1,8 @@
 @php
     $admin_logo=\App\Models\Custom::getValByName('company_logo');
-
+    $ids     = \Auth::user()->parentId();
+    $authUser=\App\Models\User::find($ids);
+ $subscription = \App\Models\Subscription::find($authUser->subscription);
 @endphp
 <aside class="codex-sidebar sidebar-{{$settings['sidebar_mode']}}">
     <div class="logo-gridwrap">
@@ -176,7 +178,7 @@
                         </a>
                     </li>
                     @endif
-                    @if(Gate::check('manage document history'))
+                    @if(Gate::check('manage document history') && $subscription->enabled_document_history==1)
                     <li class="menu-item {{(Request::route()->getName() == 'document.history')?'active':''}}">
                         <a href="{{route('document.history')}}">
                             <div class="icon-item"><i data-feather="wind"></i></div>
@@ -184,7 +186,7 @@
                         </a>
                     </li>
                     @endif
-                    @if(Gate::check('manage logged history'))
+                    @if(Gate::check('manage logged history') && $subscription->enabled_logged_history==1)
                     <li class="menu-item {{(Request::route()->getName() == 'logged.history')?'active':''}}">
                         <a href="{{route('logged.history')}}">
                             <div class="icon-item"><i data-feather="check-square"></i></div>

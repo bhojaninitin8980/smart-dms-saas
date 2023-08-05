@@ -138,7 +138,10 @@ class User extends Authenticatable
     {
         return User::where('type', '!=', 'super admin')->where('type', '!=', 'admin')->where('parent_id', '=', $this->parentId())->count();
     }
-
+    public function totalDocument()
+    {
+        return Document::where('parent_id', '=', $this->parentId())->count();
+    }
     public function totalContact()
     {
         return Contact::where('parent_id', '=', $this->parentId())->count();

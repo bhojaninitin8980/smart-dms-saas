@@ -77,9 +77,8 @@
                                 <p> {{$user->email}}</p>
                                 <p class="mt-5"> {{__('Subscription Expired : ') }} {{!empty($user->plan_expire_date) ? \Auth::user()->dateFormat($user->plan_expire_date): __('Unlimited')}}</p>
                                 <div class="group-btn">
-                                    <span
-                                        class="btn btn-primary btn-md"> {{__('Users')}} : {{$user->totalUser()}}</span>
-                                    <span class="btn btn-secondary btn-md"> {{__('Contact')}} : {{$user->totalContact()}}</span>
+                                    <span class="btn btn-primary btn-md"> {{__('User')}} : {{$user->totalUser()}}</span>
+                                    <span class="btn btn-secondary btn-md"> {{__('Document')}} : {{$user->totalDocument()}}</span>
                                 </div>
                             </div>
                         </div>

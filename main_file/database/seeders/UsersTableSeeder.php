@@ -41,7 +41,47 @@ class UsersTableSeeder extends Seeder
             'manage password settings',
             'manage general settings',
             'manage company settings',
-
+            'manage category',
+            'create category',
+            'edit category',
+            'delete category',
+            'manage sub category',
+            'create sub category',
+            'edit sub category',
+            'delete sub category',
+            'manage tag',
+            'create tag',
+            'edit tag',
+            'delete tag',
+            'manage document',
+            'create document',
+            'edit document',
+            'delete document',
+            'show document',
+            'manage my document',
+            'edit my document',
+            'delete my document',
+            'show my document',
+            'create my document',
+            'manage reminder',
+            'create reminder',
+            'edit reminder',
+            'delete reminder',
+            'show reminder',
+            'manage my reminder',
+            'manage document history',
+            'download document',
+            'preview document',
+            'manage comment',
+            'create comment',
+            'manage version',
+            'create version',
+            'manage share document',
+            'delete share document',
+            'create share document',
+            'manage mail',
+            'send mail',
+            'manage logged history',
         ];
         foreach($arrPermissions as $ap)
         {
@@ -96,6 +136,47 @@ class UsersTableSeeder extends Seeder
             'manage password settings',
             'manage general settings',
             'manage company settings',
+            'manage category',
+            'create category',
+            'edit category',
+            'delete category',
+            'manage sub category',
+            'create sub category',
+            'edit sub category',
+            'delete sub category',
+            'manage tag',
+            'create tag',
+            'edit tag',
+            'delete tag',
+            'manage document',
+            'create document',
+            'edit document',
+            'delete document',
+            'show document',
+            'manage my document',
+            'edit my document',
+            'delete my document',
+            'show my document',
+            'create my document',
+            'manage reminder',
+            'create reminder',
+            'edit reminder',
+            'delete reminder',
+            'show reminder',
+            'manage my reminder',
+            'manage document history',
+            'download document',
+            'preview document',
+            'manage comment',
+            'create comment',
+            'manage version',
+            'create version',
+            'manage share document',
+            'delete share document',
+            'create share document',
+            'manage mail',
+            'send mail',
+            'manage logged history',
         ];
         foreach($adminPermissions as $ap)
         {
@@ -135,7 +216,7 @@ class UsersTableSeeder extends Seeder
             'manage role',
             'create role',
             'edit role',
-            'delete user',
+            'delete role',
             'manage contact',
             'create contact',
             'edit contact',
@@ -149,6 +230,35 @@ class UsersTableSeeder extends Seeder
             'create note',
             'edit note',
             'delete note',
+            'manage document',
+            'create document',
+            'edit document',
+            'delete document',
+            'show document',
+            'manage my document',
+            'edit my document',
+            'delete my document',
+            'show my document',
+            'create my document',
+            'manage reminder',
+            'create reminder',
+            'edit reminder',
+            'delete reminder',
+            'show reminder',
+            'manage my reminder',
+            'manage document history',
+            'download document',
+            'preview document',
+            'manage comment',
+            'create comment',
+            'manage version',
+            'create version',
+            'manage share document',
+            'delete share document',
+            'create share document',
+            'manage mail',
+            'send mail',
+            'manage logged history',
         ];
         foreach($managerPermissions as $ap)
         {
@@ -164,12 +274,71 @@ class UsersTableSeeder extends Seeder
                 'type' => 'manager',
                 'lang' => 'english',
                 'profile' => 'avatar.png',
-                'subscription' => 1,
+                'subscription' => 0,
                 'parent_id' => $admin->id,
             ]
         );
         // Default admin role assign
         $manager->assignRole($managerRole);
+
+
+        // Default Employee role
+        $employeeRole = Role::create(
+            [
+                'name' => 'employee',
+                'parent_id' => $admin->id,
+            ]
+        );
+        // Default admin permissions
+        $employeePermissions = [
+            'manage contact',
+            'create contact',
+            'edit contact',
+            'delete contact',
+            'manage support',
+            'create support',
+            'edit support',
+            'delete support',
+            'reply support',
+            'manage note',
+            'create note',
+            'edit note',
+            'delete note',
+            'manage my document',
+            'edit my document',
+            'delete my document',
+            'show my document',
+            'create my document',
+            'show reminder',
+            'manage my reminder',
+            'download document',
+            'preview document',
+            'manage comment',
+            'create comment',
+            'manage version',
+            'manage share document',
+            'create share document',
+        ];
+        foreach($employeePermissions as $ap)
+        {
+            $permission = Permission::findByName($ap);
+            $employeeRole->givePermissionTo($permission);
+        }
+        // Default admin
+        $employee = User::create(
+            [
+                'name' => 'Employee',
+                'email' => 'employee@gmail.com',
+                'password' => Hash::make('123456'),
+                'type' => 'employee',
+                'lang' => 'english',
+                'profile' => 'avatar.png',
+                'subscription' => 0,
+                'parent_id' => $admin->id,
+            ]
+        );
+        // Default admin role assign
+        $employee->assignRole($employeeRole);
 
     }
 }

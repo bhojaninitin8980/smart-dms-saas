@@ -18,12 +18,24 @@
             {{Form::number('total_user',null,array('class'=>'form-control','placeholder'=>__('Enter total user'),'required'=>'required'))}}
         </div>
         <div class="form-group col-md-12">
-            {{Form::label('total_contact',__('Contact Limit'),array('class'=>'form-label'))}}
-            {{Form::number('total_contact',null,array('class'=>'form-control','placeholder'=>__('Enter total contact'),'required'=>'required'))}}
+            {{Form::label('total_document',__('Document Limit'),array('class'=>'form-label'))}}
+            {{Form::number('total_document',null,array('class'=>'form-control','placeholder'=>__('Enter total contact'),'required'=>'required'))}}
         </div>
-        <div class="form-group col-md-12">
-            {{Form::label('total_support',__('Support Limit'),array('class'=>'form-label'))}}
-            {{Form::number('total_support',null,array('class'=>'form-control','placeholder'=>__('Enter total support'),'required'=>'required'))}}
+        <div class="form-group col-md-6">
+            {{Form::label('enabled_document_history',__('Show Document History'),array('class'=>'form-label'))}}
+            <div>
+                <label class="switch with-icon switch-primary">
+                    <input type="checkbox" name="enabled_document_history" id="enabled_document_history"><span class="switch-btn"></span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            {{Form::label('enabled_logged_history',__('Show User Logged History'),array('class'=>'form-label'))}}
+            <div>
+                <label class="switch with-icon switch-primary">
+                    <input type="checkbox" name="enabled_logged_history" id="enabled_logged_history"><span class="switch-btn"></span>
+                </label>
+            </div>
         </div>
     </div>
 </div>

@@ -101,7 +101,8 @@ class UserController extends Controller
                     return redirect()->back()->with('error', $messages->first());
                 }
 
-                $authUser     = \Auth::user();
+                $ids     = \Auth::user()->parentId();
+                $authUser=\App\Models\User::find($ids);
                 $total_user   = $authUser->totalUser();
                 $subscription = Subscription::find($authUser->subscription);
                 if($total_user < $subscription->total_user || $subscription->total_user == 0)

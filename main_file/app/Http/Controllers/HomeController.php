@@ -1,25 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
-use App\Models\Applicant;
-use App\Models\AppliedJob;
+use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Custom;
-use App\Models\Expense;
-use App\Models\InterviewSchedule;
-use App\Models\Invoice;
-use App\Models\InvoicePayment;
 use App\Models\NoticeBoard;
 use App\Models\Order;
-use App\Models\Property;
-use App\Models\PropertyUnit;
+use App\Models\Reminder;
+use App\Models\SubCategory;
 use App\Models\Subscription;
 use App\Models\Support;
-use App\Models\Tenant;
 use App\Models\User;
-
+use App\Models\Document;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -42,12 +35,20 @@ class HomeController extends Controller
                 return view('dashboard.super_admin', compact('data'));
             } else {
 
-                $data['supports'] = Support::where('parent_id', \Auth::user()->parentId())->orderBy('id', 'desc')->take(10)->get();
                 $data['totalUser'] = User::where('parent_id', \Auth::user()->parentId())->count();
+                $data['totalDocument'] = Document::where('parent_id', \Auth::user()->parentId())->count();
+                $data['todayDocument'] = Document::whereDate('created_at',Carbon::today())->where('parent_id', \Auth::user()->parentId())->count();
+                $data['totalCategory'] = Category::where('parent_id', \Auth::user()->parentId())->count();
+                $data['totalReminder'] = Reminder::where('parent_id', \Auth::user()->parentId())->count();
+                $data['todayReminder'] = Reminder::whereDate('date',Carbon::today())->where('parent_id', \Auth::user()->parentId())->count();
+
                 $data['totalContact'] = Contact::where('parent_id', \Auth::user()->id)->count();
                 $data['totalSupport'] = Support::where('created_id', \Auth::user()->id)->orWhere('assign_user', \Auth::user()->id)->count();
                 $data['todaySupport'] = Support::whereDate('created_at', '=', date('Y-m-d'))->where('created_id', \Auth::user()->id)->orWhere('assign_user', \Auth::user()->id)->count();
                 $data['settings']=Custom::settings();
+                $data['documentByCategory'] = $this->documentByCategory();
+                $data['documentBySubCategory'] = $this->documentBySubCategory();
+
                 return view('dashboard.index', compact('data'));
             }
         } else {
@@ -102,30 +103,36 @@ class HomeController extends Controller
             $currentdate = strtotime('+1 month', $currentdate);
         }
 
-
         return $payment;
 
     }
 
-    public function incomeByMonth()
+
+
+    public function documentByCategory()
     {
-        $start = strtotime(date('Y-01'));
-        $end = strtotime(date('Y-12'));
-
-        $currentdate = $start;
-
-        $payment = [];
-        while ($currentdate <= $end) {
-            $payment['label'][] = date('M-Y', $currentdate);
-
-            $month = date('m', $currentdate);
-            $year = date('Y', $currentdate);
-            $payment['income'][] = InvoicePayment::where('parent_id',\Auth::user()->parentId())->whereMonth('payment_date', $month)->whereYear('payment_date', $year)->sum('amount');
-            $payment['expense'][] = Expense::where('parent_id',\Auth::user()->parentId())->whereMonth('date', $month)->whereYear('date', $year)->sum('amount');
-            $currentdate = strtotime('+1 month', $currentdate);
+        $categories=Category::where('parent_id',\Auth::user()->parentId())->get();
+        $documents = [];
+        $cat = [];
+        foreach ($categories as $category) {
+            $documents[] = Document::where('parent_id',\Auth::user()->parentId())->where('category_id',$category->id)->count();
+            $cat[]=$category->title;
         }
-
-        return $payment;
-
+        $data['data']=$documents;
+        $data['category']=$cat;
+        return $data;
+    }
+    public function documentBySubCategory()
+    {
+        $categories=SubCategory::where('parent_id',\Auth::user()->parentId())->get();
+        $documents = [];
+        $cat = [];
+        foreach ($categories as $category) {
+            $documents[] = Document::where('parent_id',\Auth::user()->parentId())->where('category_id',$category->id)->count();
+            $cat[]=$category->title;
+        }
+        $data['data']=$documents;
+        $data['category']=$cat;
+        return $data;
     }
 }

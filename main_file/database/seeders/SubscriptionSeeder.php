@@ -17,8 +17,9 @@ class SubscriptionSeeder extends Seeder
                 'price' => 0,
                 'duration' => 'Unlimit',
                 'total_user' => 5,
-                'total_contact' => 5,
-                'total_support' => 5,
+                'total_document' => 5,
+                'enabled_document_history' => 1,
+                'enabled_logged_history' => 1 ,
             ]
         );
     }

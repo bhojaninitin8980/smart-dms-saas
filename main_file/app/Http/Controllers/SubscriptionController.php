@@ -40,8 +40,7 @@ class SubscriptionController extends Controller
                 'price' => 'required',
                 'duration' => 'required',
                 'total_user' => 'required',
-                'total_contact' => 'required',
-                'total_support' => 'required',
+                'total_document' => 'required',
             ], [
                     'regex' => __('The Name format is invalid, Contains letter, number and only alphanum'),
                 ]
@@ -57,8 +56,9 @@ class SubscriptionController extends Controller
             $subscription->price = $request->price;
             $subscription->duration = $request->duration;
             $subscription->total_user = $request->total_user;
-            $subscription->total_contact = $request->total_contact;
-            $subscription->total_support = $request->total_support;
+            $subscription->total_document = $request->total_document;
+            $subscription->enabled_document_history = isset($request->enabled_document_history)?1:0;
+            $subscription->enabled_logged_history = isset($request->enabled_logged_history)?1:0;
             $subscription->description = $request->description;
             $subscription->save();
 
@@ -92,6 +92,7 @@ class SubscriptionController extends Controller
 
     public function update(Request $request, subscription $subscription)
     {
+
         if (\Auth::user()->type == 'super admin') {
             $validator = \Validator::make(
                 $request->all(), [
@@ -99,8 +100,7 @@ class SubscriptionController extends Controller
                 'price' => 'required',
                 'duration' => 'required',
                 'total_user' => 'required',
-                'total_contact' => 'required',
-                'total_support' => 'required',
+                'total_document' => 'required',
             ], [
                     'regex' => __('The Name format is invalid, Contains letter, number and only alphanum'),
                 ]
@@ -115,9 +115,10 @@ class SubscriptionController extends Controller
             $subscription->name = $request->name;
             $subscription->price = $request->price;
             $subscription->duration = $request->duration;
-            $subscription->total_contact = $request->total_contact;
             $subscription->total_user = $request->total_user;
-            $subscription->total_support = $request->total_support;
+            $subscription->total_document = $request->total_document;
+            $subscription->enabled_document_history = isset($request->enabled_document_history)?1:0;
+            $subscription->enabled_logged_history = isset($request->enabled_logged_history)?1:0;
             $subscription->description = $request->description;
             $subscription->save();
 
