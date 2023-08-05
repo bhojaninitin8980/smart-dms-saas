@@ -15,7 +15,9 @@ class ReminderController extends Controller
     public function index()
     {
         if (\Auth::user()->can('manage reminder')) {
-            $reminders = Reminder::where('parent_id', '=', \Auth::user()->parentId())->get();
+            $reminders = Reminder::where('parent_id', '=', \Auth::user()->parentId())
+                ->orWhereRaw('find_in_set(?, assign_user)', [\Auth::user()->id])
+                ->get();
             return view('reminder.index', compact('reminders'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -137,16 +139,16 @@ class ReminderController extends Controller
     public function destroy(Reminder $reminder)
     {
         if (\Auth::user()->can('delete reminder')) {
-        $document = Document::find($reminder->document_id);
+            $document = Document::find($reminder->document_id);
 
-        $reminder->delete();
+            $reminder->delete();
 
-        $data['document_id'] = !empty($document) ? $document->id : 0;
-        $data['action'] = __('Delete reminder');
-        $data['description'] = __('Delete reminder for') . ' ' . !empty($document) ? $document->name : '' . ' ' . __('deleted by') . ' ' . \Auth::user()->name;
-        $data['document_id'] = $document->id;
-        DocumentHistory::history($data);
-        return redirect()->back()->with('success', 'Reminder successfully deleted!');
+            $data['document_id'] = !empty($document) ? $document->id : 0;
+            $data['action'] = __('Delete reminder');
+            $data['description'] = __('Delete reminder for') . ' ' . !empty($document) ? $document->name : '' . ' ' . __('deleted by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
+            DocumentHistory::history($data);
+            return redirect()->back()->with('success', 'Reminder successfully deleted!');
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
         }

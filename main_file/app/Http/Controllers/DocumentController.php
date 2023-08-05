@@ -61,8 +61,8 @@ class DocumentController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
-            $ids     = \Auth::user()->parentId();
-            $authUser=\App\Models\User::find($ids);
+            $ids = \Auth::user()->parentId();
+            $authUser = \App\Models\User::find($ids);
             $total_document = $authUser->totalDocument();
             $subscription = Subscription::find($authUser->subscription);
             if ($total_document < $subscription->total_document || $subscription->total_document == 0) {
@@ -189,7 +189,11 @@ class DocumentController extends Controller
     public function myDocument()
     {
         if (\Auth::user()->can('manage my document')) {
-            $documents = Document::where('created_by', '=', \Auth::user()->id)->get();
+            $documents = Document::where('created_by', '=', \Auth::user()->id);
+            $documents->join('share_documents', 'documents.id', 'share_documents.document_id');
+            $documents->orWhere('share_documents.user_id',\Auth::user()->id);
+            $documents = $documents->get();
+
             return view('document.own', compact('documents'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -455,11 +459,11 @@ class DocumentController extends Controller
 
     public function history()
     {
-        $ids     = \Auth::user()->parentId();
-        $authUser=\App\Models\User::find($ids);
+        $ids = \Auth::user()->parentId();
+        $authUser = \App\Models\User::find($ids);
         $subscription = \App\Models\Subscription::find($authUser->subscription);
 
-        if (\Auth::user()->can('manage document history') && $subscription->enabled_document_history==1) {
+        if (\Auth::user()->can('manage document history') && $subscription->enabled_document_history == 1) {
             $histories = DocumentHistory::where('parent_id', \Auth::user()->parentId())->get();
             return view('document.history', compact('histories'));
         } else {
@@ -469,11 +473,11 @@ class DocumentController extends Controller
 
     public function loggedHistory()
     {
-        $ids     = \Auth::user()->parentId();
-        $authUser=\App\Models\User::find($ids);
+        $ids = \Auth::user()->parentId();
+        $authUser = \App\Models\User::find($ids);
         $subscription = \App\Models\Subscription::find($authUser->subscription);
 
-        if (\Auth::user()->can('manage logged history')  && $subscription->enabled_logged_history==1) {
+        if (\Auth::user()->can('manage logged history') && $subscription->enabled_logged_history == 1) {
             $histories = LoggedHistory::where('parent_id', \Auth::user()->parentId())->get();
             return view('logged_history.index', compact('histories'));
         } else {

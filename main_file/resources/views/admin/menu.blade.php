@@ -142,7 +142,7 @@
                         </a>
                     </li>
                 @endif
-                @if(Gate::check('manage document') )
+                @if(Gate::check('manage document') || Gate::check('manage my document') || Gate::check('manage reminder') || Gate::check('manage my reminder') || Gate::check('manage document history') || Gate::check('manage logged history'))
                     <li class="cdxmenu-title">
                         <h5>{{__('Business Management')}}</h5>
                     </li>

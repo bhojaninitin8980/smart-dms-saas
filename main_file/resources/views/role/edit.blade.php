@@ -82,11 +82,28 @@
                                             </div>
                                         @endif
                                     @endif
-                                        @if(in_array('reply '.$module,(array) $permissions))
-                                            @if($key = array_search('reply '.$module,$permissions))
+                                    @if(in_array('reply '.$module,(array) $permissions))
+                                        @if($key = array_search('reply '.$module,$permissions))
+                                            <div class="form-check custom-chek form-check-inline">
+                                                {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
+                                                {{Form::label('permission'.$key,'Reply',['class'=>'form-check-label'])}}
+                                            </div>
+                                        @endif
+                                    @endif
+                                        @if(in_array('send '.$module,(array) $permissions))
+                                            @if($key = array_search('send '.$module,$permissions))
                                                 <div class="form-check custom-chek form-check-inline">
                                                     {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
-                                                    {{Form::label('permission'.$key,'Reply',['class'=>'form-check-label'])}}
+                                                    {{Form::label('permission'.$key,'Send',['class'=>'form-check-label'])}}
+                                                </div>
+                                            @endif
+                                        @endif
+
+                                        @if(in_array('preview '.$module,(array) $permissions))
+                                            @if($key = array_search('preview '.$module,$permissions))
+                                                <div class="form-check custom-chek form-check-inline">
+                                                    {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
+                                                    {{Form::label('permission'.$key,'Preview',['class'=>'form-check-label'])}}
                                                 </div>
                                             @endif
                                         @endif
