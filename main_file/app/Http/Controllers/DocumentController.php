@@ -33,11 +33,11 @@ class DocumentController extends Controller
 
     public function create()
     {
-        $category=Category::where('parent_id',\Auth::user()->parentId())->get()->pluck('title','id');
-        $category->prepend(__('Select Category'),'');
-        $tages=Tag::where('parent_id',\Auth::user()->parentId())->get()->pluck('title','id');
+        $category = Category::where('parent_id', \Auth::user()->parentId())->get()->pluck('title', 'id');
+        $category->prepend(__('Select Category'), '');
+        $tages = Tag::where('parent_id', \Auth::user()->parentId())->get()->pluck('title', 'id');
 
-        return view('document.create',compact('category','tages'));
+        return view('document.create', compact('category', 'tages'));
     }
 
 
@@ -66,7 +66,7 @@ class DocumentController extends Controller
             $document->category_id = $request->category_id;
             $document->sub_category_id = $request->sub_category_id;
             $document->description = $request->description;
-            $document->tages = !empty($request->tages)?implode(',',$request->tages):'';
+            $document->tages = !empty($request->tages) ? implode(',', $request->tages) : '';
             $document->created_by = \Auth::user()->id;
             $document->parent_id = \Auth::user()->parentId();
             $document->save();
@@ -82,19 +82,19 @@ class DocumentController extends Controller
                     mkdir($dir, 0777, true);
                 }
                 $request->file('document')->storeAs('upload/document/', $documentFileName);
-                $version=new VersionHistory();
-                $version->document=$documentFileName;
-                $version->current_version=1;
-                $version->document_id=$document->id;
-                $version->created_by= \Auth::user()->id;
-                $version->parent_id= \Auth::user()->parentId();
+                $version = new VersionHistory();
+                $version->document = $documentFileName;
+                $version->current_version = 1;
+                $version->document_id = $document->id;
+                $version->created_by = \Auth::user()->id;
+                $version->parent_id = \Auth::user()->parentId();
                 $version->save();
             }
 
-            $data['document_id']=$document->id;
-            $data['action']=__('Document Create');
-            $data['description']=__('New document').' '.$document->name.' '.__('created by').' '.\Auth::user()->name;
-            $data['document_id']=$document->id;
+            $data['document_id'] = $document->id;
+            $data['action'] = __('Document Create');
+            $data['description'] = __('New document') . ' ' . $document->name . ' ' . __('created by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
             return redirect()->back()->with('success', __('Document successfully created!'));
         } else {
@@ -105,20 +105,20 @@ class DocumentController extends Controller
 
     public function show($cid)
     {
-        $id=Crypt::decrypt($cid);
-        $document=Document::find($id);
-        $latestVersion=VersionHistory::where('document_id',$id)->where('current_version',1)->first();
-        return view('document.show',compact('document','latestVersion'));
+        $id = Crypt::decrypt($cid);
+        $document = Document::find($id);
+        $latestVersion = VersionHistory::where('document_id', $id)->where('current_version', 1)->first();
+        return view('document.show', compact('document', 'latestVersion'));
     }
 
 
     public function edit(Document $document)
     {
-        $category=Category::where('parent_id',\Auth::user()->parentId())->get()->pluck('title','id');
-        $category->prepend(__('Select Category'),'');
-        $tages=Tag::where('parent_id',\Auth::user()->parentId())->get()->pluck('title','id');
+        $category = Category::where('parent_id', \Auth::user()->parentId())->get()->pluck('title', 'id');
+        $category->prepend(__('Select Category'), '');
+        $tages = Tag::where('parent_id', \Auth::user()->parentId())->get()->pluck('title', 'id');
 
-        return view('document.edit',compact('document','category','tages'));
+        return view('document.edit', compact('document', 'category', 'tages'));
     }
 
 
@@ -144,13 +144,13 @@ class DocumentController extends Controller
             $document->category_id = $request->category_id;
             $document->sub_category_id = $request->sub_category_id;
             $document->description = $request->description;
-            $document->tages = !empty($request->tages)?implode(',',$request->tages):'';
+            $document->tages = !empty($request->tages) ? implode(',', $request->tages) : '';
             $document->save();
 
-            $data['document_id']=$document->id;
-            $data['action']=__('Document Update');
-            $data['description']=__('Document update').' '.$document->name.' '.__('updated by').' '.\Auth::user()->name;
-            $data['document_id']=$document->id;
+            $data['document_id'] = $document->id;
+            $data['action'] = __('Document Update');
+            $data['description'] = __('Document update') . ' ' . $document->name . ' ' . __('updated by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', __('Document successfully created!'));
@@ -165,10 +165,10 @@ class DocumentController extends Controller
         if (\Auth::user()->can('delete document')) {
             $document->delete();
 
-            $data['document_id']=$document->id;
-            $data['action']=__('Document Delete');
-            $data['description']=__('Document delete').' '.$document->name.' '.__('deleted by').' '.\Auth::user()->name;
-            $data['document_id']=$document->id;
+            $data['document_id'] = $document->id;
+            $data['action'] = __('Document Delete');
+            $data['description'] = __('Document delete') . ' ' . $document->name . ' ' . __('deleted by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', 'Document successfully deleted!');
@@ -186,237 +186,304 @@ class DocumentController extends Controller
             return redirect()->back()->with('error', __('Permission Denied!'));
         }
     }
-    public function comment($ids){
-        $id=Crypt::decrypt($ids);
-        $document=Document::find($id);
-        $comments=DocumentComment::where('document_id',$id)->get();
-        return view('document.comment', compact('document','comments'));
-    }
 
-    public function commentData(Request $request,$ids){
-        $validator = \Validator::make(
-            $request->all(), [
-            'comment' => 'required',
-
-        ]
-        );
-        if ($validator->fails()) {
-            $messages = $validator->getMessageBag();
-
-            return redirect()->back()->with('error', $messages->first());
+    public function comment($ids)
+    {
+        if (\Auth::user()->can('manage comment')) {
+            $id = Crypt::decrypt($ids);
+            $document = Document::find($id);
+            $comments = DocumentComment::where('document_id', $id)->get();
+            return view('document.comment', compact('document', 'comments'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
         }
 
-        $id=Crypt::decrypt($ids);
-        $document=Document::find($id);
-        $comment=new DocumentComment();
-        $comment->comment=$request->comment;
-        $comment->user_id=\Auth::user()->id;
-        $comment->document_id=$document->id;
-        $comment->parent_id=\Auth::user()->parentId();
-        $comment->save();
 
-        $data['document_id']=$document->id;
-        $data['action']=__('Comment Create');
-        $data['description']=__('Comment create for').' '.$document->name.' '.__('commented by').' '.\Auth::user()->name;
-        $data['document_id']=$document->id;
-        DocumentHistory::history($data);
-
-        return redirect()->back()->with('success', 'Document comment successfully created!');
     }
 
-    public function reminder($ids){
-        $id=Crypt::decrypt($ids);
-        $document=Document::find($id);
-        $reminders=Reminder::where('document_id',$id)->get();
-        $users=User::where('parent_id',\Auth::user()->parentId())->get()->pluck('name','id');
-        return view('document.reminder', compact('document','reminders','users'));
-    }
-
-    public function versionHistory($ids){
-        $id=Crypt::decrypt($ids);
-        $document=Document::find($id);
-        $versions=VersionHistory::where('document_id',$id)->get();
-
-        return view('document.version_history', compact('document','versions'));
-    }
-
-    public function newVersion(Request $request,$ids){
-        $validator = \Validator::make(
-            $request->all(), [
-                'document' => 'required',
-            ]
-        );
-        if ($validator->fails()) {
-            $messages = $validator->getMessageBag();
-            return redirect()->back()->with('error', $messages->first());
-        }
-
-        $id=Crypt::decrypt($ids);
-
-        VersionHistory::where('document_id',$id)->update(['current_version'=>0]);
-        if (!empty($request->document)) {
-            $documentFilenameWithExt = $request->file('document')->getClientOriginalName();
-            $documentFilename = pathinfo($documentFilenameWithExt, PATHINFO_FILENAME);
-            $documentExtension = $request->file('document')->getClientOriginalExtension();
-            $documentFileName = time() . '.' . $documentExtension;
-
-            $dir = storage_path('upload/document');
-            if (!file_exists($dir)) {
-                mkdir($dir, 0777, true);
-            }
-            $request->file('document')->storeAs('upload/document/', $documentFileName);
-            $version=new VersionHistory();
-            $version->document=$documentFileName;
-            $version->current_version=1;
-            $version->document_id=$id;
-            $version->created_by= \Auth::user()->id;
-            $version->parent_id= \Auth::user()->parentId();
-            $version->save();
-        }
-        $document=Document::find($id);
-        $data['document_id']=$id;
-        $data['action']=__('New version');
-        $data['description']=__('Upload new version for').' '.$document->name.' '.__('uploaded by').' '.\Auth::user()->name;
-        $data['document_id']=$document->id;
-        DocumentHistory::history($data);
-
-        return redirect()->back()->with('success', __('New version successfully uploaded!'));
-    }
-
-    public function shareDocument($ids){
-        $id=Crypt::decrypt($ids);
-        $document=Document::find($id);
-        $shareDocuments=shareDocument::where('document_id',$id)->get();
-        $users=User::where('parent_id',\Auth::user()->parentId())->get()->pluck('name','id');
-        return view('document.share', compact('document','shareDocuments','users'));
-    }
-
-    public function shareDocumentData(Request $request,$ids){
-
-        $validator = \Validator::make(
-            $request->all(), [
-                'assign_user' => 'required',
-            ]
-        );
-        if(isset($request->time_duration)){
+    public function commentData(Request $request, $ids)
+    {
+        if (\Auth::user()->can('create comment')) {
             $validator = \Validator::make(
                 $request->all(), [
-                    'start_date' => 'required',
-                    'end_date' => 'required',
+                    'comment' => 'required',
+
                 ]
             );
-        }
-        if ($validator->fails()) {
-            $messages = $validator->getMessageBag();
-            return redirect()->back()->with('error', $messages->first());
-        }
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
 
-        foreach ($request->assign_user as $user){
-            $share=new shareDocument();
-            $share->user_id=$user;
-            $share->document_id=$request->document_id;
-            if(!empty($request->start_date) && !empty($request->end_date)){
-                $share->start_date=$request->start_date;
-                $share->end_date=$request->end_date;
+                return redirect()->back()->with('error', $messages->first());
             }
-            $share->parent_id=\Auth::user()->parentId();
-            $share->save();
+
+            $id = Crypt::decrypt($ids);
+            $document = Document::find($id);
+            $comment = new DocumentComment();
+            $comment->comment = $request->comment;
+            $comment->user_id = \Auth::user()->id;
+            $comment->document_id = $document->id;
+            $comment->parent_id = \Auth::user()->parentId();
+            $comment->save();
+
+            $data['document_id'] = $document->id;
+            $data['action'] = __('Comment Create');
+            $data['description'] = __('Comment create for') . ' ' . $document->name . ' ' . __('commented by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
+            DocumentHistory::history($data);
+
+            return redirect()->back()->with('success', 'Document comment successfully created!');
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
         }
-        $id=Crypt::decrypt($ids);
-        $document=Document::find($id);
-        $data['document_id']=$id;
-        $data['action']=__('Share document');
-        $data['description']=__('Share document').' '.$document->name.' '.__('shared by').' '.\Auth::user()->name;
-        $data['document_id']=$document->id;
-        DocumentHistory::history($data);
-
-        return redirect()->back()->with('success', 'Document successfully assigned!');
     }
 
-    public function shareDocumentDelete($id){
-        $document=Document::find($id);
-        $shareDoc=shareDocument::find($id);
-        $shareDoc->delete();
-
-        $data['document_id']=$id;
-        $data['action']=__('Share document delete');
-        $data['description']=__('Share document').' '.$document->name.' '.__('delete,deleted by').' '.\Auth::user()->name;
-        $data['document_id']=$document->id;
-        DocumentHistory::history($data);
-
-        return redirect()->back()->with('success', 'Assigned document successfully removed!');
-    }
-
-    public function sendEmail($ids){
-        $id=Crypt::decrypt($ids);
-        $document=Document::find($id);
-
-        return view('document.send_email', compact('document'));
-    }
-
-    public function sendEmailData(Request $request,$ids){
-        $validator = \Validator::make(
-            $request->all(), [
-                'email' => 'required',
-                'subject' => 'required',
-                'message' => 'required',
-            ]
-        );
-        if ($validator->fails()) {
-            $messages = $validator->getMessageBag();
-            return redirect()->back()->with('error', $messages->first());
+    public function reminder($ids)
+    {
+        if (\Auth::user()->can('manage reminder')) {
+            $id = Crypt::decrypt($ids);
+            $document = Document::find($id);
+            $reminders = Reminder::where('document_id', $id)->get();
+            $users = User::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+            return view('document.reminder', compact('document', 'reminders', 'users'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
         }
-        $data=[
-            'to'=>$request->email,
-            'from'=>env('MAIL_FROM_ADDRESS'),
-            'from_name'=>env('MAIL_FROM_NAME'),
-            'subject'=>$request->subject,
-            'message'=>$request->message,
-        ];
+    }
 
-        try
-        {
-            \Mail::to($request->email)->send(new \App\Mail\Document($data));
+    public function versionHistory($ids)
+    {
+        if (\Auth::user()->can('manage version')) {
+            $id = Crypt::decrypt($ids);
+            $document = Document::find($id);
+            $versions = VersionHistory::where('document_id', $id)->get();
+
+            return view('document.version_history', compact('document', 'versions'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
         }
-        catch(\Exception $e)
-        {
-            $error = $e->getMessage();
-            return redirect()->back()->with('error', $error);
+    }
+
+    public function newVersion(Request $request, $ids)
+    {
+        if (\Auth::user()->can('create version')) {
+            $validator = \Validator::make(
+                $request->all(), [
+                    'document' => 'required',
+                ]
+            );
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
+                return redirect()->back()->with('error', $messages->first());
+            }
+
+            $id = Crypt::decrypt($ids);
+
+            VersionHistory::where('document_id', $id)->update(['current_version' => 0]);
+            if (!empty($request->document)) {
+                $documentFilenameWithExt = $request->file('document')->getClientOriginalName();
+                $documentFilename = pathinfo($documentFilenameWithExt, PATHINFO_FILENAME);
+                $documentExtension = $request->file('document')->getClientOriginalExtension();
+                $documentFileName = time() . '.' . $documentExtension;
+
+                $dir = storage_path('upload/document');
+                if (!file_exists($dir)) {
+                    mkdir($dir, 0777, true);
+                }
+                $request->file('document')->storeAs('upload/document/', $documentFileName);
+                $version = new VersionHistory();
+                $version->document = $documentFileName;
+                $version->current_version = 1;
+                $version->document_id = $id;
+                $version->created_by = \Auth::user()->id;
+                $version->parent_id = \Auth::user()->parentId();
+                $version->save();
+            }
+            $document = Document::find($id);
+            $data['document_id'] = $id;
+            $data['action'] = __('New version');
+            $data['description'] = __('Upload new version for') . ' ' . $document->name . ' ' . __('uploaded by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
+            DocumentHistory::history($data);
+
+            return redirect()->back()->with('success', __('New version successfully uploaded!'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
         }
-
-        $id=Crypt::decrypt($ids);
-        $document=Document::find($id);
-        $data['document_id']=$id;
-        $data['action']=__('Mail send');
-        $data['description']=__('Mail send for').' '.$document->name.' '.__('sended by').' '.\Auth::user()->name;
-        $data['document_id']=$document->id;
-        DocumentHistory::history($data);
-
-        return redirect()->back()->with('success', 'Mail successfully sent!');
     }
 
-    public function history(){
-        $histories=DocumentHistory::where('parent_id',\Auth::user()->parentId())->get();
-        return view('document.history', compact('histories'));
+    public function shareDocument($ids)
+    {
+        if (\Auth::user()->can('manage share document')) {
+            $id = Crypt::decrypt($ids);
+            $document = Document::find($id);
+            $shareDocuments = shareDocument::where('document_id', $id)->get();
+            $users = User::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+            return view('document.share', compact('document', 'shareDocuments', 'users'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
     }
 
-    public function loggedHistory(){
-        $histories=LoggedHistory::where('parent_id',\Auth::user()->parentId())->get();
-        return view('logged_history.index', compact('histories'));
+    public function shareDocumentData(Request $request, $ids)
+    {
+        if (\Auth::user()->can('create share document')) {
+            $validator = \Validator::make(
+                $request->all(), [
+                    'assign_user' => 'required',
+                ]
+            );
+            if (isset($request->time_duration)) {
+                $validator = \Validator::make(
+                    $request->all(), [
+                        'start_date' => 'required',
+                        'end_date' => 'required',
+                    ]
+                );
+            }
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
+                return redirect()->back()->with('error', $messages->first());
+            }
+
+            foreach ($request->assign_user as $user) {
+                $share = new shareDocument();
+                $share->user_id = $user;
+                $share->document_id = $request->document_id;
+                if (!empty($request->start_date) && !empty($request->end_date)) {
+                    $share->start_date = $request->start_date;
+                    $share->end_date = $request->end_date;
+                }
+                $share->parent_id = \Auth::user()->parentId();
+                $share->save();
+            }
+            $id = Crypt::decrypt($ids);
+            $document = Document::find($id);
+            $data['document_id'] = $id;
+            $data['action'] = __('Share document');
+            $data['description'] = __('Share document') . ' ' . $document->name . ' ' . __('shared by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
+            DocumentHistory::history($data);
+
+            return redirect()->back()->with('success', 'Document successfully assigned!');
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
     }
 
-    public function loggedHistoryShow($id){
+    public function shareDocumentDelete($id)
+    {
+        if (\Auth::user()->can('delete share document')) {
+            $document = Document::find($id);
+            $shareDoc = shareDocument::find($id);
+            $shareDoc->delete();
 
-        $histories=LoggedHistory::find($id);
-        return view('logged_history.show', compact('histories'));
+            $data['document_id'] = $id;
+            $data['action'] = __('Share document delete');
+            $data['description'] = __('Share document') . ' ' . $document->name . ' ' . __('delete,deleted by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
+            DocumentHistory::history($data);
+
+            return redirect()->back()->with('success', 'Assigned document successfully removed!');
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
     }
 
-    public function loggedHistoryDestroy($id){
-        $histories=LoggedHistory::find($id);
-        $histories->delete();
-        return redirect()->back()->with('success', 'Logged history succefully deleted!');
+    public function sendEmail($ids)
+    {
+        if (\Auth::user()->can('manage mail')) {
+            $id = Crypt::decrypt($ids);
+            $document = Document::find($id);
+
+            return view('document.send_email', compact('document'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
     }
 
+    public function sendEmailData(Request $request, $ids)
+    {
+        if (\Auth::user()->can('send mail')) {
+            $validator = \Validator::make(
+                $request->all(), [
+                    'email' => 'required',
+                    'subject' => 'required',
+                    'message' => 'required',
+                ]
+            );
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
+                return redirect()->back()->with('error', $messages->first());
+            }
+            $data = [
+                'to' => $request->email,
+                'from' => env('MAIL_FROM_ADDRESS'),
+                'from_name' => env('MAIL_FROM_NAME'),
+                'subject' => $request->subject,
+                'message' => $request->message,
+            ];
+
+            try {
+                \Mail::to($request->email)->send(new \App\Mail\Document($data));
+            } catch (\Exception $e) {
+                $error = $e->getMessage();
+                return redirect()->back()->with('error', $error);
+            }
+
+            $id = Crypt::decrypt($ids);
+            $document = Document::find($id);
+            $data['document_id'] = $id;
+            $data['action'] = __('Mail send');
+            $data['description'] = __('Mail send for') . ' ' . $document->name . ' ' . __('sended by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
+            DocumentHistory::history($data);
+
+            return redirect()->back()->with('success', 'Mail successfully sent!');
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
+    }
+
+    public function history()
+    {
+        if (\Auth::user()->can('manage document history')) {
+            $histories = DocumentHistory::where('parent_id', \Auth::user()->parentId())->get();
+            return view('document.history', compact('histories'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
+    }
+
+    public function loggedHistory()
+    {
+        if (\Auth::user()->can('manage logged history')) {
+            $histories = LoggedHistory::where('parent_id', \Auth::user()->parentId())->get();
+            return view('logged_history.index', compact('histories'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
+    }
+
+    public function loggedHistoryShow($id)
+    {
+        if (\Auth::user()->can('manage logged history')) {
+            $histories = LoggedHistory::find($id);
+            return view('logged_history.show', compact('histories'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
+    }
+
+    public function loggedHistoryDestroy($id)
+    {
+        if (\Auth::user()->can('delete logged history')) {
+            $histories = LoggedHistory::find($id);
+            $histories->delete();
+            return redirect()->back()->with('success', 'Logged history succefully deleted!');
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
+    }
 
 
 }

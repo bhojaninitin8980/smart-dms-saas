@@ -42,9 +42,11 @@
                                     {{Form::label('message',__('Message'),array('class'=>'form-label'))}}
                                     {{Form::textarea('message',null,array('class'=>'form-control','placeholder'=>__('Enter message'),'rows'=>10))}}
                                 </div>
-                                <div class="form-group  col-md-12 text-end">
-                                    {{Form::submit(__('Send'),array('class'=>'btn btn-primary btn-rounded'))}}
-                                </div>
+                                @if(Gate::check('send mail'))
+                                    <div class="form-group  col-md-12 text-end">
+                                        {{Form::submit(__('Send'),array('class'=>'btn btn-primary btn-rounded'))}}
+                                    </div>
+                                @endif
                             </div>
                             {{ Form::close() }}
                         </div>

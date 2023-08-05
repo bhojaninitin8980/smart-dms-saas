@@ -22,6 +22,7 @@
             <div class="cdxemail-contain">
                 @include('document.main')
                 <div class="email-body">
+                    @if(Gate::check('create reminder'))
                     <div class="card buttons">
                         <div class="card-header">
                             <h4>{{__('Reminder')}}</h4>
@@ -63,6 +64,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="card">
                         <div class="card-body">
                             <table class="display dataTable cell-border datatbl-advance">
@@ -72,7 +74,9 @@
                                     <th>{{__('Time')}}</th>
                                     <th>{{__('Subject')}}</th>
                                     <th>{{__('Created By')}}</th>
+                                    @if(Gate::check('show reminder'))
                                     <th>{{__('Action')}}</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -82,12 +86,14 @@
                                         <td>{{\Auth::user()->timeFormat($reminder->time)}}</td>
                                         <td> {{ $reminder->subject }} </td>
                                         <td> {{ !empty($reminder->createdBy)?$reminder->createdBy->name:'-' }} </td>
+                                        @if(Gate::check('show reminder'))
                                         <td>
                                             <a class="text-warning customModal" data-size="lg" data-bs-toggle="tooltip"
                                                data-bs-original-title="{{__('Show')}}" href="#"
                                                data-url="{{ route('reminder.show',$reminder->id) }}"
                                                data-title="{{__('Details')}}"> <i data-feather="eye"></i></a>
                                         </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>

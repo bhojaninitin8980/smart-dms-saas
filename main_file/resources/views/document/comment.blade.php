@@ -22,6 +22,7 @@
             <div class="cdxemail-contain">
                 @include('document.main')
                 <div class="email-body">
+                    @if(Gate::check('create comment'))
                     <div class="card buttons">
                         <div class="card-header">
                             <h4>{{__('Comment')}}</h4>
@@ -44,6 +45,8 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+
                     <div class="card">
 
                         <div class="card-body">

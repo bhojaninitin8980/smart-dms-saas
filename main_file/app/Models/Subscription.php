@@ -12,8 +12,9 @@ class Subscription extends Model
         'duration',
         'image',
         'total_user',
-        'total_property',
-        'total_tenant',
+        'total_document',
+        'enabled_document_history',
+        'enabled_logged_history',
         'description',
 
     ];

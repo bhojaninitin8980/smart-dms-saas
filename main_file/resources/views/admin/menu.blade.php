@@ -145,7 +145,7 @@
                         <h5>{{__('Business Management')}}</h5>
                     </li>
                     @if(Gate::check('manage document'))
-                        <li class="menu-item {{(Request::route()->getName() == 'document.index' || Request::route()->getName() == 'document.show')?'active':''}}">
+                        <li class="menu-item {{(Request::route()->getName() == 'document.index' || Request::route()->getName() == 'document.show' || Request::route()->getName() == 'document.comment' || Request::route()->getName() == 'document.reminder' || Request::route()->getName() == 'document.version.history' || Request::route()->getName() == 'document.share' || Request::route()->getName() == 'document.send.email')?'active':''}}">
                             <a href="{{route('document.index')}}">
                                 <div class="icon-item"><i data-feather="file-text"></i></div>
                                 <span>{{__('All Documents')}}</span>
@@ -184,13 +184,14 @@
                         </a>
                     </li>
                     @endif
+                    @if(Gate::check('manage logged history'))
                     <li class="menu-item {{(Request::route()->getName() == 'logged.history')?'active':''}}">
                         <a href="{{route('logged.history')}}">
                             <div class="icon-item"><i data-feather="check-square"></i></div>
                             <span>{{__('User Logged History')}}</span>
                         </a>
                     </li>
-
+                    @endif
                 @endif
                 @if(Gate::check('manage contact') || Gate::check('manage support') || Gate::check('manage note'))
                     <li class="cdxmenu-title">

@@ -25,23 +25,23 @@ class ReminderController extends Controller
 
     public function create()
     {
-        $documents=Document::where('parent_id',\Auth::user()->parentId())->get()->pluck('name','id');
-        $documents->prepend(__('Select Document'),'');
-        $users=User::where('parent_id',\Auth::user()->parentId())->get()->pluck('name','id');
-        return view('reminder.create', compact('users','documents'));
+        $documents = Document::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+        $documents->prepend(__('Select Document'), '');
+        $users = User::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+        return view('reminder.create', compact('users', 'documents'));
     }
 
 
     public function store(Request $request)
     {
-        if (\Auth::user()->can('create document')) {
+        if (\Auth::user()->can('create reminder')) {
             $validator = \Validator::make(
                 $request->all(), [
-                'date' => 'required',
-                'time' => 'required',
-                'subject' => 'required',
-                'message' => 'required',
-            ]
+                    'date' => 'required',
+                    'time' => 'required',
+                    'subject' => 'required',
+                    'message' => 'required',
+                ]
             );
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
@@ -56,16 +56,16 @@ class ReminderController extends Controller
             $reminder->time = $request->time;
             $reminder->subject = $request->subject;
             $reminder->message = $request->message;
-            $reminder->assign_user = !empty($request->assign_user)?implode(',',$request->assign_user):'';
+            $reminder->assign_user = !empty($request->assign_user) ? implode(',', $request->assign_user) : '';
             $reminder->created_by = \Auth::user()->id;
             $reminder->parent_id = \Auth::user()->parentId();
             $reminder->save();
 
-            $document=Document::find($request->document_id);
-            $data['document_id']=!empty($document)?$document->id:0;
-            $data['action']=__('Create reminder');
-            $data['description']=__('Create reminder for').' '.!empty($document)?$document->name:''.' '.__('created by').' '.\Auth::user()->name;
-            $data['document_id']=$document->id;
+            $document = Document::find($request->document_id);
+            $data['document_id'] = !empty($document) ? $document->id : 0;
+            $data['action'] = __('Create reminder');
+            $data['description'] = __('Create reminder for') . ' ' . !empty($document) ? $document->name : '' . ' ' . __('created by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', __('Reminder successfully created!'));
@@ -78,22 +78,26 @@ class ReminderController extends Controller
 
     public function show(Reminder $reminder)
     {
-        return view('reminder.show',compact('reminder'));
+        if (\Auth::user()->can('show reminder')) {
+            return view('reminder.show', compact('reminder'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
     }
 
 
     public function edit(Reminder $reminder)
     {
-        $documents=Document::where('parent_id',\Auth::user()->parentId())->get()->pluck('name','id');
-        $documents->prepend(__('Select Document'),'');
-        $users=User::where('parent_id',\Auth::user()->parentId())->get()->pluck('name','id');
-        return view('reminder.edit', compact('users','documents','reminder'));
+        $documents = Document::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+        $documents->prepend(__('Select Document'), '');
+        $users = User::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+        return view('reminder.edit', compact('users', 'documents', 'reminder'));
     }
 
 
     public function update(Request $request, Reminder $reminder)
     {
-        if (\Auth::user()->can('create document')) {
+        if (\Auth::user()->can('edit reminder')) {
             $validator = \Validator::make(
                 $request->all(), [
                     'date' => 'required',
@@ -113,14 +117,14 @@ class ReminderController extends Controller
             $reminder->time = $request->time;
             $reminder->subject = $request->subject;
             $reminder->message = $request->message;
-            $reminder->assign_user = !empty($request->assign_user)?implode(',',$request->assign_user):'';
+            $reminder->assign_user = !empty($request->assign_user) ? implode(',', $request->assign_user) : '';
             $reminder->save();
 
-            $document=Document::find($request->document_id);
-            $data['document_id']=!empty($document)?$document->id:0;
-            $data['action']=__('Create reminder');
-            $data['description']=__('Update reminder for').' '.!empty($document)?$document->name:''.' '.__('updated by').' '.\Auth::user()->name;
-            $data['document_id']=$document->id;
+            $document = Document::find($request->document_id);
+            $data['document_id'] = !empty($document) ? $document->id : 0;
+            $data['action'] = __('Create reminder');
+            $data['description'] = __('Update reminder for') . ' ' . !empty($document) ? $document->name : '' . ' ' . __('updated by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', __('Reminder successfully updated!'));
@@ -132,21 +136,25 @@ class ReminderController extends Controller
 
     public function destroy(Reminder $reminder)
     {
-
-        $document=Document::find($reminder->document_id);
+        if (\Auth::user()->can('delete reminder')) {
+        $document = Document::find($reminder->document_id);
 
         $reminder->delete();
 
-        $data['document_id']=!empty($document)?$document->id:0;
-        $data['action']=__('Delete reminder');
-        $data['description']=__('Delete reminder for').' '.!empty($document)?$document->name:''.' '.__('deleted by').' '.\Auth::user()->name;
-        $data['document_id']=$document->id;
+        $data['document_id'] = !empty($document) ? $document->id : 0;
+        $data['action'] = __('Delete reminder');
+        $data['description'] = __('Delete reminder for') . ' ' . !empty($document) ? $document->name : '' . ' ' . __('deleted by') . ' ' . \Auth::user()->name;
+        $data['document_id'] = $document->id;
         DocumentHistory::history($data);
         return redirect()->back()->with('success', 'Reminder successfully deleted!');
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied!'));
+        }
     }
 
-    public function myReminder(){
-        if (\Auth::user()->can('manage reminder')) {
+    public function myReminder()
+    {
+        if (\Auth::user()->can('manage my reminder')) {
             $reminders = Reminder::where('created_by', '=', \Auth::user()->id)->get();
             return view('reminder.own', compact('reminders'));
         } else {

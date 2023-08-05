@@ -24,15 +24,27 @@
                 <div class="email-body">
                     <div class="card">
                         <div class="card-header">
-                           <h4>{{__('Basic Details')}}</h4>
-                           <div class="float-right">
-                               <a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-original-title="{{__('Preview')}}" href="{{!empty($latestVersion->document)? asset(Storage::url('upload/document/')).'/'.$latestVersion->document : '#'}}" target="_blank"><i data-feather="maximize"> </i></a>
-                               <a class="btn btn-primary" data-bs-toggle="tooltip" data-bs-original-title="{{__('Download')}}" href="{{!empty($latestVersion->document)? asset(Storage::url('upload/document/')).'/'.$latestVersion->document : '#'}}"><i data-feather="download"> </i></a>
-                               <a class="btn btn-primary customModal" data-bs-toggle="tooltip"
-                                  data-bs-original-title="{{__('Edit')}}" href="#"
-                                  data-url="{{ route('document.edit',$document->id) }}"
-                                  data-title="{{__('Edit Support')}}"> <i data-feather="edit"></i></a>
-                           </div>
+                            <h4>{{__('Basic Details')}}</h4>
+                            <div class="float-right">
+                                @if(Gate::check('edit document'))
+                                    <a class="btn btn-primary" data-bs-toggle="tooltip"
+                                       data-bs-original-title="{{__('Preview')}}"
+                                       href="{{!empty($latestVersion->document)? asset(Storage::url('upload/document/')).'/'.$latestVersion->document : '#'}}"
+                                       target="_blank"><i data-feather="maximize"> </i></a>
+                                @endif
+                                @if(Gate::check('download document'))
+                                    <a class="btn btn-primary" data-bs-toggle="tooltip"
+                                       data-bs-original-title="{{__('Download')}}"
+                                       href="{{!empty($latestVersion->document)? asset(Storage::url('upload/document/')).'/'.$latestVersion->document : '#'}}"><i
+                                            data-feather="download"> </i></a>
+                                @endif
+                                @if(Gate::check('preview document'))
+                                    <a class="btn btn-primary customModal" data-bs-toggle="tooltip"
+                                       data-bs-original-title="{{__('Edit')}}" href="#"
+                                       data-url="{{ route('document.edit',$document->id) }}"
+                                       data-title="{{__('Edit Support')}}"> <i data-feather="edit"></i></a>
+                                @endif
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="tab-content">

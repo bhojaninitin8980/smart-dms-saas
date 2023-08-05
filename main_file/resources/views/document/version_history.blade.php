@@ -22,30 +22,32 @@
             <div class="cdxemail-contain">
                 @include('document.main')
                 <div class="email-body">
-                    <div class="card buttons">
-                        <div class="card-header">
-                            <h4>{{__('Version History')}}</h4>
-                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse1" role="button"
-                               aria-expanded="false" aria-controls="collapse1"> <i
-                                    class="ti-plus mr-5"></i>{{__('New Version')}}</a>
-                        </div>
-                        <div class="card-body">
-                            <div class="collapse" id="collapse1">
-                                {{Form::open(array('route'=>array('document.new.version',\Illuminate\Support\Facades\Crypt::encrypt($document->id)),'method'=>'post','enctype' => "multipart/form-data"))}}
-                                {{Form::hidden('document_id',$document->id,array('class'=>'form-control'))}}
-                                <div class="row">
-                                    <div class="form-group  col-md-12">
-                                        {{Form::label('document',__('Document'),array('class'=>'form-label'))}}
-                                        {{Form::file('document',array('class'=>'form-control'))}}
+                    @if(Gate::check('create version'))
+                        <div class="card buttons">
+                            <div class="card-header">
+                                <h4>{{__('Version History')}}</h4>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse1" role="button"
+                                   aria-expanded="false" aria-controls="collapse1"> <i
+                                        class="ti-plus mr-5"></i>{{__('New Version')}}</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="collapse" id="collapse1">
+                                    {{Form::open(array('route'=>array('document.new.version',\Illuminate\Support\Facades\Crypt::encrypt($document->id)),'method'=>'post','enctype' => "multipart/form-data"))}}
+                                    {{Form::hidden('document_id',$document->id,array('class'=>'form-control'))}}
+                                    <div class="row">
+                                        <div class="form-group  col-md-12">
+                                            {{Form::label('document',__('Document'),array('class'=>'form-label'))}}
+                                            {{Form::file('document',array('class'=>'form-control'))}}
+                                        </div>
+                                        <div class="form-group  col-md-12 text-end">
+                                            {{Form::submit(__('Upload'),array('class'=>'btn btn-primary btn-rounded'))}}
+                                        </div>
                                     </div>
-                                    <div class="form-group  col-md-12 text-end">
-                                        {{Form::submit(__('Upload'),array('class'=>'btn btn-primary btn-rounded'))}}
-                                    </div>
+                                    {{ Form::close() }}
                                 </div>
-                                {{ Form::close() }}
                             </div>
                         </div>
-                    </div>
+                    @endif
                     <div class="card">
                         <div class="card-body">
                             <table class="display dataTable cell-border datatbl-advance">
@@ -54,7 +56,9 @@
                                     <th>{{__('Uploaded At')}}</th>
                                     <th>{{__('Uploaded By')}}</th>
                                     <th>{{__('Status')}}</th>
-                                    <th>{{__('Action')}}</th>
+                                    @if(Gate::check('preview document') ||  Gate::check('download document'))
+                                        <th>{{__('Action')}}</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -69,10 +73,22 @@
                                                 <span class="badge badge-warning">{{__('Old Version')}}</span>
                                             @endif
                                         </td>
-                                        <td>
-                                            <a class="text-info" data-bs-toggle="tooltip" data-bs-original-title="{{__('View')}}" href="{{!empty($version->document)? asset(Storage::url('upload/document/')).'/'.$version->document : '#'}}" target="_blank"> <i data-feather="maximize"></i></a>
-                                            <a class="text-primary" data-bs-toggle="tooltip" data-bs-original-title="{{__('Download')}}" href="{{!empty($version->document)? asset(Storage::url('upload/document/')).'/'.$version->document : '#'}}" download=""> <i data-feather="download"></i></a>
-                                        </td>
+                                        @if(Gate::check('preview document') ||  Gate::check('download document'))
+                                            <td>
+                                                @if(Gate::check('preview document') )
+                                                    <a class="text-info" data-bs-toggle="tooltip"
+                                                       data-bs-original-title="{{__('View')}}"
+                                                       href="{{!empty($version->document)? asset(Storage::url('upload/document/')).'/'.$version->document : '#'}}"
+                                                       target="_blank"> <i data-feather="maximize"></i></a>
+                                                @endif
+                                                @if(Gate::check('download document'))
+                                                    <a class="text-primary" data-bs-toggle="tooltip"
+                                                       data-bs-original-title="{{__('Download')}}"
+                                                       href="{{!empty($version->document)? asset(Storage::url('upload/document/')).'/'.$version->document : '#'}}"
+                                                       download=""> <i data-feather="download"></i></a>
+                                                @endif
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
