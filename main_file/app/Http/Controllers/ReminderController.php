@@ -53,7 +53,7 @@ class ReminderController extends Controller
 
 
             $reminder = new Reminder();
-            $reminder->document_id = $request->document_id;
+            $reminder->document_id = !empty($request->document_id)?$request->document_id:0;
             $reminder->date = $request->date;
             $reminder->time = $request->time;
             $reminder->subject = $request->subject;
@@ -63,7 +63,7 @@ class ReminderController extends Controller
             $reminder->parent_id = \Auth::user()->parentId();
             $reminder->save();
 
-            $document = Document::find($request->document_id);
+            $document = Document::find(!empty($request->document_id)?$request->document_id:0);
             $data['document_id'] = !empty($document) ? $document->id : 0;
             $data['action'] = __('Create reminder');
             $data['description'] = __('Create reminder for') . ' ' . !empty($document) ? $document->name : '' . ' ' . __('created by') . ' ' . \Auth::user()->name;
@@ -157,7 +157,9 @@ class ReminderController extends Controller
     public function myReminder()
     {
         if (\Auth::user()->can('manage my reminder')) {
-            $reminders = Reminder::where('created_by', '=', \Auth::user()->id)->get();
+            $reminders = Reminder::where('parent_id', '=', \Auth::user()->id)
+                ->orWhereRaw('find_in_set(?, assign_user)', [\Auth::user()->id])
+                ->get();
             return view('reminder.own', compact('reminders'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));

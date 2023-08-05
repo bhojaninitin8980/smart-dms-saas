@@ -29,7 +29,7 @@
                         <thead>
                         <tr>
                             <th>{{__('Title')}}</th>
-                            <th>{{__('Created_at')}}</th>
+                            <th>{{__('Created At')}}</th>
                             @if(Gate::check('edit category') ||  Gate::check('delete category'))
                                 <th class="text-right">{{__('Action')}}</th>
                             @endif

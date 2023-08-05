@@ -113,7 +113,7 @@
 
     </div>
     <div class="row">
-        <div class="col-xxl-6 cdx-xxl-50">
+        <div class="col-xxl-12 cdx-xxl-50">
             <div class="card overall-revenuetbl">
                 <div class="card-header">
                     <h4>{{__('Document By Category')}}</h4>
@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xxl-6 cdx-xxl-50">
+        <div class="col-xxl-12 cdx-xxl-50">
             <div class="card overall-revenuetbl">
                 <div class="card-header">
                     <h4>{{__('Document By Sub Category')}}</h4>

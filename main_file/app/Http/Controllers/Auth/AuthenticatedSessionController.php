@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $ip = $_SERVER['REMOTE_ADDR'];
-         $ip = '49.36.83.154';
+
 
         $query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
 

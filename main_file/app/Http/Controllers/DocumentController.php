@@ -44,7 +44,7 @@ class DocumentController extends Controller
 
     public function store(Request $request)
     {
-        if (\Auth::user()->can('create document')) {
+        if (\Auth::user()->can('create document') || \Auth::user()->can('create my document')) {
             $validator = \Validator::make(
                 $request->all(), [
                 'name' => 'required|regex:/^[\s\w-]*$/',
@@ -133,7 +133,7 @@ class DocumentController extends Controller
 
     public function update(Request $request, Document $document)
     {
-        if (\Auth::user()->can('edit document')) {
+        if (\Auth::user()->can('edit document') || \Auth::user()->can('create my document')) {
             $validator = \Validator::make(
                 $request->all(), [
                 'name' => 'required|regex:/^[\s\w-]*$/',
@@ -189,11 +189,14 @@ class DocumentController extends Controller
     public function myDocument()
     {
         if (\Auth::user()->can('manage my document')) {
-            $documents = Document::where('created_by', '=', \Auth::user()->id);
-            $documents->join('share_documents', 'documents.id', 'share_documents.document_id');
-            $documents->orWhere('share_documents.user_id',\Auth::user()->id);
-            $documents = $documents->get();
+            $assign_doc=shareDocument::where('user_id',\Auth::user()->id)->get()->pluck('id');
 
+            $documents = Document::where('created_by', '=', \Auth::user()->id);
+            if(!empty($assign_doc)){
+                $documents->orWhereIn('id',$assign_doc);
+            }
+
+            $documents = $documents->get();
             return view('document.own', compact('documents'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
