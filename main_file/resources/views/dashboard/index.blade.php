@@ -138,6 +138,7 @@
 
 @push('script-page')
     <script>
+        "use strict";
         var options = {
             series: [{
                 name: "{{__('Total Document')}}",

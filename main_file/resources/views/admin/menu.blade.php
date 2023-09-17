@@ -163,36 +163,36 @@
                         </li>
                     @endif
                     @if(Gate::check('manage reminder'))
-                    <li class="menu-item {{(Request::route()->getName() == 'reminder.index')?'active':''}}">
-                        <a href="{{route('reminder.index')}}">
-                            <div class="icon-item"><i data-feather="cpu"></i></div>
-                            <span>{{__('All Reminders')}}</span>
-                        </a>
-                    </li>
+                        <li class="menu-item {{(Request::route()->getName() == 'reminder.index')?'active':''}}">
+                            <a href="{{route('reminder.index')}}">
+                                <div class="icon-item"><i data-feather="cpu"></i></div>
+                                <span>{{__('All Reminders')}}</span>
+                            </a>
+                        </li>
                     @endif
                     @if(Gate::check('manage my reminder'))
-                    <li class="menu-item {{(Request::route()->getName() == 'my-reminder')?'active':''}}">
-                        <a href="{{route('my-reminder')}}">
-                            <div class="icon-item"><i data-feather="aperture"></i></div>
-                            <span>{{__('My Reminders')}}</span>
-                        </a>
-                    </li>
+                        <li class="menu-item {{(Request::route()->getName() == 'my-reminder')?'active':''}}">
+                            <a href="{{route('my-reminder')}}">
+                                <div class="icon-item"><i data-feather="aperture"></i></div>
+                                <span>{{__('My Reminders')}}</span>
+                            </a>
+                        </li>
                     @endif
                     @if(Gate::check('manage document history') && $subscription->enabled_document_history==1)
-                    <li class="menu-item {{(Request::route()->getName() == 'document.history')?'active':''}}">
-                        <a href="{{route('document.history')}}">
-                            <div class="icon-item"><i data-feather="wind"></i></div>
-                            <span>{{__('Document History')}}</span>
-                        </a>
-                    </li>
+                        <li class="menu-item {{(Request::route()->getName() == 'document.history')?'active':''}}">
+                            <a href="{{route('document.history')}}">
+                                <div class="icon-item"><i data-feather="wind"></i></div>
+                                <span>{{__('Document History')}}</span>
+                            </a>
+                        </li>
                     @endif
                     @if(Gate::check('manage logged history') && $subscription->enabled_logged_history==1)
-                    <li class="menu-item {{(Request::route()->getName() == 'logged.history')?'active':''}}">
-                        <a href="{{route('logged.history')}}">
-                            <div class="icon-item"><i data-feather="check-square"></i></div>
-                            <span>{{__('User Logged History')}}</span>
-                        </a>
-                    </li>
+                        <li class="menu-item {{(Request::route()->getName() == 'logged.history')?'active':''}}">
+                            <a href="{{route('logged.history')}}">
+                                <div class="icon-item"><i data-feather="check-square"></i></div>
+                                <span>{{__('User Logged History')}}</span>
+                            </a>
+                        </li>
                     @endif
                 @endif
                 @if(Gate::check('manage contact') || Gate::check('manage support') || Gate::check('manage note'))

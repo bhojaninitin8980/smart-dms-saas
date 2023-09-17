@@ -13,6 +13,7 @@
 <script src="{{ asset('assets/js/layout-storage.js') }}"></script>
 
 <script>
+    "use strict";
 $(".customizer-modal").append('' +
 '<form method="post" action="{{route("theme.settings")}}">{{csrf_field()}}<div class="customizer-layer"></div>' +
     '<div class="customizer-action bg-primary"><i data-feather="settings"></i>' +

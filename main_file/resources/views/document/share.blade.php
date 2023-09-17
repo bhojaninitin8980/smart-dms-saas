@@ -4,6 +4,7 @@
 @endsection
 @push('script-page')
     <script>
+        "use strict";
         $(document).on('click', '#time_duration', function () {
             if ($("#time_duration").is(':checked'))
                 $(".time_duration").removeClass('d-none');
