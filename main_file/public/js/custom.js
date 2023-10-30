@@ -6,7 +6,6 @@ $(document).ready(function() {
 
 
 $(document).on('click', '.customModal', function () {
-    "use strict";
     var title = $(this).data('title');
     var url = $(this).data('url');
     var size = ($(this).data('size') == '') ? 'md' : $(this).data('size');
@@ -30,9 +29,7 @@ $(document).on('click', '.customModal', function () {
 
 // basic message
 $(document).on('click', '.confirm_dialog', function(e) {
-    "use strict";
     var form = $(this).closest("form");
-
     Swal.fire({
         title: 'Are you sure you want to delete this record ?',
         text: "This record can not be restore after delete. Do you want to confirm?",
@@ -50,7 +47,6 @@ $(document).on('click', '.confirm_dialog', function(e) {
 
 
 $(document).on('click', '.fc-day-grid-event', function (e) {
-    "use strict";
     e.preventDefault();
     var event = $(this);
     var title = $(this).find('.fc-content .fc-title').html();
@@ -74,7 +70,6 @@ $(document).on('click', '.fc-day-grid-event', function (e) {
 
 
 function toastrs(title, message, status) {
-    "use strict";
     if(status=='success'){
         var msg_status='primary';
     }else{
@@ -116,7 +111,6 @@ function toastrs(title, message, status) {
 }
 
 function convertArrayToJson(form) {
-    "use strict";
     var data = $(form).serializeArray();
     var indexed_array = {};
 
@@ -128,7 +122,6 @@ function convertArrayToJson(form) {
 }
 
 function select2(){
-    "use strict";
     $('.basic-select').select2();
     $('.hidesearch').select2({
         minimumResultsForSearch: -1
@@ -136,7 +129,6 @@ function select2(){
 }
 
 function datatable(){
-    "use strict";
     //Local Datatable JS
     $('.basicdata-tbl').DataTable({
         "scrollX": true,
