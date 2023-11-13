@@ -56,7 +56,7 @@ class HomeController extends Controller
                 header('location:install');
                 die;
             } else {
-                return redirect()->route('login');
+                return view('layouts.landing');
 
             }
 
