@@ -41,6 +41,7 @@ class UsersTableSeeder extends Seeder
             'manage password settings',
             'manage general settings',
             'manage company settings',
+
             'manage category',
             'create category',
             'edit category',
