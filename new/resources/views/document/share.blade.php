@@ -98,9 +98,9 @@
                                     <tr role="row">
                                         <td>{{!empty($shareDocument->user)?$shareDocument->user->name:'-'}}</td>
                                         <td>{{!empty($shareDocument->user)?$shareDocument->user->email:'-'}}</td>
-                                        <td>{{\Auth::user()->dateFormat($shareDocument->created_at)}}</td>
-                                        <td>{{!empty($shareDocument->start_date)?\Auth::user()->dateFormat($shareDocument->start_date):'-'}}</td>
-                                        <td>{{!empty($shareDocument->end_date)?\Auth::user()->dateFormat($shareDocument->end_date):'-'}}</td>
+                                        <td>{{dateFormat($shareDocument->created_at)}}</td>
+                                        <td>{{!empty($shareDocument->start_date)?dateFormat($shareDocument->start_date):'-'}}</td>
+                                        <td>{{!empty($shareDocument->end_date)?dateFormat($shareDocument->end_date):'-'}}</td>
                                         @if(Gate::check('delete share document'))
                                         <td>
                                             {!! Form::open(['method' => 'DELETE', 'route' => ['document.share.destroy', $shareDocument->id]]) !!}

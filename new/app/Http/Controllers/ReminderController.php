@@ -15,7 +15,7 @@ class ReminderController extends Controller
     public function index()
     {
         if (\Auth::user()->can('manage reminder')) {
-            $reminders = Reminder::where('parent_id', '=', \Auth::user()->parentId())
+            $reminders = Reminder::where('parent_id', '=', parentId())
                 ->orWhereRaw('find_in_set(?, assign_user)', [\Auth::user()->id])
                 ->get();
             return view('reminder.index', compact('reminders'));
@@ -27,9 +27,9 @@ class ReminderController extends Controller
 
     public function create()
     {
-        $documents = Document::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+        $documents = Document::where('parent_id', parentId())->get()->pluck('name', 'id');
         $documents->prepend(__('Select Document'), '');
-        $users = User::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+        $users = User::where('parent_id', parentId())->get()->pluck('name', 'id');
         return view('reminder.create', compact('users', 'documents'));
     }
 
@@ -60,7 +60,7 @@ class ReminderController extends Controller
             $reminder->message = $request->message;
             $reminder->assign_user = !empty($request->assign_user) ? implode(',', $request->assign_user) : '';
             $reminder->created_by = \Auth::user()->id;
-            $reminder->parent_id = \Auth::user()->parentId();
+            $reminder->parent_id = parentId();
             $reminder->save();
 
             $document = Document::find(!empty($request->document_id)?$request->document_id:0);
@@ -90,9 +90,9 @@ class ReminderController extends Controller
 
     public function edit(Reminder $reminder)
     {
-        $documents = Document::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+        $documents = Document::where('parent_id', parentId())->get()->pluck('name', 'id');
         $documents->prepend(__('Select Document'), '');
-        $users = User::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+        $users = User::where('parent_id', parentId())->get()->pluck('name', 'id');
         return view('reminder.edit', compact('users', 'documents', 'reminder'));
     }
 

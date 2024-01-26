@@ -78,14 +78,10 @@ class User extends Authenticatable
 
         }
     }
+    public function totalDocument()
+    {
+        return Document::where('parent_id', '=', parentId())->count();
+    }
 
-    public function totalProperty()
-    {
-        return Property::where('parent_id', parentId())->count();
-    }
-    public function totalUnit()
-    {
-        return PropertyUnit::where('parent_id', parentId())->count();
-    }
 
 }

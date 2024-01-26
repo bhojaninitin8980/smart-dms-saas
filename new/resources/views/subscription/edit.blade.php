@@ -19,12 +19,16 @@
             {{Form::number('total_user',null,array('class'=>'form-control','placeholder'=>__('Enter total user'),'required'=>'required'))}}
         </div>
         <div class="form-group col-md-12">
-            {{Form::label('total_property',__('Property Limit'),array('class'=>'form-label'))}}
-            {{Form::number('total_property',null,array('class'=>'form-control','placeholder'=>__('Enter total property'),'required'=>'required'))}}
+            {{Form::label('total_document',__('Document Limit'),array('class'=>'form-label'))}}
+            {{Form::number('total_document',null,array('class'=>'form-control','placeholder'=>__('Enter total contact'),'required'=>'required'))}}
         </div>
-        <div class="form-group col-md-12">
-            {{Form::label('total_tenant',__('Tenant Limit'),array('class'=>'form-label'))}}
-            {{Form::number('total_tenant',null,array('class'=>'form-control','placeholder'=>__('Enter total tenant'),'required'=>'required'))}}
+        <div class="form-group col-md-6">
+            {{Form::label('enabled_document_history',__('Show Document History'),array('class'=>'form-label'))}}
+            <div>
+                <label class="switch with-icon switch-primary">
+                    <input type="checkbox" name="enabled_document_history" id="enabled_document_history" {{$subscription->enabled_document_history==1?'checked':''}}><span class="switch-btn"></span>
+                </label>
+            </div>
         </div>
         <div class="form-group col-md-6">
             {{Form::label('enabled_logged_history',__('Show User Logged History'),array('class'=>'form-label'))}}

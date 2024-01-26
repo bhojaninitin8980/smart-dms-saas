@@ -21,8 +21,8 @@ class CreateSubscriptionsTable extends Migration
             $table->string('duration')->nullable();
             $table->string('image')->nullable();
             $table->integer('total_user')->nullable();
-            $table->integer('total_property')->nullable();
-            $table->integer('total_tenant')->nullable();
+            $table->integer('total_document')->nullable();
+            $table->integer('enabled_document_history')->default(0);
             $table->integer('enabled_logged_history')->default(0);
             $table->text('description')->nullable();
             $table->timestamps();

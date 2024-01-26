@@ -24,7 +24,7 @@ class DocumentController extends Controller
     public function index()
     {
         if (\Auth::user()->can('manage document')) {
-            $documents = Document::where('parent_id', '=', \Auth::user()->parentId())->get();
+            $documents = Document::where('parent_id', '=', parentId())->get();
             return view('document.index', compact('documents'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -34,9 +34,9 @@ class DocumentController extends Controller
 
     public function create()
     {
-        $category = Category::where('parent_id', \Auth::user()->parentId())->get()->pluck('title', 'id');
+        $category = Category::where('parent_id', parentId())->get()->pluck('title', 'id');
         $category->prepend(__('Select Category'), '');
-        $tages = Tag::where('parent_id', \Auth::user()->parentId())->get()->pluck('title', 'id');
+        $tages = Tag::where('parent_id', parentId())->get()->pluck('title', 'id');
 
         return view('document.create', compact('category', 'tages'));
     }
@@ -61,7 +61,7 @@ class DocumentController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
-            $ids = \Auth::user()->parentId();
+            $ids = parentId();
             $authUser = \App\Models\User::find($ids);
             $total_document = $authUser->totalDocument();
             $subscription = Subscription::find($authUser->subscription);
@@ -73,7 +73,7 @@ class DocumentController extends Controller
                 $document->description = $request->description;
                 $document->tages = !empty($request->tages) ? implode(',', $request->tages) : '';
                 $document->created_by = \Auth::user()->id;
-                $document->parent_id = \Auth::user()->parentId();
+                $document->parent_id = parentId();
                 $document->save();
 
                 if (!empty($request->document)) {
@@ -92,7 +92,7 @@ class DocumentController extends Controller
                     $version->current_version = 1;
                     $version->document_id = $document->id;
                     $version->created_by = \Auth::user()->id;
-                    $version->parent_id = \Auth::user()->parentId();
+                    $version->parent_id = parentId();
                     $version->save();
                 }
 
@@ -123,9 +123,9 @@ class DocumentController extends Controller
 
     public function edit(Document $document)
     {
-        $category = Category::where('parent_id', \Auth::user()->parentId())->get()->pluck('title', 'id');
+        $category = Category::where('parent_id', parentId())->get()->pluck('title', 'id');
         $category->prepend(__('Select Category'), '');
-        $tages = Tag::where('parent_id', \Auth::user()->parentId())->get()->pluck('title', 'id');
+        $tages = Tag::where('parent_id', parentId())->get()->pluck('title', 'id');
 
         return view('document.edit', compact('document', 'category', 'tages'));
     }
@@ -238,7 +238,7 @@ class DocumentController extends Controller
             $comment->comment = $request->comment;
             $comment->user_id = \Auth::user()->id;
             $comment->document_id = $document->id;
-            $comment->parent_id = \Auth::user()->parentId();
+            $comment->parent_id = parentId();
             $comment->save();
 
             $data['document_id'] = $document->id;
@@ -259,7 +259,7 @@ class DocumentController extends Controller
             $id = Crypt::decrypt($ids);
             $document = Document::find($id);
             $reminders = Reminder::where('document_id', $id)->get();
-            $users = User::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+            $users = User::where('parent_id', parentId())->get()->pluck('name', 'id');
             return view('document.reminder', compact('document', 'reminders', 'users'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -311,7 +311,7 @@ class DocumentController extends Controller
                 $version->current_version = 1;
                 $version->document_id = $id;
                 $version->created_by = \Auth::user()->id;
-                $version->parent_id = \Auth::user()->parentId();
+                $version->parent_id = parentId();
                 $version->save();
             }
             $document = Document::find($id);
@@ -333,7 +333,7 @@ class DocumentController extends Controller
             $id = Crypt::decrypt($ids);
             $document = Document::find($id);
             $shareDocuments = shareDocument::where('document_id', $id)->get();
-            $users = User::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+            $users = User::where('parent_id', parentId())->get()->pluck('name', 'id');
             return view('document.share', compact('document', 'shareDocuments', 'users'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -369,7 +369,7 @@ class DocumentController extends Controller
                     $share->start_date = $request->start_date;
                     $share->end_date = $request->end_date;
                 }
-                $share->parent_id = \Auth::user()->parentId();
+                $share->parent_id = parentId();
                 $share->save();
             }
             $id = Crypt::decrypt($ids);
@@ -462,12 +462,12 @@ class DocumentController extends Controller
 
     public function history()
     {
-        $ids = \Auth::user()->parentId();
+        $ids = parentId();
         $authUser = \App\Models\User::find($ids);
         $subscription = \App\Models\Subscription::find($authUser->subscription);
 
         if (\Auth::user()->can('manage document history') && $subscription->enabled_document_history == 1) {
-            $histories = DocumentHistory::where('parent_id', \Auth::user()->parentId())->get();
+            $histories = DocumentHistory::where('parent_id', parentId())->get();
             return view('document.history', compact('histories'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -476,12 +476,12 @@ class DocumentController extends Controller
 
     public function loggedHistory()
     {
-        $ids = \Auth::user()->parentId();
+        $ids = parentId();
         $authUser = \App\Models\User::find($ids);
         $subscription = \App\Models\Subscription::find($authUser->subscription);
 
         if (\Auth::user()->can('manage logged history') && $subscription->enabled_logged_history == 1) {
-            $histories = LoggedHistory::where('parent_id', \Auth::user()->parentId())->get();
+            $histories = LoggedHistory::where('parent_id', parentId())->get();
             return view('logged_history.index', compact('histories'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));

@@ -78,100 +78,51 @@
                 @endif
             @endif
 
-            @if(Gate::check('manage property') || Gate::check('manage unit')|| Gate::check('manage tenant') || Gate::check('manage invoice') || Gate::check('manage expense') || Gate::check('manage maintainer') || Gate::check('manage maintenance request') || Gate::check('manage contact') || Gate::check('manage support') || Gate::check('manage note'))
+            @if(Gate::check('manage document') || Gate::check('manage my document') || Gate::check('manage reminder') || Gate::check('manage my reminder') || Gate::check('manage document history') || Gate::check('manage logged history') || Gate::check('manage support') || Gate::check('manage contact') || Gate::check('manage note'))
                 <li class="cdxmenu-title">
                     <h5>{{__('Business Management')}}</h5>
                 </li>
-                @if(Gate::check('manage tenant'))
-                    <li class="menu-item {{in_array($routeName,['tenant.index','tenant.create','tenant.edit','tenant.show'])?'active':''}}">
-                        <a href="{{route('tenant.index')}}">
-                            <div class="icon-item"><i data-feather="user"></i></div>
-                            <span>{{__('Tenants')}} </span>
-                        </a>
-                    </li>
-                @endif
-                @if(Gate::check('manage maintainer'))
-                    <li class="menu-item {{in_array($routeName,['maintainer.index'])?'active':''}} ">
-                        <a href="{{route('maintainer.index')}}">
-                            <div class="icon-item"><i data-feather="user-check"></i></div>
-                            <span>{{__('Maintainers')}} </span>
-                        </a>
-                    </li>
-                @endif
-                @if(Gate::check('manage tenant') || Gate::check('manage property') || Gate::check('manage unit'))
-                    <li class="menu-item {{in_array($routeName,['property.index','property.create','property.edit','property.show','unit.index'])?'active':''}}">
-                        <a href="javascript:void(0);">
-                            <div class="icon-item"><i data-feather="home"></i></div>
-                            <span>{{__('Real Estate')}}</span><i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="submenu-list"
-                            style="display: {{in_array($routeName,['property.index','property.create','property.edit','property.show','unit.index'])?'block':'none'}}">
-
-                            @if(Gate::check('manage property'))
-                                <li class="menu-item {{in_array($routeName,['property.index','property.create','property.edit','property.show'])?'active':''}} ">
-                                    <a href="{{route('property.index')}}">  {{__('Properties')}} </a>
-                                </li>
-                            @endif
-                            @if(Gate::check('manage unit'))
-                                <li class="menu-item {{in_array($routeName,['unit.index'])?'active':''}} ">
-                                    <a href="{{route('unit.index')}}">  {{__('Units')}} </a>
-                                </li>
-                            @endif
-
-                        </ul>
-                    </li>
-                @endif
-                @if(Gate::check('manage maintainer') || Gate::check('manage maintenance request') )
-                    <li class="menu-item {{in_array($routeName,['maintenance-request.index','maintenance-request.pending','maintenance-request.inprogress'])?'active':''}}">
-                        <a href="javascript:void(0);">
-                            <div class="icon-item"><i data-feather="tool"></i></div>
-                            <span>{{__('Maintenance')}}</span><i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="submenu-list"
-                            style="display: {{in_array($routeName,['maintenance-request.index','maintenance-request.pending','maintenance-request.inprogress'])?'block':'none'}}">
-
-                            @if(Gate::check('manage maintenance request'))
-                                <li class="menu-item {{in_array($routeName,['maintenance-request.index'])?'active':''}}">
-                                    <a href="{{route('maintenance-request.index')}}">{{__('All Requests')}} </a>
-                                </li>
-                            @endif
-                            @if(Gate::check('manage maintenance request'))
-                                <li class="menu-item {{in_array($routeName,['maintenance-request.pending'])?'active':''}}">
-                                    <a href="{{route('maintenance-request.pending')}}">{{__('Pending')}} </a>
-                                </li>
-                            @endif
-                            @if(Gate::check('manage maintenance request'))
-                                <li class="menu-item {{in_array($routeName,['maintenance-request.inprogress'])?'active':''}}">
-                                    <a href="{{route('maintenance-request.inprogress')}}">{{__('In Progress')}} </a>
-                                </li>
-                            @endif
-
-                        </ul>
-                    </li>
-                @endif
-
-                @if(Gate::check('manage invoice') || Gate::check('manage expense') )
-                    <li class="menu-item {{in_array($routeName,['invoice.index','invoice.create','invoice.edit','invoice.show','expense.index'])?'active':''}}">
-                        <a href="javascript:void(0);">
+                @if(Gate::check('manage document'))
+                    <li class="menu-item {{(Request::route()->getName() == 'document.index' || Request::route()->getName() == 'document.show' || Request::route()->getName() == 'document.comment' || Request::route()->getName() == 'document.reminder' || Request::route()->getName() == 'document.version.history' || Request::route()->getName() == 'document.share' || Request::route()->getName() == 'document.send.email')?'active':''}}">
+                        <a href="{{route('document.index')}}">
                             <div class="icon-item"><i data-feather="file-text"></i></div>
-                            <span>{{__('Finance')}}</span><i class="fa fa-angle-down"></i>
+                            <span>{{__('All Documents')}}</span>
                         </a>
-                        <ul class="submenu-list"
-                            style="display: {{in_array($routeName,['invoice.index','invoice.create','invoice.edit','invoice.show','expense.index'])?'block':'none'}}">
-                            @if(Gate::check('manage invoice'))
-                                <li class="menu-item {{in_array($routeName,['invoice.index','invoice.create','invoice.edit','invoice.show'])?'active':''}}">
-                                    <a href="{{route('invoice.index')}}">  {{__('Invoices')}} </a>
-                                </li>
-                            @endif
-                            @if(Gate::check('manage expense'))
-                                <li class="menu-item {{in_array($routeName,['expense.index'])?'active':''}}">
-                                    <a href="{{route('expense.index')}}"> {{__('Expense')}}  </a>
-                                </li>
-                            @endif
-
-                        </ul>
                     </li>
                 @endif
+                @if(Gate::check('manage my document'))
+                    <li class="menu-item {{(Request::route()->getName() == 'document.my-document')?'active':''}}">
+                        <a href="{{route('document.my-document')}}">
+                            <div class="icon-item"><i data-feather="file"></i></div>
+                            <span>{{__('My Documents')}}</span>
+                        </a>
+                    </li>
+                @endif
+                @if(Gate::check('manage reminder'))
+                    <li class="menu-item {{(Request::route()->getName() == 'reminder.index')?'active':''}}">
+                        <a href="{{route('reminder.index')}}">
+                            <div class="icon-item"><i data-feather="cpu"></i></div>
+                            <span>{{__('All Reminders')}}</span>
+                        </a>
+                    </li>
+                @endif
+                @if(Gate::check('manage my reminder'))
+                    <li class="menu-item {{(Request::route()->getName() == 'my-reminder')?'active':''}}">
+                        <a href="{{route('my-reminder')}}">
+                            <div class="icon-item"><i data-feather="aperture"></i></div>
+                            <span>{{__('My Reminders')}}</span>
+                        </a>
+                    </li>
+                @endif
+                @if(Gate::check('manage document history') && $subscription->enabled_document_history==1)
+                    <li class="menu-item {{(Request::route()->getName() == 'document.history')?'active':''}}">
+                        <a href="{{route('document.history')}}">
+                            <div class="icon-item"><i data-feather="wind"></i></div>
+                            <span>{{__('Document History')}}</span>
+                        </a>
+                    </li>
+                @endif
+
 
                 @if(Gate::check('manage support'))
                     <li class="menu-item {{in_array($routeName,['support.index','support.show'])?'active':''}}">
@@ -200,15 +151,31 @@
                 @endif
             @endif
 
-            @if(Gate::check('manage types'))
+            @if(Gate::check('manage category') || Gate::check('manage sub category') || Gate::check('manage tag'))
                 <li class="cdxmenu-title">
                     <h5>{{__('Setup')}}</h5>
                 </li>
-                @if(Gate::check('manage types'))
-                    <li class="menu-item {{in_array($routeName,['type.index'])?'active':''}}">
-                        <a href="{{route('type.index')}}">
-                            <div class="icon-item"><i data-feather="file-text"></i></div>
-                            <span>{{__('Types')}}</span>
+                @if(Gate::check('manage category'))
+                    <li class="menu-item {{(Request::route()->getName() == 'category.index')?'active':''}}">
+                        <a href="{{route('category.index')}}">
+                            <div class="icon-item"><i data-feather="list"></i></div>
+                            <span>{{__('Category')}}</span>
+                        </a>
+                    </li>
+                @endif
+                @if(Gate::check('manage sub category'))
+                    <li class="menu-item {{(Request::route()->getName() == 'sub-category.index')?'active':''}}">
+                        <a href="{{route('sub-category.index')}}">
+                            <div class="icon-item"><i data-feather="sliders"></i></div>
+                            <span>{{__('Sub Category')}}</span>
+                        </a>
+                    </li>
+                @endif
+                @if(Gate::check('manage tag'))
+                    <li class="menu-item {{(Request::route()->getName() == 'tag.index')?'active':''}}">
+                        <a href="{{route('tag.index')}}">
+                            <div class="icon-item"><i data-feather="layers"></i></div>
+                            <span>{{__('Tags')}}</span>
                         </a>
                     </li>
                 @endif

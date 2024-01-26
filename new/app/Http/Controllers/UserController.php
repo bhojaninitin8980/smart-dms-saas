@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         if (\Auth::user()->can('manage user')) {
             if (\Auth::user()->type == 'super admin') {
-                $users = User::where('parent_id', parentId())->where('type', 'admin')->get();
+                $users = User::where('parent_id', parentId())->where('type', 'owner')->get();
             } else {
                 $users = User::where('parent_id', parentId())->whereNotIn('type',['tenant','maintainer'])->get();
             }

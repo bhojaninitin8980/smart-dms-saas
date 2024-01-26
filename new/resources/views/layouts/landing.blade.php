@@ -112,9 +112,9 @@
             <div class="col-xl-6 col-lg-7 col-lg-7">
                 <div class="intro-contain">
                     <div>
-                        <h1 class="wow fadeInLeft" data-wow-duration="1s">{{__('Smart Tenant - Property Management System')}}</h1>
-                        <p class="wow fadeInLeft" data-wow-duration="1.5s">{{__('Property management refers to the administration, operation, and oversight of real estate properties on behalf of property owners. It involves various tasks such as marketing rental properties, finding tenants, collecting rent and ensuring legal compliance.')}}</p>
-                        <a class="btn btn-primary" href="{{route('login')}}" data-wow-duration="1.8s"><i  class="fa fa-television" aria-hidden="true"></i>live demo </a>
+                        <h1 class="wow fadeInLeft" data-wow-duration="1s">{{__('DRMS SaaS - Digital Record Management System')}}</h1>
+                        <p class="wow fadeInLeft" data-wow-duration="1.5s">{{__('Document and Records Management System (DRMS SaaS) software refers to the various features and functionalities that the software offers to help organizations manage their digital documents effectively.')}}</p>
+                        <a class="btn btn-primary" href="{{route('login')}}" data-wow-duration="1.8s"><i  class="fa fa-television" aria-hidden="true"></i>{{__('live demo')}} </a>
                     </div>
                 </div>
             </div>
@@ -129,7 +129,7 @@
             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
                 <div class="land-title">
                     <h2 class="wow fadeInLeft">{{__('Home')}}</h2>
-                    <p class="wow fadeInRight">{{__('Property managers maintain accurate financial records, including income and expense tracking, budgeting, and providing owners with regular financial reports.')}}</p>
+                    <p class="wow fadeInRight">{{__('Document and Records Management System (DRMS SaaS) software refers to the various features and functionalities that the software offers to help organizations manage their digital documents effectively.')}}</p>
                 </div>
             </div>
         </div>
@@ -167,7 +167,7 @@
                                     alt=""></a></div>
                     </div>
                     <div class="demo-detail">
-                        <h3>{{__('Property')}}</h3>
+                        <h3>{{__('Subscription Plan')}}</h3>
                     </div>
                 </div>
             </div>
@@ -182,8 +182,8 @@
             <div class="col-lg-6">
                 <div class="header-detail">
                     <div>
-                        <h2 class="wow fadeInUp" data-wow-duration="0.8s">500+ {{__('Properties')}}</h2>
-                        <p class="wow fadeInUp" data-wow-duration="1.3s">{{__('Property managers maintain accurate financial records, including income and expense tracking, budgeting, and providing owners with regular financial reports.')}}</p><a
+                        <h2 class="wow fadeInUp" data-wow-duration="0.8s">500+ {{__('Documents')}}</h2>
+                        <p class="wow fadeInUp" data-wow-duration="1.3s">{{__('Document and Records Management System (DRMS SaaS) software refers to the various features and functionalities that the software offers to help organizations manage their digital documents effectively.')}}</p><a
                             class="btn btn-primary btn-md wow fadeInUp" data-wow-duration="1.8s"
                             href="javascript:void(0);">{{__('Exploar now')}}</a>
                     </div>
@@ -198,7 +198,7 @@
                                                        src="{{ asset('assets/images/landing/3.png') }}"
                                                        alt=""></div>
                             <div class="demo-detail">
-                                <h3 class="text-white">{{__('Property Details')}}</h3>
+                                <h3 class="text-white">{{__('Document')}}</h3>
                             </div>
                         </div>
                     </div>
@@ -208,7 +208,7 @@
                                                        src="{{ asset('assets/images/landing/4.png') }}"
                                                        alt=""></div>
                             <div class="demo-detail">
-                                <h3 class="text-white">{{__('Tenant')}}</h3>
+                                <h3 class="text-white">{{__('Document Details')}}</h3>
                             </div>
                         </div>
                     </div>
@@ -218,7 +218,7 @@
                                                        src="{{ asset('assets/images/landing/5.png') }}"
                                                        alt=""></div>
                             <div class="demo-detail">
-                                <h3 class="text-white">{{__('Invoice')}}</h3>
+                                <h3 class="text-white">{{__('Reminder')}}</h3>
                             </div>
                         </div>
                     </div>
@@ -228,7 +228,7 @@
                                                        src="{{ asset('assets/images/landing/6.png') }}"
                                                        alt=""></div>
                             <div class="demo-detail">
-                                <h3 class="text-white">{{__('Roles & Permissions')}}</h3>
+                                <h3 class="text-white">{{__('User Logged History')}}</h3>
                             </div>
                         </div>
                     </div>
@@ -285,7 +285,7 @@
                                     alt=""></a></div>
                     </div>
                     <div class="demo-detail">
-                        <h3>{{__('Property')}}</h3>
+                        <h3>{{__('Subscription Plan')}}</h3>
                     </div>
                 </div>
             </div>
@@ -305,7 +305,7 @@
                                     alt=""></a></div>
                     </div>
                     <div class="demo-detail">
-                        <h3>{{__('Tenant')}}</h3>
+                        <h3>{{__('Document Details')}}</h3>
                     </div>
                 </div>
             </div>
@@ -325,7 +325,7 @@
                                     alt=""></a></div>
                     </div>
                     <div class="demo-detail">
-                        <h3>{{__('Invoice detail')}}</h3>
+                        <h3>{{__('Reminder')}}</h3>
                     </div>
                 </div>
             </div>
@@ -345,7 +345,7 @@
                                     alt=""></a></div>
                     </div>
                     <div class="demo-detail">
-                        <h3>{{__('Expenses')}}</h3>
+                        <h3>{{__('Document History')}}</h3>
                     </div>
                 </div>
             </div>
@@ -365,7 +365,7 @@
                                     alt=""></a></div>
                     </div>
                     <div class="demo-detail">
-                        <h3>{{__('Uer Roles & Permissions')}}</h3>
+                        <h3>{{__('User Logged History')}}</h3>
                     </div>
                 </div>
             </div>
@@ -373,7 +373,6 @@
     </div>
 </section>
 <!-- innderpages end-->
-
 
 <!-- footer start-->
 <footer class="lan-footer space-py-10">

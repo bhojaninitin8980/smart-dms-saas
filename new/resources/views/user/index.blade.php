@@ -66,7 +66,7 @@
                                     <span
                                         class="btn btn-primary btn-md"> {{__('Users')}} : {{$user->totalUser()}}</span>
                                     <span
-                                        class="btn btn-secondary btn-md"> {{__('Property')}} : {{$user->totalProperty()}}</span>
+                                        class="btn btn-secondary btn-md"> {{__('Document')}} : {{$user->totalDocument()}}</span>
                                 </div>
                             </div>
                         </div>

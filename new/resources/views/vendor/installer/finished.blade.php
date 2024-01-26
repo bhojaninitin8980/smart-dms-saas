@@ -10,31 +10,24 @@
 @endsection
 
 @section('container')
-
     <p>
         <strong class="text-danger "> Super Admin Login Details :</strong> <br>
         <strong class="text-danger"> Email : </strong> <strong>superadmin@gmail.com</strong> <br>
         <strong class="text-danger"> Password : </strong><strong> 123456</strong>
     </p>
-
     <p>
-        <strong class="text-danger"> Admin Login Details:</strong> <br>
+        <strong class="text-danger"> Owner Login Details:</strong> <br>
         <strong class="text-danger"> Email : </strong> <strong>owner@gmail.com</strong> <br>
         <strong class="text-danger"> Password : </strong><strong> 123456</strong>
     </p>
     <p>
-        <strong class="text-danger"> User Login Details:</strong> <br>
+        <strong class="text-danger"> Manage Login Details:</strong> <br>
         <strong class="text-danger"> Email : </strong> <strong>manager@gmail.com</strong> <br>
         <strong class="text-danger"> Password : </strong><strong> 123456</strong>
     </p>
     <p>
-        <strong class="text-danger"> Tenant Login Details:</strong> <br>
-        <strong class="text-danger"> Email : </strong> <strong>tenant@gmail.com</strong> <br>
-        <strong class="text-danger"> Password : </strong><strong> 123456</strong>
-    </p>
-    <p>
-        <strong class="text-danger"> Maintainer Login Details:</strong> <br>
-        <strong class="text-danger"> Email : </strong> <strong>maintainer@gmail.com</strong> <br>
+        <strong class="text-danger"> Employee Login Details:</strong> <br>
+        <strong class="text-danger"> Email : </strong> <strong>employee@gmail.com</strong> <br>
         <strong class="text-danger"> Password : </strong><strong> 123456</strong>
     </p>
 

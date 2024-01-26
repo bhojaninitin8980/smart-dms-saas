@@ -58,7 +58,7 @@
                                             <img class="img-fluid" src="{{(!empty($comment->user)? asset(Storage::url('upload/profile/')).'/'.$comment->user->profile : asset(Storage::url('upload/profile')).'/avatar.png')}}" alt="">
                                             <div class="media-body">
                                                 <a href="#">
-                                                    <h5> {{!empty($comment->user)?$comment->user->name:'-'}} <span class="comment-time">  <i class="fa fa-calendar"></i>{{\Auth::user()->dateFormat($comment->created_at)}}</span>
+                                                    <h5> {{!empty($comment->user)?$comment->user->name:'-'}} <span class="comment-time">  <i class="fa fa-calendar"></i>{{dateFormat($comment->created_at)}}</span>
                                                     </h5>
                                                 </a>
                                                 <p> {{$comment->comment}}</p>

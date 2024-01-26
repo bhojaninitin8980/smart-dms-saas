@@ -4,13 +4,13 @@
             <div class="col-6">
                 <div class="detail-group">
                     <h6>{{__('Date')}}</h6>
-                    <p class="mb-20">{{\Auth::user()->dateFormat($reminder->date)}}</p>
+                    <p class="mb-20">{{dateFormat($reminder->date)}}</p>
                 </div>
             </div>
             <div class="col-6">
                 <div class="detail-group">
                     <h6>{{__('Time')}}</h6>
-                    <p class="mb-20">{{\Auth::user()->timeFormat($reminder->time)}}</p>
+                    <p class="mb-20">{{timeFormat($reminder->time)}}</p>
                 </div>
             </div>
             <div class="col-6">

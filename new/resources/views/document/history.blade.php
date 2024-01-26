@@ -34,7 +34,7 @@
                             <tr role="row">
                                 <td> {{ !empty($history->documents)?$history->documents->name:'-' }} </td>
                                 <td> {{ucfirst($history->action) }} </td>
-                                <td>{{\Auth::user()->dateFormat($history->created_at)}} {{\Auth::user()->timeFormat($history->created_at)}}</td>
+                                <td>{{dateFormat($history->created_at)}} {{timeFormat($history->created_at)}}</td>
                                 <td> {{ !empty($history->actionUser)?$history->actionUser->name:'-' }} </td>
                                 <td> {{$history->description }} </td>
                             </tr>

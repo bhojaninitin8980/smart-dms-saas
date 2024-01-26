@@ -42,8 +42,7 @@ class SubscriptionController extends Controller
                     'price' => 'required',
                     'duration' => 'required',
                     'total_user' => 'required',
-                    'total_property' => 'required',
-                    'total_tenant' => 'required',
+                    'total_document' => 'required',
                 ]
             );
             if ($validator->fails()) {
@@ -57,8 +56,8 @@ class SubscriptionController extends Controller
             $subscription->price = $request->price;
             $subscription->duration = $request->duration;
             $subscription->total_user = $request->total_user;
-            $subscription->total_property = $request->total_property;
-            $subscription->total_tenant = $request->total_tenant;
+            $subscription->total_document = $request->total_document;
+            $subscription->enabled_document_history = isset($request->enabled_document_history)?1:0;
             $subscription->enabled_logged_history = isset($request->enabled_logged_history) ? 1 : 0;
             $subscription->description = $request->description;
             $subscription->save();
@@ -102,8 +101,7 @@ class SubscriptionController extends Controller
                     'price' => 'required',
                     'duration' => 'required',
                     'total_user' => 'required',
-                    'total_property' => 'required',
-                    'total_tenant' => 'required',
+                    'total_document' => 'required',
                 ]
             );
             if ($validator->fails()) {
@@ -116,8 +114,8 @@ class SubscriptionController extends Controller
             $subscription->price = $request->price;
             $subscription->duration = $request->duration;
             $subscription->total_user = $request->total_user;
-            $subscription->total_property = $request->total_property;
-            $subscription->total_tenant = $request->total_tenant;
+            $subscription->total_document = $request->total_document;
+            $subscription->enabled_document_history = isset($request->enabled_document_history)?1:0;
             $subscription->enabled_logged_history = isset($request->enabled_logged_history) ? 1 : 0;
             $subscription->description = $request->description;
             $subscription->save();

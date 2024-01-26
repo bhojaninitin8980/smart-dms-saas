@@ -56,8 +56,8 @@
                                    @endforeach
                                 </td>
                                 <td>{{!empty($document->createdBy)?$document->createdBy->name:''}}</td>
-                                <td>{{\Auth::user()->dateFormat($document->created_at)}}</td>
-                                <td>{{\Auth::user()->dateFormat($document->created_at)}}</td>
+                                <td>{{dateFormat($document->created_at)}}</td>
+                                <td>{{dateFormat($document->created_at)}}</td>
                                 @if(Gate::check('edit my document') ||  Gate::check('delete my document') ||  Gate::check('show my document'))
                                     <td class="text-right">
                                         <div class="cart-action">

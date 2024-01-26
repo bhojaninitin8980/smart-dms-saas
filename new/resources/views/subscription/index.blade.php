@@ -32,18 +32,19 @@
                     </div>
                     <ul class="cdxprice-list">
                         <li><span>{{$subscription->total_user}}</span>{{__('Users Limit')}}</li>
-                        <li><span>{{$subscription->total_property}}</span>{{__('Property Limit')}}</li>
-                        <li><span>{{$subscription->total_tenant}}</span>{{__('Tenant Limit')}}</li>
+                        <li><span>{{$subscription->total_document}}</span>{{__('Document Limit')}}</li>
                         <li>
                             <div class="delet-mail">
-                                @if($subscription->couponCheck()>0)
+                                @if($subscription->enabled_document_history==1)
                                     <i class="text-success mr-4" data-feather="check-circle"></i>
                                 @else
                                     <i class="text-danger mr-4" data-feather="x-circle"></i>
                                 @endif
-                                {{__('Coupon Applicable')}}
+
+                                {{__('Document History')}}
                             </div>
                         </li>
+
                         <li>
                             <div class="delet-mail">
                                 @if($subscription->enabled_logged_history==1)
@@ -54,7 +55,16 @@
                                 {{__('User Logged History')}}
                             </div>
                         </li>
-
+                        <li>
+                            <div class="delet-mail">
+                                @if($subscription->couponCheck()>0)
+                                    <i class="text-success mr-4" data-feather="check-circle"></i>
+                                @else
+                                    <i class="text-danger mr-4" data-feather="x-circle"></i>
+                                @endif
+                                {{__('Coupon Applicable')}}
+                            </div>
+                        </li>
                         @if(\Auth::user()->type!='super admin' && \Auth::user()->subscription == $subscription->id)
                             <li>
                                 <span>{{\Auth::user()->subscription_expire_date ? dateFormat(\Auth::user()->subscription_expire_date):__('Unlimited')}}</span>{{__('Expiry Date') }}
