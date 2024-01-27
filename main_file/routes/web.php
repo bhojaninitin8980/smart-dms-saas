@@ -10,6 +10,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\NoticeBoardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SupportController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\ReminderController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 require __DIR__ . '/auth.php';
 
 Route::get('/', [HomeController::class,'index'])->middleware(
@@ -61,12 +63,6 @@ Route::resource('users', UserController::class)->middleware(
 //-------------------------------Subscription-------------------------------------------
 
 
-Route::resource('subscriptions', SubscriptionController::class)->middleware(
-    [
-        'auth',
-        'XSS',
-    ]
-);
 
 Route::group(
     [
@@ -76,12 +72,28 @@ Route::group(
         ],
     ], function (){
 
+    Route::resource('subscriptions', SubscriptionController::class);
+    Route::get('coupons/history', [CouponController::class,'history'])->name('coupons.history');
+    Route::delete('coupons/history/{id}/destroy', [CouponController::class,'historyDestroy'])->name('coupons.history.destroy');
+    Route::get('coupons/apply', [CouponController::class, 'apply'])->name('coupons.apply');
+    Route::resource('coupons', CouponController::class);
     Route::get('subscription/transaction', [SubscriptionController::class,'transaction'])->name('subscription.transaction');
-    Route::post('subscription/{id}/stripe/payment', [SubscriptionController::class,'stripePayment'])->name('subscription.stripe.payment');
-
 }
 );
 
+//-------------------------------Subscription Payment-------------------------------------------
+
+Route::group(
+    [
+        'middleware' => [
+            'auth',
+            'XSS',
+        ],
+    ], function (){
+
+    Route::post('subscription/{id}/stripe/payment', [SubscriptionController::class,'stripePayment'])->name('subscription.stripe.payment');
+}
+);
 //-------------------------------Settings-------------------------------------------
 Route::group(
     [
@@ -112,7 +124,11 @@ Route::group(
     Route::get('language/{lang}', [SettingController::class,'lanquageChange'])->name('language.change');
     Route::post('theme/settings', [SettingController::class,'themeSettings'])->name('theme.settings');
 
+    Route::get('settings/site-seo', [SettingController::class,'siteSEO'])->name('setting.site.seo');
+    Route::post('settings/site-seo', [SettingController::class,'siteSEOData'])->name('setting.site.seo');
 
+    Route::get('settings/google-recaptcha', [SettingController::class,'googleRecaptcha'])->name('setting.google.recaptcha');
+    Route::post('settings/google-recaptcha', [SettingController::class,'googleRecaptchaData'])->name('setting.google.recaptcha');
 }
 );
 
@@ -166,6 +182,23 @@ Route::resource('support', SupportController::class)->middleware(
         'XSS',
     ]
 );
+
+//-------------------------------logged History-------------------------------------------
+
+Route::group(
+    [
+        'middleware' => [
+            'auth',
+            'XSS',
+        ],
+    ], function () {
+
+    Route::get('logged/history', [UserController::class,'loggedHistory'])->name('logged.history');
+    Route::get('logged/{id}/history/show', [UserController::class,'loggedHistoryShow'])->name('logged.history.show');
+    Route::delete('logged/{id}/history', [UserController::class,'loggedHistoryDestroy'])->name('logged.history.destroy');
+});
+
+
 
 //-------------------------------Document-------------------------------------------
 

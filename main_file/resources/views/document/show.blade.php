@@ -82,7 +82,7 @@
                                             <div class="mail-item">
                                                 <i class="like-mail text-warning" data-feather="star"></i>
                                                 <h6 class="parson-name">{{__('Created At')}}</h6>
-                                                <p>{{\Auth::user()->dateFormat($document->created_at)}}</p>
+                                                <p>{{dateFormat($document->created_at)}}</p>
                                             </div>
                                         </li>
                                         <li>

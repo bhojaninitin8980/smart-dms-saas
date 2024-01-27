@@ -15,13 +15,13 @@ class RoleController extends Controller
         if(\Auth::user()->can('manage role'))
         {
 
-            $roles = Role::where('parent_id', '=', \Auth::user()->parentId())->get();
+            $roles = Role::where('parent_id', '=', parentId())->get();
 
             return view('role.index', compact('roles'));
         }
         else
         {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
 
     }
@@ -56,11 +56,9 @@ class RoleController extends Controller
 
             $validator = \Validator::make(
                 $request->all(), [
-                                   'name' => 'required|regex:/^[\s\w-]*$/|unique:roles,name,NULL,id,parent_id,' . \Auth::user()->parentId(),
+                                   'name' => 'required|unique:roles,name,NULL,id,parent_id,' . parentId(),
                                    'permissions' => 'required',
-                               ],[
-                    'regex' => __('The Name format is invalid, Contains letter, number and only alphanum'),
-                ]
+                               ]
             );
             if($validator->fails())
             {
@@ -72,7 +70,7 @@ class RoleController extends Controller
             $name             = $request['name'];
             $role             = new Role();
             $role->name       = $name;
-            $role->parent_id = \Auth::user()->parentId();
+            $role->parent_id = parentId();
             $permissions      = $request['permissions'];
             $role->save();
 
@@ -82,11 +80,11 @@ class RoleController extends Controller
                 $role->givePermissionTo($p);
             }
 
-            return redirect()->back()->with('success', __('Role successfully created!'));
+            return redirect()->back()->with('success', __('Role successfully created.'));
         }
         else
         {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
 
 
@@ -132,11 +130,9 @@ class RoleController extends Controller
             $validator = \Validator::make(
                 $request->all(), [
 
-                                   'name' => 'required|regex:/^[\s\w-]*$/|unique:roles,name,' . $role['id'] . ',id,parent_id,' . \Auth::user()->parentId(),
+                                   'name' => 'required|unique:roles,name,' . $role['id'] . ',id,parent_id,' . parentId(),
                                    'permissions' => 'required',
-                               ],[
-                    'regex' => __('The Name format is invalid, Contains letter, number and only alphanum'),
-                ]
+                               ]
             );
             if($validator->fails())
             {
@@ -163,11 +159,11 @@ class RoleController extends Controller
                 $role->givePermissionTo($p);
             }
 
-            return redirect()->back()->with('success', __('Role successfully updated!'));
+            return redirect()->back()->with('success', __('Role successfully updated.'));
         }
         else
         {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
 
     }
@@ -180,11 +176,11 @@ class RoleController extends Controller
             $role = Role::find($id);
             $role->delete();
 
-            return redirect()->back()->with('success', 'Role successfully deleted!');
+            return redirect()->back()->with('success', 'Role successfully deleted.');
         }
         else
         {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
 
     }

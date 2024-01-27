@@ -1,7 +1,15 @@
 @extends('layouts.auth')
+@php
+    $settings=settings();
+@endphp
 @section('tab-title')
     {{__('Register')}}
 @endsection
+@push('script-page')
+    @if ($settings['google_recaptcha'] == 'on')
+        {!! NoCaptcha::renderJs() !!}
+    @endif
+@endpush
 @section('content')
     <div class="codex-authbox">
         <div class="auth-header">
@@ -58,6 +66,22 @@
                 </div>
             </div>
         </div>
+        @if ($settings['google_recaptcha'] == 'on')
+            <div class="form-group">
+                <label for="email" class="form-label"></label>
+                {!! NoCaptcha::display() !!}
+                @error('g-recaptcha-response')
+                <span class="small text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            @if ($errors->has('g-recaptcha-response'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                </span>
+            @endif
+        @endif
         <div class="form-group">
             <button class="btn btn-primary" type="submit"><i class="fa fa-paper-plane"></i> {{__('Register')}}</button>
         </div>

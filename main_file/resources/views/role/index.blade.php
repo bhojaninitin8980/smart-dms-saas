@@ -14,7 +14,8 @@
 @endsection
 @section('card-action-btn')
     @can('create role')
-    <a class="btn btn-primary btn-sm ml-20 customModal" href="{{ route('role.create') }}" > <i class="ti-plus mr-5"></i>{{__('Create Role')}}</a>
+        <a class="btn btn-primary btn-sm ml-20 customModal" href="{{ route('role.create') }}"> <i
+                class="ti-plus mr-5"></i>{{__('Create Role')}}</a>
     @endcan
 @endsection
 @section('content')
@@ -22,7 +23,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="display dataTable cell-border datatbl-advance" >
+                    <table class="display dataTable cell-border datatbl-advance">
                         <thead>
                         <tr>
                             <th>{{__('Role')}}</th>
@@ -41,12 +42,19 @@
                                     <div class="cart-action">
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['role.destroy', $role->id]]) !!}
                                         @can('edit role')
-                                        <a class="text-success" data-size="xl" data-bs-toggle="tooltip" data-bs-original-title="{{__('Edit')}}" href="{{ route('role.edit',$role->id) }}" > <i data-feather="edit"></i></a>
+                                            <a class="text-success" data-size="xl" data-bs-toggle="tooltip"
+                                               data-bs-original-title="{{__('Edit')}}"
+                                               href="{{ route('role.edit',$role->id) }}"> <i
+                                                    data-feather="edit"></i></a>
                                         @endcan
-                                        @can('delete role')
-                                        <a class=" text-danger confirm_dialog" data-bs-toggle="tooltip" data-bs-original-title="{{__('Detete')}}" href="#"> <i data-feather="trash-2"></i></a>
-                                        {!! Form::close() !!}
-                                        @endcan
+                                        @if($role->name !='employee' && $role->name !='customer')
+                                            @can('delete role')
+                                                <a class=" text-danger confirm_dialog" data-bs-toggle="tooltip"
+                                                   data-bs-original-title="{{__('Detete')}}" href="#"> <i
+                                                        data-feather="trash-2"></i></a>
+                                                {!! Form::close() !!}
+                                            @endcan
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

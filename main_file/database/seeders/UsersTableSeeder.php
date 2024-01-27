@@ -1,5 +1,7 @@
 <?php
+
 namespace Database\Seeders;
+
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -15,85 +17,567 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $arrPermissions = [
-            'manage user',
-            'create user',
-            'edit user',
-            'delete user',
-            'manage role',
-            'create role',
-            'edit role',
-            'delete role',
-            'manage contact',
-            'create contact',
-            'edit contact',
-            'delete contact',
-            'manage support',
-            'create support',
-            'edit support',
-            'delete support',
-            'reply support',
-            'manage note',
-            'create note',
-            'edit note',
-            'delete note',
-            'manage account settings',
-            'manage password settings',
-            'manage general settings',
-            'manage company settings',
+        // Default All Permission
+        $allPermission = [
+            [
+                'name' => 'manage user',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create user',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit user',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete user',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage role',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create role',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit role',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete role',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage contact',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create contact',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit contact',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete contact',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage support',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create support',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit support',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete support',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'reply support',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage note',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create note',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit note',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete note',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage logged history',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
 
-            'manage category',
-            'create category',
-            'edit category',
-            'delete category',
-            'manage sub category',
-            'create sub category',
-            'edit sub category',
-            'delete sub category',
-            'manage tag',
-            'create tag',
-            'edit tag',
-            'delete tag',
-            'manage document',
-            'create document',
-            'edit document',
-            'delete document',
-            'show document',
-            'manage my document',
-            'edit my document',
-            'delete my document',
-            'show my document',
-            'create my document',
-            'manage reminder',
-            'create reminder',
-            'edit reminder',
-            'delete reminder',
-            'show reminder',
-            'manage my reminder',
-            'manage document history',
-            'download document',
-            'preview document',
-            'manage comment',
-            'create comment',
-            'manage version',
-            'create version',
-            'manage share document',
-            'delete share document',
-            'create share document',
-            'manage mail',
-            'send mail',
-            'manage logged history',
+            ],
+            [
+                'name' => 'delete logged history',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+
+            ],
+            [
+                'name' => 'manage pricing packages',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create pricing packages',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit pricing packages',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete pricing packages',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'buy pricing packages',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage coupon',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'create coupon',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'edit coupon',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete coupon',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage coupon history',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'delete coupon history',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage pricing transation',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage account settings',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+
+            ],
+            [
+                'name' => 'manage password settings',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage general settings',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+
+            ],
+            [
+                'name' => 'manage company settings',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage email settings',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage payment settings',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage seo settings',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name' => 'manage google recaptcha settings',
+                'guard_name' => 'web',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+
+
+            [
+                'name'=>'manage category',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'create category',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'edit category',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'delete category',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage sub category',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'create sub category',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'edit sub category',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'delete sub category',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage tag',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'create tag',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'edit tag',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'delete tag',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'create document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'edit document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'delete document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'show document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage my document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'edit my document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'delete my document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'show my document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'create my document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage reminder',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'create reminder',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'edit reminder',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'delete reminder',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'show reminder',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage my reminder',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage document history',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'download document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'preview document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage comment',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'create comment',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage version',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'create version',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage share document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'delete share document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'create share document',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'manage mail',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+            [
+                'name'=>'send mail',
+                'gaurd_name'=>'web',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s')
+            ],
+
         ];
-        foreach($arrPermissions as $ap)
-        {
-            Permission::create(['name' => $ap]);
-        }
+        Permission::insert($allPermission);
+
+        // Default Super Admin Role
+        $superAdminRole = Role::create(
+            [
+                'name' => 'super admin',
+                'parent_id' => 0,
+            ]
+        );
+        $superAdminPermission = [
+            ['name' => 'manage user'],
+            ['name' => 'create user'],
+            ['name' => 'edit user'],
+            ['name' => 'delete user'],
+            ['name' => 'manage contact'],
+            ['name' => 'create contact'],
+            ['name' => 'edit contact'],
+            ['name' => 'delete contact'],
+            ['name' => 'manage support'],
+            ['name' => 'create support'],
+            ['name' => 'edit support'],
+            ['name' => 'delete support'],
+            ['name' => 'reply support'],
+            ['name' => 'manage note'],
+            ['name' => 'create note'],
+            ['name' => 'edit note'],
+            ['name' => 'delete note'],
+            ['name' => 'manage pricing packages'],
+            ['name' => 'create pricing packages'],
+            ['name' => 'edit pricing packages'],
+            ['name' => 'delete pricing packages'],
+            ['name' => 'manage pricing transation'],
+            ['name' => 'manage coupon'],
+            ['name' => 'create coupon'],
+            ['name' => 'edit coupon'],
+            ['name' => 'delete coupon'],
+            ['name' => 'manage coupon history'],
+            ['name' => 'delete coupon history'],
+            ['name' => 'manage account settings'],
+            ['name' => 'manage password settings'],
+            ['name' => 'manage general settings'],
+            ['name' => 'manage email settings'],
+            ['name' => 'manage payment settings'],
+            ['name' => 'manage seo settings'],
+            ['name' => 'manage google recaptcha settings'],
 
 
-        // Default Super admin
+        ];
+        $superAdminRole->givePermissionTo($superAdminPermission);
+        // Default Super Admin
         $superAdmin = User::create(
             [
-                'name' => 'Super Admin',
+                'first_name' => 'Super Admin',
                 'email' => 'superadmin@gmail.com',
                 'password' => Hash::make('123456'),
                 'type' => 'super admin',
@@ -102,244 +586,252 @@ class UsersTableSeeder extends Seeder
                 'parent_id' => 0,
             ]
         );
+        $superAdmin->assignRole($superAdminRole);
 
-        // Default admin role
-        $adminRole = Role::create(
+        // Default Owner Role
+        $ownerRole = Role::create(
             [
                 'name' => 'owner',
                 'parent_id' => $superAdmin->id,
             ]
         );
-        // Default admin permissions
-        $adminPermissions = [
-            'manage user',
-            'create user',
-            'edit user',
-            'delete user',
-            'manage role',
-            'create role',
-            'edit role',
-            'delete role',
-            'manage contact',
-            'create contact',
-            'edit contact',
-            'delete contact',
-            'manage support',
-            'create support',
-            'edit support',
-            'delete support',
-            'reply support',
-            'manage note',
-            'create note',
-            'edit note',
-            'delete note',
-            'manage account settings',
-            'manage password settings',
-            'manage general settings',
-            'manage company settings',
-            'manage category',
-            'create category',
-            'edit category',
-            'delete category',
-            'manage sub category',
-            'create sub category',
-            'edit sub category',
-            'delete sub category',
-            'manage tag',
-            'create tag',
-            'edit tag',
-            'delete tag',
-            'manage document',
-            'create document',
-            'edit document',
-            'delete document',
-            'show document',
-            'manage my document',
-            'edit my document',
-            'delete my document',
-            'show my document',
-            'create my document',
-            'manage reminder',
-            'create reminder',
-            'edit reminder',
-            'delete reminder',
-            'show reminder',
-            'manage my reminder',
-            'manage document history',
-            'download document',
-            'preview document',
-            'manage comment',
-            'create comment',
-            'manage version',
-            'create version',
-            'manage share document',
-            'delete share document',
-            'create share document',
-            'manage mail',
-            'send mail',
-            'manage logged history',
+
+        // Default Owner All Permissions
+        $ownerPermission = [
+            ['name' => 'manage user'],
+            ['name' => 'create user'],
+            ['name' => 'edit user'],
+            ['name' => 'delete user'],
+            ['name' => 'manage role'],
+            ['name' => 'create role'],
+            ['name' => 'edit role'],
+            ['name' => 'delete role'],
+            ['name' => 'manage contact'],
+            ['name' => 'create contact'],
+            ['name' => 'edit contact'],
+            ['name' => 'delete contact'],
+            ['name' => 'manage support'],
+            ['name' => 'create support'],
+            ['name' => 'edit support'],
+            ['name' => 'delete support'],
+            ['name' => 'reply support'],
+            ['name' => 'manage note'],
+            ['name' => 'create note'],
+            ['name' => 'edit note'],
+            ['name' => 'delete note'],
+            ['name' => 'manage logged history'],
+            ['name' => 'delete logged history'],
+            ['name' => 'manage pricing packages'],
+            ['name' => 'buy pricing packages'],
+            ['name' => 'manage pricing transation'],
+            ['name' => 'manage account settings'],
+            ['name' => 'manage account settings'],
+            ['name' => 'manage password settings'],
+            ['name' => 'manage general settings'],
+            ['name' => 'manage company settings'],
+
+            ['name'=>'manage category'],
+            ['name'=>'create category'],
+            ['name'=>'edit category'],
+            ['name'=>'delete category'],
+            ['name'=>'manage sub category'],
+            ['name'=>'create sub category'],
+            ['name'=>'edit sub category'],
+            ['name'=>'delete sub category'],
+            ['name'=>'manage tag'],
+            ['name'=>'create tag'],
+            ['name'=>'edit tag'],
+            ['name'=>'delete tag'],
+            ['name'=>'manage document'],
+            ['name'=>'create document'],
+            ['name'=>'edit document'],
+            ['name'=>'delete document'],
+            ['name'=>'show document'],
+            ['name'=>'manage my document'],
+            ['name'=>'edit my document'],
+            ['name'=>'delete my document'],
+            ['name'=>'show my document'],
+            ['name'=>'create my document'],
+            ['name'=>'manage reminder'],
+            ['name'=>'create reminder'],
+            ['name'=>'edit reminder'],
+            ['name'=>'delete reminder'],
+            ['name'=>'show reminder'],
+            ['name'=>'manage my reminder'],
+            ['name'=>'manage document history'],
+            ['name'=>'download document'],
+            ['name'=>'preview document'],
+            ['name'=>'manage comment'],
+            ['name'=>'create comment'],
+            ['name'=>'manage version'],
+            ['name'=>'create version'],
+            ['name'=>'manage share document'],
+            ['name'=>'delete share document'],
+            ['name'=>'create share document'],
+            ['name'=>'manage mail'],
+            ['name'=>'send mail'],
         ];
-        foreach($adminPermissions as $ap)
-        {
-            $permission = Permission::findByName($ap);
-            $adminRole->givePermissionTo($permission);
-        }
-        // Default admin
-        $admin = User::create(
+        $ownerRole->givePermissionTo($ownerPermission);
+
+        // Default Owner Create
+        $owner = User::create(
             [
-                'name' => 'Owner',
+                'first_name' => 'Owner',
                 'email' => 'owner@gmail.com',
                 'password' => Hash::make('123456'),
-                'type' => 'admin',
+                'type' => 'owner',
                 'lang' => 'english',
                 'profile' => 'avatar.png',
                 'subscription' => 1,
                 'parent_id' => $superAdmin->id,
             ]
         );
-        // Default admin role assign
-        $admin->assignRole($adminRole);
+        // Default Owner Role Assign
+        $owner->assignRole($ownerRole);
 
 
-        // Default admin role
+        // Default Owner Role
         $managerRole = Role::create(
             [
                 'name' => 'manager',
-                'parent_id' => $admin->id,
+                'parent_id' => $owner->id,
             ]
         );
-        // Default admin permissions
-        $managerPermissions = [
-            'manage user',
-            'create user',
-            'edit user',
-            'delete user',
-            'manage role',
-            'create role',
-            'edit role',
-            'delete role',
-            'manage contact',
-            'create contact',
-            'edit contact',
-            'delete contact',
-            'manage support',
-            'create support',
-            'edit support',
-            'delete support',
-            'reply support',
-            'manage note',
-            'create note',
-            'edit note',
-            'delete note',
-            'manage document',
-            'create document',
-            'edit document',
-            'delete document',
-            'show document',
-            'manage my document',
-            'edit my document',
-            'delete my document',
-            'show my document',
-            'create my document',
-            'manage reminder',
-            'create reminder',
-            'edit reminder',
-            'delete reminder',
-            'show reminder',
-            'manage my reminder',
-            'manage document history',
-            'download document',
-            'preview document',
-            'manage comment',
-            'create comment',
-            'manage version',
-            'create version',
-            'manage share document',
-            'delete share document',
-            'create share document',
-            'manage mail',
-            'send mail',
-            'manage logged history',
+        // Default Manager All Permissions
+        $managerPermission = [
+            ['name' => 'manage user'],
+            ['name' => 'create user'],
+            ['name' => 'edit user'],
+            ['name' => 'delete user'],
+            ['name' => 'manage contact'],
+            ['name' => 'create contact'],
+            ['name' => 'edit contact'],
+            ['name' => 'delete contact'],
+            ['name' => 'manage support'],
+            ['name' => 'create support'],
+            ['name' => 'edit support'],
+            ['name' => 'delete support'],
+            ['name' => 'reply support'],
+            ['name' => 'manage note'],
+            ['name' => 'create note'],
+            ['name' => 'edit note'],
+            ['name' => 'delete note'],
+
+            ['name'=>'manage category'],
+            ['name'=>'create category'],
+            ['name'=>'edit category'],
+            ['name'=>'delete category'],
+            ['name'=>'manage sub category'],
+            ['name'=>'create sub category'],
+            ['name'=>'edit sub category'],
+            ['name'=>'delete sub category'],
+            ['name'=>'manage tag'],
+            ['name'=>'create tag'],
+            ['name'=>'edit tag'],
+            ['name'=>'delete tag'],
+            ['name'=>'manage document'],
+            ['name'=>'create document'],
+            ['name'=>'edit document'],
+            ['name'=>'delete document'],
+            ['name'=>'show document'],
+            ['name'=>'manage my document'],
+            ['name'=>'edit my document'],
+            ['name'=>'delete my document'],
+            ['name'=>'show my document'],
+            ['name'=>'create my document'],
+            ['name'=>'manage reminder'],
+            ['name'=>'create reminder'],
+            ['name'=>'edit reminder'],
+            ['name'=>'delete reminder'],
+            ['name'=>'show reminder'],
+            ['name'=>'manage my reminder'],
+            ['name'=>'manage document history'],
+            ['name'=>'download document'],
+            ['name'=>'preview document'],
+            ['name'=>'manage comment'],
+            ['name'=>'create comment'],
+            ['name'=>'manage version'],
+            ['name'=>'create version'],
+            ['name'=>'manage share document'],
+            ['name'=>'delete share document'],
+            ['name'=>'create share document'],
+            ['name'=>'manage mail'],
+            ['name'=>'send mail'],
         ];
-        foreach($managerPermissions as $ap)
-        {
-            $permission = Permission::findByName($ap);
-            $managerRole->givePermissionTo($permission);
-        }
-        // Default admin
+        $managerRole->givePermissionTo($managerPermission);
+        // Default Manager Create
         $manager = User::create(
             [
-                'name' => 'Manager',
+                'first_name' => 'Manager',
                 'email' => 'manager@gmail.com',
                 'password' => Hash::make('123456'),
                 'type' => 'manager',
                 'lang' => 'english',
                 'profile' => 'avatar.png',
                 'subscription' => 0,
-                'parent_id' => $admin->id,
+                'parent_id' => $owner->id,
             ]
         );
-        // Default admin role assign
+        // Default Manager Role Assign
         $manager->assignRole($managerRole);
 
 
-        // Default Employee role
+        // Default employee role
         $employeeRole = Role::create(
             [
                 'name' => 'employee',
-                'parent_id' => $admin->id,
+                'parent_id' => $owner->id,
             ]
         );
-        // Default admin permissions
+        // Default employee permissions
         $employeePermissions = [
-            'manage contact',
-            'create contact',
-            'edit contact',
-            'delete contact',
-            'manage support',
-            'create support',
-            'edit support',
-            'delete support',
-            'reply support',
-            'manage note',
-            'create note',
-            'edit note',
-            'delete note',
-            'manage my document',
-            'edit my document',
-            'delete my document',
-            'show my document',
-            'create my document',
-            'show reminder',
-            'manage my reminder',
-            'download document',
-            'preview document',
-            'manage comment',
-            'create comment',
-            'manage version',
-            'manage share document',
-            'create share document',
+            ['name'=>'manage contact'],
+            ['name'=>'create contact'],
+            ['name'=>'edit contact'],
+            ['name'=>'delete contact'],
+            ['name'=>'manage support'],
+            ['name'=>'create support'],
+            ['name'=>'edit support'],
+            ['name'=>'delete support'],
+            ['name'=>'reply support'],
+            ['name'=>'manage note'],
+            ['name'=>'create note'],
+            ['name'=>'edit note'],
+            ['name'=>'delete note'],
+            ['name'=>'manage my document'],
+            ['name'=>'edit my document'],
+            ['name'=>'delete my document'],
+            ['name'=>'show my document'],
+            ['name'=>'create my document'],
+            ['name'=>'show reminder'],
+            ['name'=>'manage my reminder'],
+            ['name'=>'download document'],
+            ['name'=>'preview document'],
+            ['name'=>'manage comment'],
+            ['name'=>'create comment'],
+            ['name'=>'manage version'],
+            ['name'=>'manage share document'],
+            ['name'=>'create share document'],
         ];
-        foreach($employeePermissions as $ap)
-        {
-            $permission = Permission::findByName($ap);
-            $employeeRole->givePermissionTo($permission);
-        }
-        // Default admin
+        $employeeRole->givePermissionTo($employeePermissions);
+
+        // Default employee
         $employee = User::create(
             [
-                'name' => 'Employee',
+                'first_name' => 'Employee',
                 'email' => 'employee@gmail.com',
                 'password' => Hash::make('123456'),
                 'type' => 'employee',
                 'lang' => 'english',
                 'profile' => 'avatar.png',
                 'subscription' => 0,
-                'parent_id' => $admin->id,
+                'parent_id' => $owner->id,
             ]
         );
-        // Default admin role assign
+
+        // Default employee role assign
         $employee->assignRole($employeeRole);
+
 
     }
 }

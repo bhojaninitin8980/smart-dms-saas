@@ -11,11 +11,11 @@ class ContactController extends Controller
 
     public function index()
     {
-        if (\Auth::user()->can('manage contact') || \Auth::user()->type=='super admin') {
-            $contacts = Contact::where('parent_id', '=', \Auth::user()->id)->get();
+        if (\Auth::user()->can('manage contact') ) {
+            $contacts = Contact::where('parent_id', '=', parentId())->get();
             return view('contact.index', compact('contacts'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
@@ -28,14 +28,12 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-        if (\Auth::user()->can('create contact') || \Auth::user()->type=='super admin') {
+        if (\Auth::user()->can('create contact') ) {
             $validator = \Validator::make(
                 $request->all(), [
-                'name' => 'required|regex:/^[\s\w-]*$/',
-                'subject' => 'required',
-                'message' => 'required',
-            ], [
-                    'regex' => __('The Name format is invalid, Contains letter, number and only alphanum'),
+                    'name' => 'required',
+                    'subject' => 'required',
+                    'message' => 'required',
                 ]
             );
             if ($validator->fails()) {
@@ -50,13 +48,13 @@ class ContactController extends Controller
             $contact->contact_number = $request->contact_number;
             $contact->subject = $request->subject;
             $contact->message = $request->message;
-            $contact->parent_id = \Auth::user()->id;
+            $contact->parent_id = parentId();
             $contact->save();
 
-            return redirect()->back()->with('success', __('Contact successfully created!'));
+            return redirect()->back()->with('success', __('Contact successfully created.'));
 
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
 
     }
@@ -76,14 +74,12 @@ class ContactController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
-        if (\Auth::user()->can('edit contact') || \Auth::user()->type=='super admin') {
+        if (\Auth::user()->can('edit contact') ) {
             $validator = \Validator::make(
                 $request->all(), [
-                'name' => 'required|regex:/^[\s\w-]*$/',
-                'subject' => 'required',
-                'message' => 'required',
-            ], [
-                    'regex' => __('The Name format is invalid, Contains letter, number and only alphanum'),
+                    'name' => 'required',
+                    'subject' => 'required',
+                    'message' => 'required',
                 ]
             );
             if ($validator->fails()) {
@@ -100,9 +96,9 @@ class ContactController extends Controller
             $contact->message = $request->message;
             $contact->save();
 
-            return redirect()->back()->with('success', __('Contact successfully updated!'));
+            return redirect()->back()->with('success', __('Contact successfully updated.'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
 
     }
@@ -110,12 +106,12 @@ class ContactController extends Controller
 
     public function destroy(Contact $contact)
     {
-        if (\Auth::user()->can('edit contact') || \Auth::user()->type=='super admin') {
+        if (\Auth::user()->can('edit contact') ) {
             $contact->delete();
 
-            return redirect()->back()->with('success', 'Contact successfully deleted!');
+            return redirect()->back()->with('success', 'Contact successfully deleted.');
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
 
     }

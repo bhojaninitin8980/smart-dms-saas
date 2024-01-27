@@ -1,5 +1,8 @@
 <?php
 
+// Product Name : Smart Tenant SaaS
+// Version      : 1.5
+
 /**
  * Laravel - A PHP Framework For Web Artisans
  *

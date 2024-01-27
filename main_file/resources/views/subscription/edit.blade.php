@@ -1,9 +1,10 @@
 {{ Form::model($subscription, array('route' => array('subscriptions.update', $subscription->id), 'method' => 'PUT')) }}
+
 <div class="modal-body">
     <div class="row">
         <div class="form-group col-md-12">
             {{Form::label('name',__('Name'),array('class'=>'form-label'))}}
-            {{Form::text('name',null,array('class'=>'form-control font-style','placeholder'=>__('Enter subscription name'),'required'=>'required'))}}
+            {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter subscription name'),'required'=>'required'))}}
         </div>
         <div class="form-group col-md-12">
             {{Form::label('price',__('Price'),array('class'=>'form-label'))}}

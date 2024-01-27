@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+@php
+    $settings=settings();
+@endphp
+
 <head>
     <!-- Required meta tags-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="">
-    <meta name="keywords" content="">
     <title>{{env('APP_NAME')}}</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <meta name="author" content="{{!empty($settings['app_name'])?$settings['app_name']:env('APP_NAME')}}">
+    <meta name="csrf-token" content="{{csrf_token()}}">
+    <title>{{!empty($settings['app_name'])?$settings['app_name']:env('APP_NAME')}} - @yield('page-title') </title>
+
+    <meta name="title" content="{{$settings['meta_seo_title']}}">
+    <meta name="keywords" content="{{$settings['meta_seo_keyword']}}">
+    <meta name="description" content="{{$settings['meta_seo_description']}}">
+
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{env('APP_URL')}}">
+    <meta property="og:title" content="{{$settings['meta_seo_title']}}">
+    <meta property="og:description" content="{{$settings['meta_seo_description']}}">
+    <meta property="og:image" content="{{asset(Storage::url('upload/seo')).'/'.$settings['meta_seo_image']}}">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{env('APP_URL')}}">
+    <meta property="twitter:title" content="{{$settings['meta_seo_title']}}">
+    <meta property="twitter:description" content="{{$settings['meta_seo_description']}}">
+    <meta property="twitter:image" content="{{asset(Storage::url('upload/seo')).'/'.$settings['meta_seo_image']}}">
+
+    <!-- shortcut icon-->
+    <link rel="icon" href="{{asset(Storage::url('upload/logo')).'/'.$settings['company_favicon']}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset(Storage::url('upload/logo')).'/'.$settings['company_favicon']}}" type="image/x-icon">
+
     <!-- shortcut icon-->
     <link rel="shortcut icon" href="{{asset(Storage::url('upload/logo')).'/favicon.png'}}" type="image/x-icon">
     <!-- Fonts css-->
@@ -27,6 +57,7 @@
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 </head>
+
 <body>
 <!-- header start-->
 <header class="land-header fixed">
@@ -36,7 +67,8 @@
                 <div class="header-contain position-relative">
                     <div class="codex-brand">
                         <a href="javascript:void(0);">
-                            <img class="img-fluid dark-logo landing-logo" src="{{ asset('assets/images/logo/dark-logo.png') }}"
+                            <img class="img-fluid dark-logo landing-logo"
+                                 src="{{asset(Storage::url('upload/logo')).'/'.$settings['landing_logo']}}"
                                  alt="">
                         </a>
                     </div>
@@ -46,16 +78,20 @@
                                 <li class="d-xl-none">
                                     <a class="close-menu" href="javascript:void(0);">
                                         <div class="menu-brand">
-                                            <img class="img-fluid" src="{{ asset('assets/images/logo/logo.png') }}" alt=""><i data-feather="x"></i>
+                                            <img class="img-fluid" src="{{ asset('assets/images/logo/logo.png') }}"
+                                                 alt=""><i data-feather="x"></i>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="menu-item"><a href="#demos">{{__('Home')}}</a></li>
-                                <li class="menu-item"><a href="#innderpages">{{__('Inner pages')}}</a></li>
                                 <li class="menu-item"><a href="#features">{{__('Features')}}</a></li>
+
                                 <li class="menu-item">
                                     <a class="btn btn-primary me-2" href="{{route('login')}}">{{__('Login')}} </a>
-                                    <a class="btn btn-primary" href="{{route('register')}}">{{__('Register')}} </a>
+                                    @if($settings['register_page']=='on')
+                                        <a class="btn btn-primary" href="{{route('register')}}">{{__('Register')}} </a>
+                                    @endif
+
                                 </li>
 
                             </ul>
@@ -68,6 +104,7 @@
     </div>
 </header>
 <!-- header end-->
+
 <!-- intro start-->
 <section class="intro">
     <div class="container">
@@ -202,7 +239,7 @@
 </section>
 <!-- header otpion End-->
 <!-- innderpages start-->
-<section class="space-py-100" id="innderpages">
+<section class="space-py-100" id="features">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
@@ -336,180 +373,7 @@
     </div>
 </section>
 <!-- innderpages end-->
-<!-- feathure start-->
-<section class="feathure bg-white space-py-100" id="features">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="land-title">
-                    <h2 class="wow fadeInUp" data-wow-duration="1s">{{__('Features')}}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row cdx-row justify-content-center">
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap">
-                        <img class="img-fluid" src="{{ asset('assets/images/landing/feathure/1.png') }}" alt=""></div>
-                    <h5>{{__('html 5')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/2.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('CSS 3')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/3.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('SCSS')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/4.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Bootstrap')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/tailwind.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('tailwind')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/5.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Google Font')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/6.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Dark Mode')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/7.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Fully Responsive')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/8.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Clean Code')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/9.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Free Updates')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/10.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Forms')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/11.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Easy To Customize')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/12.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Gulp')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/13.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('jQuery')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/14.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Well Documented')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/15.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('W3 Validated')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/16.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('High Performance')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/17.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Browser Compatibility')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/18.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Great Support')}}</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 wow fadeInUp">
-                <div class="feathure-grid">
-                    <div class="icon-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/landing/feathure/19.png') }}"
-                                                alt=""></div>
-                    <h5>{{__('Password Show/Hide')}}</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- feathure end-->
+
 <!-- footer start-->
 <footer class="lan-footer space-py-10">
     <div class="container">
@@ -518,7 +382,8 @@
                 <div class="support-contain">
                     <div class="codex-brand">
                         <a href="javascript:void(0);">
-                            <img class="img-fluid wow fadeInUp landing-logo"src="{{ asset('assets/images/logo/dark-logo.png') }}" alt="">
+                            <img class="img-fluid wow fadeInUp landing-logo"
+                                 src="{{asset(Storage::url('upload/logo')).'/'.$settings['landing_logo']}}" alt="">
                         </a>
                     </div>
                 </div>
@@ -529,7 +394,6 @@
                         <p class="mt-20">{{__('Copyright')}} {{date('Y')}} {{env('APP_NAME')}}</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

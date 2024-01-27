@@ -13,7 +13,7 @@
     </ul>
 @endsection
 @section('card-action-btn')
-    @if(Gate::check('manage contact') || \Auth::user()->type=='super admin')
+    @if(Gate::check('manage contact') )
         <a class="btn btn-primary btn-sm ml-20 customModal" href="#" data-size="md"
            data-url="{{ route('contact.create') }}"
            data-title="{{__('Create Contact')}}"> <i class="ti-plus mr-5"></i>{{__('Create Contact')}}</a>
@@ -30,18 +30,18 @@
                                 <h4>{{$contact->name}}  </h4>
                                 <h6 class="text-light">{{$contact->email}}</h6>
                             </div>
-                            @if(Gate::check('edit contact') || Gate::check('delete contact') || \Auth::user()->type=='super admin')
+                            @if(Gate::check('edit contact') || Gate::check('delete contact') )
                                 <div class="user-setting">
                                     <div class="action-menu">
                                         <div class="action-toggle"><i data-feather="more-vertical"></i></div>
                                         <ul class="action-dropdown">
-                                            @if(Gate::check('edit contact') || \Auth::user()->type=='super admin')
+                                            @if(Gate::check('edit contact') )
                                                 <li><a class="customModal"
                                                        data-url="{{ route('contact.edit',$contact->id) }}"
                                                        data-title="{{__('Edit Contact')}}"> <i
                                                             data-feather="edit"> </i>{{__('Edit Contact')}}</a></li>
                                             @endif
-                                            @if(Gate::check('edit contact') || \Auth::user()->type=='super admin')
+                                            @if(Gate::check('edit contact') )
                                                 <li>
                                                     {!! Form::open(['method' => 'DELETE', 'route' => ['contact.destroy', $contact->id],'id'=>'user-'.$contact->id]) !!}
                                                     <a href="#" class="confirm_dialog"> <i
@@ -60,7 +60,7 @@
                             <ul class="info-list">
                                 <li><span>{{__('Contact Number')}}  :- </span>{{$contact->contact_number}} </li>
                                 <li>
-                                    <span>{{__('Created Date')}} :- </span>{{\Auth::user()->dateFormat($contact->created_at)}}
+                                    <span>{{__('Created Date')}} :- </span>{{dateFormat($contact->created_at)}}
                                 </li>
 
                             </ul>

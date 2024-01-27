@@ -12,9 +12,8 @@
 <!-- Theme Customizer-->
 <script src="{{ asset('assets/js/layout-storage.js') }}"></script>
 
-@if(\Auth::user()->type=='super admin' || \Auth::user()->type=='admin')
 <script>
-
+    "use strict";
 $(".customizer-modal").append('' +
 '<form method="post" action="{{route("theme.settings")}}">{{csrf_field()}}<div class="customizer-layer"></div>' +
     '<div class="customizer-action bg-primary"><i data-feather="settings"></i>' +
@@ -65,8 +64,6 @@ $(".customizer-modal").append('' +
         '</div></form>' +
 '');
 </script>
-@endif
-
 <script src="{{ asset('assets/js/customizer.js') }}"></script>
 <!-- Feather icons js-->
 <script src="{{ asset('assets/js/icons/feather-icon/feather.js') }}"></script>
@@ -99,6 +96,8 @@ $(".customizer-modal").append('' +
 <script src="{{ asset('assets/js/vendors/notify/bootstrap-notify.js') }}"></script>
 
 <script src="{{ asset('assets/js/custom-script.js') }}"></script>
+@stack('script-page')
+
 <script src="{{ asset('js/custom.js') }}"></script>
 @if ($message = Session::get('success'))
     <script>
@@ -114,4 +113,4 @@ $(".customizer-modal").append('' +
     <script>toastrs('Info', '{!! $message !!}', 'info')</script>
 @endif
 
-@stack('script-page')
+

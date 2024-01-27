@@ -4,13 +4,13 @@
 /* overall-revenue */
 .overall-revenuetbl{
   .card-body{
-    padding: 15px 20px 0px 10px !important;     
+    padding: 15px 20px 0px 10px !important;
   }
 }
 
 /* sale-revenue */
 .sale-revenue{
-  .card-body{   
+  .card-body{
     h4{
       margin-block-start: 10px;
       font-weight: 400;
@@ -46,12 +46,12 @@
 
 
 
-/* sale category */
-.sale-categorychart{ 
+/* sale coupon */
+.sale-categorychart{
   position: relative;
   .category-count{
     position: absolute;
-    top: 50%;   
+    top: 50%;
     inset-inline-start: 50%;
     margin-inline-end: -50%;
     transform: translate(-50%, -50%) ;
@@ -63,7 +63,7 @@
   .apexcharts-legend{
     inset: auto 0px 5px 0 !important;
     padding: 0;
-    .apexcharts-legend-series{          
+    .apexcharts-legend-series{
       width:45%;
       .apexcharts-legend-text{
         &:nth-child(2){
@@ -91,13 +91,13 @@
 
 /* ecommerce product */
 .ecompro-slide{
-  
+
 }
 .ecom-product{
   margin-inline-start: 15px;
   margin-inline-end: 15px;
   .card-body{
-    overflow: hidden;   
+    overflow: hidden;
     border-radius: 5px;
   }
   .product-imgwrap{
@@ -117,11 +117,11 @@
       color: $black;
     }
     p{
-      font-size: 14px;      
-    } 
+      font-size: 14px;
+    }
     h6{
       margin-block-end: 5px;
-    }   
+    }
     .rating-detail{
       display: flex;
       align-items: center;
@@ -130,10 +130,10 @@
         margin-inline-start: 10px;
       }
       .btn{
-        background-color: $theme-border;    
-        margin-inline-start: auto;    
+        background-color: $theme-border;
+        margin-inline-start: auto;
       }
-    }    
+    }
   }
   &:hover{
     .product-imgwrap{
@@ -165,16 +165,16 @@
               margin-inline-start: 20px;
           }
           a{
-              border: 1px solid $theme-border;                          
-              padding: 10px 20px;    
-              i{                        
+              border: 1px solid $theme-border;
+              padding: 10px 20px;
+              i{
                   margin-inline-end:10px;
               }
               &.active{
                   background-color: $theme-primary;
-                  color: $white;                       
+                  color: $white;
               }
-          }    
+          }
       }
   }
   .cdx-cvc{

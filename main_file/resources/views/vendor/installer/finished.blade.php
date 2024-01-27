@@ -10,13 +10,11 @@
 @endsection
 
 @section('container')
-
     <p>
         <strong class="text-danger "> Super Admin Login Details :</strong> <br>
         <strong class="text-danger"> Email : </strong> <strong>superadmin@gmail.com</strong> <br>
         <strong class="text-danger"> Password : </strong><strong> 123456</strong>
     </p>
-
     <p>
         <strong class="text-danger"> Owner Login Details:</strong> <br>
         <strong class="text-danger"> Email : </strong> <strong>owner@gmail.com</strong> <br>
@@ -32,6 +30,7 @@
         <strong class="text-danger"> Email : </strong> <strong>employee@gmail.com</strong> <br>
         <strong class="text-danger"> Password : </strong><strong> 123456</strong>
     </p>
+
     @if(session('message')['dbOutputLog'])
         <p><strong><small>{{ trans('installer_messages.final.migration') }}</small></strong></p>
         <pre><code>{{ session('message')['dbOutputLog'] }}</code></pre>

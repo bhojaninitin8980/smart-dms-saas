@@ -20344,3 +20344,56 @@ body.rtlmode .blgcomment-list li .media .media-body h5 .comment-time {
     width: 250px !important;
     height: 85px !important;
 }
+
+.codex-calendar .events-list li {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 15px;
+    border-radius: 5px;
+    color: #fff;
+    line-height: 1
+}
+
+.codex-calendar .events-list li i {
+    -webkit-margin-end: 10px;
+    margin-inline-end:10px}
+
+.codex-calendar .events-list li:nth-child(n+2) {
+    -webkit-margin-before: 15px;
+    margin-block-start:15px}
+
+.codex-calendar .fc-event-title {
+    padding: 10px 15px;
+    width: 100%;
+    white-space: pre-wrap
+}
+
+.codex-calendar .fc-button-group button {
+    background-color: #1a7cbc;
+    border-radius: 5px !important;
+    text-transform: capitalize;
+    padding: 7px 13px;
+    border: none
+}
+
+.codex-calendar .fc-button-group button:focus {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important
+}
+
+.codex-calendar .fc-button-group button:nth-child(n+2) {
+    -webkit-margin-start: 10px !important;
+    margin-inline-start:10px !important}
+
+.codex-calendar .fc-daygrid-event {
+    border: none
+}
+
+.codex-calendar table thead .fc-col-header-cell {
+    padding: 10px 12px;
+    background-color: rgba(26,124,188,.05) !important
+}
+
+.codex-calendar .fc .fc-toolbar-title {
+    color: #8392a5
+}

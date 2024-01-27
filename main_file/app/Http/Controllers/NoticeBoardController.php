@@ -10,12 +10,12 @@ class NoticeBoardController extends Controller
 
     public function index()
     {
-        if (\Auth::user()->can('manage note') || \Auth::user()->type == 'super admin') {
-            $notes = NoticeBoard::where('parent_id', '=', \Auth::user()->id)->get();
+        if (\Auth::user()->can('manage note')) {
+            $notes = NoticeBoard::where('parent_id', '=', parentId())->get();
 
             return view('note.index', compact('notes'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
@@ -28,14 +28,12 @@ class NoticeBoardController extends Controller
 
     public function store(Request $request)
     {
-        if (\Auth::user()->can('create note') || \Auth::user()->type == 'super admin') {
+        if (\Auth::user()->can('create note')) {
             $validator = \Validator::make(
                 $request->all(), [
-                'title' => 'required|regex:/^[\s\w-]*$/',
+                'title' => 'required',
                 'description' => 'required',
-            ], [
-                    'regex' => __('The Title format is invalid, Contains letter, number and only alphanum'),
-                ]
+            ]
             );
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
@@ -63,12 +61,12 @@ class NoticeBoardController extends Controller
             $note->title = $request->title;
             $note->description = $request->description;
             $note->attachment = !empty($request->attachment) ? $noteFileName : '';
-            $note->parent_id = \Auth::user()->id;
+            $note->parent_id = parentId();
             $note->save();
 
-            return redirect()->back()->with('success', __('Note successfully created!'));
+            return redirect()->back()->with('success', __('Note successfully created.'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
@@ -81,26 +79,24 @@ class NoticeBoardController extends Controller
 
     public function edit($id)
     {
-        if (\Auth::user()->can('edit note') || \Auth::user()->type == 'super admin') {
+        if (\Auth::user()->can('edit note')) {
             $note = NoticeBoard::find($id);
 
             return view('note.edit', compact('note'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
 
     public function update(Request $request, $id)
     {
-        if (\Auth::user()->can('edit note') || \Auth::user()->type == 'super admin') {
+        if (\Auth::user()->can('edit note')) {
             $validator = \Validator::make(
                 $request->all(), [
-                'title' => 'required|regex:/^[\s\w-]*$/',
+                'title' => 'required',
                 'description' => 'required',
-            ], [
-                    'regex' => __('The Title format is invalid, Contains letter, number and only alphanum'),
-                ]
+            ]
             );
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
@@ -138,16 +134,16 @@ class NoticeBoardController extends Controller
 
             $note->save();
 
-            return redirect()->back()->with('success', __('Note successfully updated!'));
+            return redirect()->back()->with('success', __('Note successfully updated.'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
 
     public function destroy($id)
     {
-        if (\Auth::user()->can('delete note') || \Auth::user()->type == 'super admin') {
+        if (\Auth::user()->can('delete note')) {
             $note = NoticeBoard::find($id);
             $dir = storage_path('upload/applicant/attachment');
             if ($note->attachment) {
@@ -156,9 +152,9 @@ class NoticeBoardController extends Controller
 
             $note->delete();
 
-            return redirect()->back()->with('success', 'Note successfully deleted!');
+            return redirect()->back()->with('success', 'Note successfully deleted.');
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 }

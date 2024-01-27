@@ -31,7 +31,7 @@
                         <div class="small-group">
                             <div>
                                 {{Form::label('name',__('Role Name'),['class'=>'form-label'])}}
-                                {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter role name')))}}
+                                {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter role name'),  ($role->name =='employee' || $role->name =='customer')?'readonly':''))}}
                             </div>
                         </div>
                     </div>

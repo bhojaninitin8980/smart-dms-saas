@@ -4,7 +4,7 @@
     <table class="table table-striped mb-0">
         <tbody>
         @php
-            $modules=['user','role','applied job','applicant','interview schedule','archive applicant','hire applicant','custom question','stage','location','job category','type','skill'];
+            $modules=['user','role','applied job','applicant','interview schedule','archive applicant','hire applicant','custom question','stage','location','job coupon','type','skill'];
         @endphp
         @foreach($modules as $module)
             <tr>

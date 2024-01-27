@@ -41,8 +41,8 @@
                         <tbody>
                         @foreach($reminders as $reminder)
                             <tr role="row">
-                                <td>{{\Auth::user()->dateFormat($reminder->date)}}</td>
-                                <td>{{\Auth::user()->timeFormat($reminder->time)}}</td>
+                                <td>{{dateFormat($reminder->date)}}</td>
+                                <td>{{timeFormat($reminder->time)}}</td>
                                 <td> {{ $reminder->subject }} </td>
                                 <td> {{ !empty($reminder->createdBy)?$reminder->createdBy->name:'-' }} </td>
                                 <td>

@@ -12,8 +12,8 @@ class Subscription extends Model
         'duration',
         'image',
         'total_user',
-        'total_document',
-        'enabled_document_history',
+        'total_property',
+        'total_tenant',
         'enabled_logged_history',
         'description',
 
@@ -21,8 +21,15 @@ class Subscription extends Model
 
     public static $duration = [
         'Monthly' => 'Monthly',
+        'Quarterly' => 'Quarterly',
         'Yearly' => 'Yearly',
-        'Unlimit' => 'Unlimit',
+        'Unlimited' => 'Unlimited',
     ];
+
+    public function couponCheck()
+    {
+       $packages= Coupon::whereRaw("find_in_set($this->id,applicable_packages)")->count();
+      return $packages;
+    }
 
 }

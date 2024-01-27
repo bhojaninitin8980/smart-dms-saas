@@ -21,7 +21,7 @@ class PermissionController extends Controller
     {
 
         $roles = Role::get();
-//        $roles = Role::where('parent_id', '=', \Auth::user()->parentId())->get();
+//        $roles = Role::where('parent_id', '=', parentId())->get();
 
         return view('permission.create')->with('roles', $roles);
     }
@@ -59,7 +59,7 @@ class PermissionController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Permission successfully created!');
+        return redirect()->back()->with('success', 'Permission successfully created.');
 
     }
 
@@ -73,7 +73,7 @@ class PermissionController extends Controller
     public function edit($id)
     {
         $permission = Permission::find($id);
-        $roles      = Role::where('parent_id', '=', \Auth::user()->parentId())->get();
+        $roles      = Role::where('parent_id', '=', parentId())->get();
 
         return view('permission.edit', compact('roles', 'permission'));
     }
@@ -97,7 +97,7 @@ class PermissionController extends Controller
         $input = $request->all();
         $permission->fill($input)->save();
 
-        return redirect()->back()->with('success', 'Permission successfully updated!');
+        return redirect()->back()->with('success', 'Permission successfully updated.');
     }
 
 
@@ -106,6 +106,6 @@ class PermissionController extends Controller
         $permission = Permission::findOrFail($id);
         $permission->delete();
 
-        return redirect()->back()->with('success', 'Permission successfully deleted!');
+        return redirect()->back()->with('success', 'Permission successfully deleted.');
     }
 }

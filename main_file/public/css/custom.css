@@ -57,3 +57,25 @@
 .email-sidebar ul.custom-sidebarmenu-list {
     margin-block-start: 0px;
 }
+.invoice-logo{
+    width: 250px;
+}
+
+.codex-calendar .events-list li{
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 10px;
+    border-radius: 5px;
+    color: #fff;
+    line-height: 1;
+}
+.codex-calendar .events-list{
+    overflow: auto;
+    height: 863px;
+}
+.landing_logo{
+    filter: drop-shadow(2px 3px 7px #011C4B);
+}
+.head-invoice img{
+    width: 250px;
+}

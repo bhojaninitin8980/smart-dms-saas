@@ -64,7 +64,7 @@
                                 <tbody>
                                 @foreach($versions as $version)
                                     <tr role="row">
-                                        <td>{{\Auth::user()->dateFormat($version->created_at)}} {{\Auth::user()->timeFormat($version->created_at)}}</td>
+                                        <td>{{dateFormat($version->created_at)}} {{timeFormat($version->created_at)}}</td>
                                         <td>{{!empty($version->createdBy)?$version->createdBy->name:'-'}}</td>
                                         <td>
                                             @if($version->current_version==1)

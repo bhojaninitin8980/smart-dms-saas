@@ -16,10 +16,12 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
         'type',
+        'phone_number',
         'profile',
         'lang',
         'subscription',
@@ -39,117 +41,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function parentId()
+    public function getNameAttribute()
     {
-
-        if($this->type == 'admin' || $this->type == 'super admin')
-        {
-            return $this->id;
-        }
-        else
-        {
-            return $this->parent_id;
-        }
-    }
-
-    public function dateFormat($date)
-    {
-        $settings = Custom::settings();
-
-        return date($settings['company_date_format'], strtotime($date));
-    }
-
-    public function timeFormat($time)
-    {
-        $settings = Custom::settings();
-
-        return date($settings['company_time_format'], strtotime($time));
-    }
-
-    public function priceFormat($price)
-    {
-        $settings = Custom::settings();
-
-        return $settings['company_currency_symbol'] . $price;
-    }
-
-    public function assignSubscription($id)
-    {
-        $subscription = Subscription::find($id);
-        if($subscription)
-        {
-            $this->subscription = $subscription->id;
-            if($subscription->duration == 'month')
-            {
-                $this->subscription_expire_date = Carbon::now()->addMonths(1)->isoFormat('YYYY-MM-DD');
-            }
-            elseif($subscription->duration == 'year')
-            {
-                $this->subscription_expire_date = Carbon::now()->addYears(1)->isoFormat('YYYY-MM-DD');
-            }
-            else
-            {
-                $this->subscription_expire_date = null;
-            }
-            $this->save();
-
-            $users = User::where('parent_id', '=', \Auth::user()->parentId())->where('type', '!=', 'super admin')->where('type', '!=', 'admin')->get();
-
-
-
-            if($subscription->total_user == 0)
-            {
-                foreach($users as $user)
-                {
-                    $user->is_active = 1;
-                    $user->save();
-                }
-            }
-            else
-            {
-                $userCount = 0;
-                foreach($users as $user)
-                {
-                    $userCount++;
-                    if($userCount <= $subscription->total_user)
-                    {
-                        $user->is_active = 1;
-                        $user->save();
-                    }
-                    else
-                    {
-                        $user->is_active = 0;
-                        $user->save();
-                    }
-                }
-            }
-
-        }
-        else
-        {
-            return [
-                'is_success' => false,
-                'error' => 'Subscription is deleted.',
-            ];
-        }
+        return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
     }
 
     public function totalUser()
     {
-        return User::where('type', '!=', 'super admin')->where('type', '!=', 'admin')->where('parent_id', '=', $this->parentId())->count();
+        return User::where('type', '!=', 'super admin')->where('type', '!=', 'owner')->where('parent_id', '=', parentId())->count();
     }
-    public function totalDocument()
-    {
-        return Document::where('parent_id', '=', $this->parentId())->count();
-    }
+
     public function totalContact()
     {
-        return Contact::where('parent_id', '=', $this->parentId())->count();
+        return Contact::where('parent_id', '=', parentId())->count();
     }
 
     public function roleWiseUserCount($role)
     {
-        return User::where('type', $role)->where('parent_id',\Auth::user()->parentId())->count();
+        return User::where('type', $role)->where('parent_id',parentId())->count();
     }
     public static function GetDeviceType($user_agent)
     {
@@ -168,6 +77,10 @@ class User extends Authenticatable
             }
 
         }
+    }
+    public function totalDocument()
+    {
+        return Document::where('parent_id', '=', parentId())->count();
     }
 
 

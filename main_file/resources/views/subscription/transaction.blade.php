@@ -32,7 +32,7 @@
                         @foreach ($transactions as $transaction)
                             <tr>
                                 <td>{{$transaction->name}}</td>
-                                <td>{{\Auth::user()->dateFormat($transaction->created_at)}}</td>
+                                <td>{{dateFormat($transaction->created_at)}}</td>
                                 <td>{{$transaction->subscription}}</td>
                                 <td>{{(!empty(env('CURRENCY_SYMBOL'))?env('CURRENCY_SYMBOL'):'$').$transaction->price}}</td>
                                 <td>{{$transaction->payment_type}}</td>

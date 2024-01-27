@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 @php
-    $settings=\App\Models\Custom::settings();
+    $settings=settings();
 @endphp
 <html lang="en">
 @include('admin.head')
@@ -22,13 +22,6 @@
             </div>
             <div class="right-breadcrumb">
                 <ul>
-                    <li class="header_li">
-                        <div class="bread-wrap"><i class="fa fa-clock-o"></i></div><span class="liveTime"></span>
-                    </li>
-                    <li class="header_li">
-                        <div class="bread-wrap "><i class="fa fa-calendar"></i></div><span class="getDate"></span>
-                    </li>
-
                    @yield('card-action-btn')
                 </ul>
             </div>
@@ -36,7 +29,7 @@
     </div>
     <!-- breadcrumb end-->
     <!-- theme body start-->
-    <div class="theme-body @yield('page-class')" data-simplebar>
+    <div class="theme-body @yield('page-class') " data-simplebar>
         <div class="custom-container common-dash">
             @include('admin.content')
         </div>

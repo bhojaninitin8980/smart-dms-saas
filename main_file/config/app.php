@@ -198,6 +198,7 @@ return [
         /* Setup Wizard */
 
         RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
 
         /* End */
 
@@ -216,7 +217,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'Utility' => \App\Models\Utility::class,
+        'Custom' => \App\Models\Custom::class,
+        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
     ])->toArray(),
 
 ];

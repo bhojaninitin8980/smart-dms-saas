@@ -26,7 +26,7 @@
                     <ul class="blogsoc-list">
                         <li><a href="#" data-bs-toggle="tooltip" data-bs-original-title="{{__('Created By')}}"><i data-feather="user"></i>{{ !empty($support->createdUser)?$support->createdUser->name:'-' }}</a></li>
                         <li><a href="#" data-bs-toggle="tooltip" data-bs-original-title="{{__('Assign User')}}"><i data-feather="user"></i>{{ !empty($support->assignUser)?$support->assignUser->name:__('All') }}</a></li>
-                        <li><a href="#" data-bs-toggle="tooltip" data-bs-original-title="{{__('Created Date')}}" ><i data-feather="calendar"></i>{{\Auth::user()->dateFormat($support->created_at)}}</a></li>
+                        <li><a href="#" data-bs-toggle="tooltip" data-bs-original-title="{{__('Created Date')}}" ><i data-feather="calendar"></i>{{dateFormat($support->created_at)}}</a></li>
 
                         <li>
                             <a href="#" data-bs-toggle="tooltip" data-bs-original-title="{{__('Priority')}}" >
@@ -83,7 +83,7 @@
                                     <img class="img-fluid " src="{{(!empty($reply->user) && !empty($reply->user->profile))?asset(Storage::url('upload/profile')).'/'.$reply->user->profile:asset(Storage::url('upload/profile')).'/avatar.png'}}" alt="">
                                     <div class="media-body">
                                         <a href="#">
-                                            <h5>{{!empty($reply->user)?$reply->user->name:''}}<span class="comment-time">    <i class="fa fa-calendar"></i>{{\Auth::user()->dateFormat($reply->created_at)}}</span></h5>
+                                            <h5>{{!empty($reply->user)?$reply->user->name:''}}<span class="comment-time">    <i class="fa fa-calendar"></i>{{dateFormat($reply->created_at)}}</span></h5>
                                         </a>
 
                                         <p>  {{$reply->description}}</p>
@@ -98,7 +98,7 @@
                                     <img class="img-fluid" src="{{(!empty($reply->user) && !empty($reply->user->profile))?asset(Storage::url('upload/profile')).'/'.$reply->user->profile:asset(Storage::url('upload/profile')).'/avatar.png'}}" alt="">
                                     <div class="media-body">
                                         <a href="#">
-                                            <h5> {{!empty($reply->user)?$reply->user->name:''}} <span class="comment-time">    <i class="fa fa-calendar"></i>{{\Auth::user()->dateFormat($reply->created_at)}}</span></h5>
+                                            <h5> {{!empty($reply->user)?$reply->user->name:''}} <span class="comment-time">    <i class="fa fa-calendar"></i>{{dateFormat($reply->created_at)}}</span></h5>
                                         </a>
 
                                         <p>  {{$reply->description}}</p>

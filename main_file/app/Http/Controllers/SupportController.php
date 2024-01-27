@@ -13,12 +13,12 @@ class SupportController extends Controller
 
     public function index()
     {
-        if (\Auth::user()->can('manage support') || \Auth::user()->type == 'super admin') {
-            $supports = Support::where('parent_id', '=', \Auth::user()->id)->orWhere('assign_user', \Auth::user()->id)->get();
+        if (\Auth::user()->can('manage support') ) {
+            $supports = Support::where('parent_id', '=', parentId())->orWhere('assign_user', parentId())->get();
 
             return view('support.index', compact('supports'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
@@ -26,13 +26,13 @@ class SupportController extends Controller
     public function create()
     {
         if (\Auth::user()->type == 'super admin') {
-            $users = User::where('type', 'admin')->get()->pluck('name', 'id');
+            $users = User::where('type', 'owner')->get()->pluck('name', 'id');
             $users->prepend(__('All'), 0);
-        } elseif (\Auth::user()->type == 'admin') {
-            $users = User::where('parent_id', \Auth::user()->parentId())->orWhere('type', 'super admin')->get()->pluck('name', 'id');
+        } elseif (\Auth::user()->type == 'owner') {
+            $users = User::where('parent_id', parentId())->orWhere('type', 'super admin')->get()->pluck('name', 'id');
             $users->prepend(__('All'), 0);
         } else {
-            $users = User::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+            $users = User::where('parent_id', parentId())->get()->pluck('name', 'id');
             $users->prepend(__('All'), 0);
         }
 
@@ -45,7 +45,7 @@ class SupportController extends Controller
 
     public function store(Request $request)
     {
-        if (\Auth::user()->can('create support') || \Auth::user()->type == 'super admin') {
+        if (\Auth::user()->can('create support') ) {
             $validator = \Validator::make(
                 $request->all(), [
                     'subject' => 'required',
@@ -82,41 +82,41 @@ class SupportController extends Controller
             $support->status = $request->status;
             $support->attachment = !empty($request->attachment) ? $supportFileName : '';
             $support->description = $request->description;
-            $support->created_id = \Auth::user()->id;
-            $support->parent_id = \Auth::user()->parentId();
+            $support->created_id = parentId();
+            $support->parent_id = parentId();
             $support->save();
 
-            return redirect()->back()->with('success', __('Support successfully created!'));
+            return redirect()->back()->with('success', __('Support successfully created.'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
 
     public function show($ids)
     {
-        if (\Auth::user()->can('reply support') || \Auth::user()->type == 'super admin') {
+        if (\Auth::user()->can('reply support') ) {
             $id = Crypt::decrypt($ids);
             $support = Support::find($id);
 
             return view('support.show', compact('support'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
 
     public function edit(Support $support)
     {
-        if (\Auth::user()->can('edit support') || \Auth::user()->type == 'super admin') {
+        if (\Auth::user()->can('edit support') ) {
             if (\Auth::user()->type == 'super admin') {
-                $users = User::where('type', 'admin')->get()->pluck('name', 'id');
+                $users = User::where('type', 'owner')->get()->pluck('name', 'id');
                 $users->prepend(__('All'), 0);
-            } elseif (\Auth::user()->type == 'admin') {
-                $users = User::where('parent_id', \Auth::user()->parentId())->orWhere('type', 'super admin')->get()->pluck('name', 'id');
+            } elseif (\Auth::user()->type == 'owner') {
+                $users = User::where('parent_id', parentId())->orWhere('type', 'super admin')->get()->pluck('name', 'id');
                 $users->prepend(__('All'), 0);
             } else {
-                $users = User::where('parent_id', \Auth::user()->parentId())->get()->pluck('name', 'id');
+                $users = User::where('parent_id', parentId())->get()->pluck('name', 'id');
                 $users->prepend(__('All'), 0);
             }
 
@@ -125,14 +125,14 @@ class SupportController extends Controller
 
             return view('support.edit', compact('users', 'priority', 'status', 'support'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
 
     public function update(Request $request, Support $support)
     {
-        if (\Auth::user()->can('edit support') || \Auth::user()->type == 'super admin') {
+        if (\Auth::user()->can('edit support') ) {
             $validator = \Validator::make(
                 $request->all(), [
                     'subject' => 'required',
@@ -175,16 +175,16 @@ class SupportController extends Controller
             $support->description = $request->description;
             $support->save();
 
-            return redirect()->back()->with('success', __('Support successfully updated!'));
+            return redirect()->back()->with('success', __('Support successfully updated.'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
 
     public function destroy(Support $support)
     {
-        if (\Auth::user()->can('delete support') || \Auth::user()->type == 'super admin') {
+        if (\Auth::user()->can('delete support') ) {
             $dir = storage_path('upload/support');
             if ($support->attachment) {
                 unlink($dir . '/' . $support->attachment);
@@ -193,15 +193,15 @@ class SupportController extends Controller
             SupportReply::where('support_id', $support->id)->delete();
             $support->delete();
 
-            return redirect()->route('support.index')->with('success', 'Support successfully deleted!');
+            return redirect()->route('support.index')->with('success', 'Support successfully deleted.');
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 
     public function reply(Request $request, $id)
     {
-        if (\Auth::user()->can('reply support') || \Auth::user()->type == 'super admin') {
+        if (\Auth::user()->can('reply support') ) {
             $validator = \Validator::make(
                 $request->all(), [
                     'comment' => 'required',
@@ -215,14 +215,14 @@ class SupportController extends Controller
 
             $support = new SupportReply();
             $support->support_id = $id;
-            $support->user_id = \Auth::user()->id;
+            $support->user_id = parentId();
             $support->description = $request->comment;
-            $support->parent_id = \Auth::user()->parentId();
+            $support->parent_id = parentId();
             $support->save();
 
-            return redirect()->back()->with('success', __('Support reply successfully send!'));
+            return redirect()->back()->with('success', __('Support reply successfully send.'));
         } else {
-            return redirect()->back()->with('error', __('Permission Denied!'));
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 }

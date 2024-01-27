@@ -30,7 +30,7 @@ class DocumentHistory extends Model
         $history->action=$request['action'];
         $history->action_user=\Auth::user()->id;
         $history->description=$request['description'];
-        $history->parent_id=\Auth::user()->parentId();
+        $history->parent_id=parentId();
         $history->save();
         return $history;
     }

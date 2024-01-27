@@ -9,9 +9,7 @@
         </li>
     </ul>
 @endsection
-@php
-    $settings=\App\Models\Custom::settings();
-@endphp
+
 @section('content')
     <div class="row">
         <div class="col-xxl-3 col-sm-6 cdx-xxl-50">

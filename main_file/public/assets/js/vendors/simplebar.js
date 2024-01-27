@@ -2423,7 +2423,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 2.4.0
-	 * @category Date
+	 * @coupon Date
 	 * @returns {number} Returns the timestamp.
 	 * @example
 	 *
@@ -2460,7 +2460,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 0.1.0
-	 * @category Function
+	 * @coupon Function
 	 * @param {Function} func The function to debounce.
 	 * @param {number} [wait=0] The number of milliseconds to delay.
 	 * @param {Object} [options={}] The options object.
@@ -2635,7 +2635,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 0.1.0
-	 * @category Function
+	 * @coupon Function
 	 * @param {Function} func The function to throttle.
 	 * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
 	 * @param {Object} [options={}] The options object.
@@ -2682,7 +2682,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 0.1.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
 	 * @example
@@ -2711,7 +2711,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 4.0.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
 	 * @example
@@ -2738,7 +2738,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 4.0.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
 	 * @example
@@ -2760,7 +2760,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 4.0.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to process.
 	 * @returns {number} Returns the number.
 	 * @example
@@ -2863,7 +2863,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 2.4.0
-	 * @category Date
+	 * @coupon Date
 	 * @returns {number} Returns the timestamp.
 	 * @example
 	 *
@@ -2900,7 +2900,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 0.1.0
-	 * @category Function
+	 * @coupon Function
 	 * @param {Function} func The function to debounce.
 	 * @param {number} [wait=0] The number of milliseconds to delay.
 	 * @param {Object} [options={}] The options object.
@@ -3060,7 +3060,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 0.1.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
 	 * @example
@@ -3089,7 +3089,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 4.0.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
 	 * @example
@@ -3116,7 +3116,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 4.0.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
 	 * @example
@@ -3138,7 +3138,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 4.0.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to process.
 	 * @returns {number} Returns the number.
 	 * @example
@@ -3712,7 +3712,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 0.1.0
-	 * @category Function
+	 * @coupon Function
 	 * @param {Function} func The function to have its output memoized.
 	 * @param {Function} [resolver] The function to resolve the cache key.
 	 * @returns {Function} Returns the new memoized function.
@@ -3771,7 +3771,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 4.0.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to compare.
 	 * @param {*} other The other value to compare.
 	 * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
@@ -3805,7 +3805,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 0.1.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is a function, else `false`.
 	 * @example
@@ -3831,7 +3831,7 @@
 	 * @static
 	 * @memberOf _
 	 * @since 0.1.0
-	 * @category Lang
+	 * @coupon Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
 	 * @example

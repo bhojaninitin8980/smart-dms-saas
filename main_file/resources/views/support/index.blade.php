@@ -13,7 +13,7 @@
     </ul>
 @endsection
 @section('card-action-btn')
-    @if(Gate::check('create support') || \Auth::user()->type=='super admin')
+    @if(Gate::check('create support') )
         <a class="btn btn-primary btn-sm ml-20 customModal" href="#" data-size="md"
            data-url="{{ route('support.create') }}"
            data-title="{{__('Create Support')}}"> <i class="ti-plus mr-5"></i>{{__('Create Support')}}</a>
@@ -58,7 +58,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{\Auth::user()->dateFormat($support->created_at)}}
+                                    {{dateFormat($support->created_at)}}
                                 </td>
                                 <td>
                                     {{ !empty($support->createdUser)?$support->createdUser->name:'-' }}

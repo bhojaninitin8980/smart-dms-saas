@@ -31,13 +31,24 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
 
+        if(env('google_recaptcha') == 'on')
+        {
+            $validation['g-recaptcha-response'] = 'required|captcha';
+        }else{
+            $validation = [];
+        }
+        $this->validate($request, $validation);
+
+        $request->authenticate();
         $request->session()->regenerate();
+        $user = Auth::user();
+        if($user->is_active == 0)
+        {
+            auth()->logout();
+        }
 
         $ip = $_SERVER['REMOTE_ADDR'];
-
-
         $query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
 
         if(isset($query['status']) && $query['status'] == 'success')
@@ -66,7 +77,7 @@ class AuthenticatedSessionController extends Controller
             $details->date = date('Y-m-d H:i:s');
             $details->Details = $json;
             $details->type = Auth::user()->type;
-            $details->parent_id = Auth::user()->parentId();
+            $details->parent_id = parentId();
             $details->save();
         }
         return redirect()->intended(RouteServiceProvider::HOME);

@@ -27,25 +27,25 @@ dataLabels: {
 },
 stroke: {
   width: [0,0],
-  curve: 'smooth',   
-}, 
+  curve: 'smooth',
+},
 plotOptions: {
-  bar: {       
+  bar: {
       columnWidth:"20%",
       startingShape:"rounded",
       endingShape: "rounded",
   }
 },
-fill:{        
-    opacity:[1, 0.08],     
+fill:{
+    opacity:[1, 0.08],
       gradient:{
-      type:"horizontal",       
+      type:"horizontal",
       opacityFrom:0.5,
       opacityTo:0.1,
-      stops: [100, 100, 100]       
+      stops: [100, 100, 100]
     }
-}, 
-colors: [Codexdmeki.themeprimary],  
+},
+colors: [Codexdmeki.themeprimary],
 states: {
    normal: {
           filter: {
@@ -69,9 +69,9 @@ states: {
   },
 grid:{
    strokeDashArray: 2,
-},   
+},
 
- yaxis:{     
+ yaxis:{
     tickAmount: 10 ,
     min: 10.00 ,
     max: 80.00 ,
@@ -82,14 +82,14 @@ grid:{
         },
       style: {
         colors: '#262626',
-        fontSize: '14px',              
-        fontWeight: 500, 
-        fontFamily: 'Roboto, sans-serif'   
-      }              
+        fontSize: '14px',
+        fontWeight: 500,
+        fontFamily: 'Roboto, sans-serif'
+      }
     },
 },
 xaxis: {
-  categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct','Nov','Dece'],      
+  categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct','Nov','Dece'],
   axisTicks: {
     show:false
   },
@@ -99,9 +99,9 @@ xaxis: {
   labels:{
         style: {
             colors: '#262626',
-            fontSize: '14px',              
-            fontWeight: 500, 
-            fontFamily: 'Roboto, sans-serif'                 
+            fontSize: '14px',
+            fontWeight: 500,
+            fontFamily: 'Roboto, sans-serif'
         },
     },
 },
@@ -122,19 +122,19 @@ responsive:[
           }
       },
     },
-  ] 
+  ]
 };
 var chart = new ApexCharts(document.querySelector("#over-revenue"), options);
 chart.render();
 //*** over revenue end  ***//
-      
+
 
 //*** Earning Revenue start  ***//
 var options = {
 series:[{
   name: 'Selling growth',
   data: [35,50,55,40,50,60,50,35,60,30,65,35],
-}  
+}
 ],
 chart:{
   type: 'area',
@@ -146,26 +146,26 @@ chart:{
 },
   colors: [Codexdmeki.themeprimary,Codexdmeki.themesecondary],
   plotOptions: {
-    bar:{        
+    bar:{
       borderRadius: 5,
       horizontal: false,
-      columnWidth: '35%',       
+      columnWidth: '35%',
     },
   },
   dataLabels:{
     enabled:false
-  },       
+  },
   legend:{
     show: false,
-  },  
+  },
   stroke:{
     curve: 'smooth',
-  },     
+  },
   grid:{
     strokeDashArray: 2,
   },
   xaxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct','Nov','Dec'], 
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct','Nov','Dec'],
     axisTicks: {
       show:false
     },
@@ -175,9 +175,9 @@ chart:{
     labels:{
         style: {
             colors: '#262626',
-            fontSize: '14px',              
-            fontWeight: 500, 
-            fontFamily: 'Roboto, sans-serif'                 
+            fontSize: '14px',
+            fontWeight: 500,
+            fontFamily: 'Roboto, sans-serif'
         },
     },
   },
@@ -187,18 +187,18 @@ chart:{
     },
     axisBorder:{
       show:false
-    },  
+    },
     labels:{
       formatter: function (y) {
           return y.toFixed(0) + "k";
         },
         style: {
             colors: '#262626',
-            fontSize: '14px',              
-            fontWeight: 500, 
-            fontFamily: 'Roboto, sans-serif'                 
+            fontSize: '14px',
+            fontWeight: 500,
+            fontFamily: 'Roboto, sans-serif'
         },
-    },   
+    },
   },
   responsive:[
     {
@@ -216,22 +216,22 @@ chart:{
           height:290
         }
       },
-    }      
-  ]         
+    }
+  ]
 };
 var chart = new ApexCharts(document.querySelector("#earning-revenue"), options);
-chart.render();  
+chart.render();
 //*** Earning Revenue end  ***//
 
 
-//*** sale by category start  ***//
+//*** sale by coupon start  ***//
 var options = {
     labels: ['Panding','Delevered', 'Canceled', 'Returned'],
     series: [40, 35, 20, 50],
     chart: {
       type: 'donut',
       height: 345 ,
-    },     
+    },
     states: {
           normal: {
               filter: {
@@ -242,7 +242,7 @@ var options = {
           hover: {
               filter: {
                   type: 'darken',
-                  value: 1,                   
+                  value: 1,
               }
           },
           active: {
@@ -263,26 +263,26 @@ var options = {
       width: 0,
     },
     legend:{
-      position:'bottom',       
-      horizontalAlign: 'left', 
+      position:'bottom',
+      horizontalAlign: 'left',
       offsetX: 0,
       offsetY: 0,
       colors: '#262626',
-      fontSize: '14px',              
-      fontWeight: 500, 
+      fontSize: '14px',
+      fontWeight: 500,
       fontFamily: 'Roboto, sans-serif',
       onItemClick: {
         toggleDataSeries: true
       },
       onItemHover: {
         highlightDataSeries: false
-      },       
+      },
     },
     dataLabels: {
       enabled: false,
     },
   colors: [Codexdmeki.themeprimary,Codexdmeki.themesecondary,Codexdmeki.themeinfo,Codexdmeki.themewarning],
-  responsive:[  
+  responsive:[
     {
       breakpoint:992,
       options:{
@@ -294,6 +294,6 @@ var options = {
 
   ]
 };
-var chart = new ApexCharts(document.querySelector("#sale-category"), options);
+var chart = new ApexCharts(document.querySelector("#sale-coupon"), options);
 chart.render();
-//*** sale by category end ***//
+//*** sale by coupon end ***//

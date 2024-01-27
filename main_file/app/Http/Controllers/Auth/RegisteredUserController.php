@@ -21,13 +21,19 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        $registerPage=getSettingsValByName('register_page');
+
+        if($registerPage =='on'){
+            return view('auth.register');
+        }else{
+            return view('auth.login');
+        }
     }
 
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -44,8 +50,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'type' => 'admin',
-            'subscription' => 1,
+            'type' => 'owner',
             'lang' => 'english',
         ]);
 

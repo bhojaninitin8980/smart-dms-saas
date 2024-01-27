@@ -7,7 +7,7 @@ $(document).ready(function () {
     "use strict";
 
     //*** SIDEBAR START ***//
-    $(".submenu-list").slideUp(300);
+    // $(".submenu-list").slideUp(300);
     $(".secondsubmenu-list").slideUp(300);
     $('.codex-menu .menu-item').click(function () {
         $(this).children(".submenu-list").slideToggle(300);
@@ -212,7 +212,7 @@ $(document).ready(function () {
 
 
     //*** PRODUCT CATEGORY CHECKBOX START ***//
-    var productCheckAll = 'input.custom-input[name="category"]'
+    var productCheckAll = 'input.custom-input[name="coupon"]'
 
         $("input#checkAll").on('change', function () {
         if (this.checked) {

@@ -42,7 +42,7 @@
                                 <td>{{ !empty($history->user)?$history->user->name:'-' }}</td>
                                 <td>{{ !empty($history->user)?$history->user->email:'-' }}</td>
                                 <td> {{ucfirst($history->type)}} </td>
-                                <td>{{ !empty($history->date) ? \Auth::user()->dateformat($history->date) : '-' }}</td>
+                                <td>{{ !empty($history->date) ? dateFormat($history->date) : '-' }}</td>
                                 <td>{{ $history->ip }}</td>
                                 <td>{{ !empty($historydetail->country)?$historydetail->country:'-' }}</td>
                                 <td>{{ $historydetail->device_type }}</td>

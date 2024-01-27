@@ -15,10 +15,10 @@ class SubscriptionSeeder extends Seeder
             [
                 'name' => 'Basic',
                 'price' => 0,
-                'duration' => 'Unlimit',
+                'duration' => 'Unlimited',
                 'total_user' => 5,
                 'total_document' => 5,
-                'enabled_document_history' => 1,
+                'enabled_document_history' => 1 ,
                 'enabled_logged_history' => 1 ,
             ]
         );

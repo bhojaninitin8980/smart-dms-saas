@@ -29,6 +29,7 @@
                 </label>
             </div>
         </div>
+
         <div class="form-group col-md-6">
             {{Form::label('enabled_logged_history',__('Show User Logged History'),array('class'=>'form-label'))}}
             <div>

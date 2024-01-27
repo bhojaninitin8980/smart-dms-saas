@@ -1,7 +1,7 @@
 //*** Default Load Todo List
-var todoLocal_store = localStorage.getItem("todosTbl");  
+var todoLocal_store = localStorage.getItem("todosTbl");
 var todos;
-var todoInputVal;	
+var todoInputVal;
 var todoListData;
 var listText;
 if (todoLocal_store == null) {
@@ -10,11 +10,11 @@ if (todoLocal_store == null) {
 	todos = JSON.parse(todoLocal_store);
 }
 localStorage.setItem('todosTbl',JSON.stringify(todos));
-	
+
 //*** Check for data in localStorage
-function checkTodos() {    		
-	let html = "";	
-	todos.forEach((todo,index) => {          
+function checkTodos() {
+	let html = "";
+	todos.forEach((todo,index) => {
 		html += `<li class="todo-itemlist">
 					<div class="item-contain">
 						<div class="todo-contian">
@@ -27,7 +27,7 @@ function checkTodos() {
 						</div>
 					</div>
 					<div class="list-error"></div>
-				</li>`;		
+				</li>`;
 			});
 	$(".todo-list").empty().append(html);
 	let html2 = `(${todos.length})` ;
@@ -35,14 +35,14 @@ function checkTodos() {
 }
 
 //*** Add items in todos
-$(document).on('click', '.add-todo', function () { 	
-	todoInputVal = $('input.todoInput').val();	
+$(document).on('click', '.add-todo', function () {
+	todoInputVal = $('input.todoInput').val();
 	let htmlAdd = "";
 	if ($.trim(todoInputVal) !== ''){
-		todos.push(todoInputVal);		
-		localStorage.setItem('todosTbl',JSON.stringify(todos));	
-	} 	
-	todoListData = todos.forEach((todo,index) => { 
+		todos.push(todoInputVal);
+		localStorage.setItem('todosTbl',JSON.stringify(todos));
+	}
+	todoListData = todos.forEach((todo,index) => {
 	// console.log(index)
 	htmlAdd += `<li class="todo-itemlist">
 			   <div class="item-contain">
@@ -58,16 +58,16 @@ $(document).on('click', '.add-todo', function () {
 			   <div class="list-error"></div>
 			</li>`;
 		});
-	$(".todo-list").empty().append(htmlAdd);     
+	$(".todo-list").empty().append(htmlAdd);
 	let htmlAdd_count = `(${todos.length})` ;
 	$(".card-header h4 .countTodo").empty().append(htmlAdd_count);
 	if ($.trim(todoInputVal) == '') {
-		$(this).parents('.todo-content').find('.error').text('You must enter something!');
+		$(this).parents('.todo-content').find('.error').text('You must enter something.');
 	} else {
-		$(this).parents('.todo-content').find('.todo-list').append(todoListData);          
-		$(this).parents('.todo-content').find('.error').empty();						
-	}	
-	$(this).siblings('input.todoInput').val('');                       
+		$(this).parents('.todo-content').find('.todo-list').append(todoListData);
+		$(this).parents('.todo-content').find('.error').empty();
+	}
+	$(this).siblings('input.todoInput').val('');
 });
 $('input.todoInput').keydown(function (event) {
 	if (event.which == 13) {
@@ -78,7 +78,7 @@ $('input.todoInput').keydown(function (event) {
 
 //*** Delete Todo List
 let removeTodo = (index) => {
-	todos.splice(index, 1);	
+	todos.splice(index, 1);
 	localStorage.setItem("todosTbl", JSON.stringify(todos));
 	checkTodos();
 };
@@ -88,9 +88,9 @@ $(document).on('click', '.edit-todo', function () {
 	$(this).removeClass('edit-todo');
     $(this).addClass('update-todo');
 	$(this).html('<i class="fa fa-check text-primary" aria-hidden="true"></i>');
-	listText = $(this).parents('.item-contain').find('.todo-data').html();	
-	$(this).parents('.item-contain').find('.todo-data').attr('class', 'update-data');			
-	$(this).parents('.item-contain').find('.update-data').html('<input type="text" class="todoEdit_input" value="' + listText + '" style="width: 100%;height: 40px;">');	
+	listText = $(this).parents('.item-contain').find('.todo-data').html();
+	$(this).parents('.item-contain').find('.todo-data').attr('class', 'update-data');
+	$(this).parents('.item-contain').find('.update-data').html('<input type="text" class="todoEdit_input" value="' + listText + '" style="width: 100%;height: 40px;">');
 	$(this).parents('.item-contain').find('input').focus();
 });
 
@@ -99,10 +99,10 @@ $(document).on('click', '.update-todo', function () {
 	var index;
 	index = $(this).attr('data-val');
 	var listText = $(this).parents('.item-contain').find('input').val();
-	
+
 	if ($.trim(listText) == '') {
-		$(this).parents('.todo-itemlist').find('.list-error').text('You must enter something!');
-	} else {		
+		$(this).parents('.todo-itemlist').find('.list-error').text('You must enter something.');
+	} else {
         $(this).removeClass('update-todo');
         $(this).addClass('edit-todo');
 		$(this).html('<i class="fa fa-pencil"></i>');
@@ -120,7 +120,7 @@ $(document).on('click', '.update-todo', function () {
 $(document).keydown(function (event) {
 	if (event.which == 13) {
 		event.preventDefault();
-		$('.update-todo').click();		
+		$('.update-todo').click();
 	}
 });
 

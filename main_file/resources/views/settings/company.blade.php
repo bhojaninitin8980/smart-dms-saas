@@ -26,11 +26,11 @@
                         </div>
                         <div class="form-group col-md-6">
                             {{Form::label('company_email',__('Company Email'),array('class'=>'form-label')) }}
-                            {{Form::text('company_email',$settings['company_phone'],array('class'=>'form-control ','placeholder'=>__('Enter company email')))}}
+                            {{Form::text('company_email',$settings['company_email'],array('class'=>'form-control ','placeholder'=>__('Enter company email')))}}
                         </div>
                         <div class="form-group col-md-6">
                             {{Form::label('company_phone',__('Company Phone'),array('class'=>'form-label')) }}
-                            {{Form::text('company_phone',$settings['company_address'],array('class'=>'form-control','placeholder'=>__('Enter company phone')))}}
+                            {{Form::text('company_phone',$settings['company_phone'],array('class'=>'form-control','placeholder'=>__('Enter company phone')))}}
 
                         </div>
                         <div class="form-group col-md-6">
@@ -71,8 +71,16 @@
                                 @endforeach
                             </select>
                         </div>
-                  
 
+
+                        <div class="form-group col-md-6">
+                            {{Form::label('invoice_prefix',__('Invoice Prefix')) }}
+                            {{Form::text('invoice_prefix',$settings['invoice_prefix'],array('class'=>'form-control','placeholder'=>__('Enter invoice prefix')))}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{Form::label('expense_prefix',__('Invoice Prefix')) }}
+                            {{Form::text('expense_prefix',$settings['expense_prefix'],array('class'=>'form-control','placeholder'=>__('Enter expense prefix')))}}
+                        </div>
                         <div class="form-group col-md-3">
                             {{Form::label('company_zipcode',__('Company Date Format'),array('class'=>'form-label')) }}
                             <div class="">

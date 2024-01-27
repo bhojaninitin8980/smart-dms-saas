@@ -1,4 +1,4 @@
-// basic message 
+// basic message
 $(document).on('click', '#swt1', function(e) {
 	Swal.fire('Any fool can use a computer')
 });
@@ -13,19 +13,19 @@ $(document).on('click', '#swt2', function(e) {
 });
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt3', function(e) {
 	Swal.fire({
 	  icon: 'error',
 	  title: 'Oops...',
-	  text: 'Something went wrong!',
+	  text: 'Something went wrong.',
 	  footer: '<a href="">Why do I have this issue?</a>'
 	})
 });
 
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt4', function(e) {
 	Swal.fire({
   imageUrl: 'https://placeholder.pics/svg/300x1500',
@@ -35,7 +35,7 @@ $(document).on('click', '#swt4', function(e) {
 });
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt5', function(e) {
 	Swal.fire({
   title: '<strong>HTML <u>example</u></strong>',
@@ -48,8 +48,8 @@ $(document).on('click', '#swt5', function(e) {
   showCancelButton: true,
   focusConfirm: false,
   confirmButtonText:
-    '<i class="fa fa-thumbs-up"></i> Great!',
-  confirmButtonAriaLabel: 'Thumbs up, great!',
+    '<i class="fa fa-thumbs-up"></i> Great.',
+  confirmButtonAriaLabel: 'Thumbs up, great.',
   cancelButtonText:
     '<i class="fa fa-thumbs-down"></i>',
   cancelButtonAriaLabel: 'Thumbs down'
@@ -59,7 +59,7 @@ $(document).on('click', '#swt5', function(e) {
 
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt6', function(e) {
 	Swal.fire({
   title: 'Do you want to save the changes?',
@@ -70,7 +70,7 @@ $(document).on('click', '#swt6', function(e) {
 }).then((result) => {
   /* Read more about isConfirmed, isDenied below */
   if (result.isConfirmed) {
-    Swal.fire('Saved!', '', 'success')
+    Swal.fire('Saved.', '', 'success')
   } else if (result.isDenied) {
     Swal.fire('Changes are not saved', '', 'info')
   }
@@ -79,7 +79,7 @@ $(document).on('click', '#swt6', function(e) {
 
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt7', function(e) {
 	Swal.fire({
   position: 'top-end',
@@ -92,7 +92,7 @@ $(document).on('click', '#swt7', function(e) {
 
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt8', function(e) {
 	Swal.fire({
   title: 'Custom animation with Animate.css',
@@ -107,7 +107,7 @@ $(document).on('click', '#swt8', function(e) {
 
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt9', function(e) {
 	Swal.fire({
   title: 'Are you sure?',
@@ -116,11 +116,11 @@ $(document).on('click', '#swt9', function(e) {
   showCancelButton: true,
   confirmButtonColor: '#3085d6',
   cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
+  confirmButtonText: 'Yes, delete it.'
 }).then((result) => {
   if (result.isConfirmed) {
     Swal.fire(
-      'Deleted!',
+      'Deleted.',
       'Your file has been deleted.',
       'success'
     )
@@ -130,7 +130,7 @@ $(document).on('click', '#swt9', function(e) {
 
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt10', function(e) {
 	const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
@@ -145,13 +145,13 @@ swalWithBootstrapButtons.fire({
   text: "You won't be able to revert this!",
   icon: 'warning',
   showCancelButton: true,
-  confirmButtonText: 'Yes, delete it!',
-  cancelButtonText: 'No, cancel!',
+  confirmButtonText: 'Yes, delete it.',
+  cancelButtonText: 'No, cancel.',
   reverseButtons: true
 }).then((result) => {
   if (result.isConfirmed) {
     swalWithBootstrapButtons.fire(
-      'Deleted!',
+      'Deleted.',
       'Your file has been deleted.',
       'success'
     )
@@ -170,10 +170,10 @@ swalWithBootstrapButtons.fire({
 
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt11', function(e) {
 	Swal.fire({
-  title: 'Sweet!',
+  title: 'Sweet.',
   text: 'Modal with a custom image.',
   imageUrl: 'https://unsplash.it/400/200',
   imageWidth: 400,
@@ -184,7 +184,7 @@ $(document).on('click', '#swt11', function(e) {
 
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt12', function(e) {
 	Swal.fire({
   title: 'Custom width, padding, color, background.',
@@ -202,11 +202,11 @@ $(document).on('click', '#swt12', function(e) {
 });
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt13', function(e) {
 	let timerInterval
 Swal.fire({
-  title: 'Auto close alert!',
+  title: 'Auto close alert.',
   html: 'I will close in <b></b> milliseconds.',
   timer: 2000,
   timerProgressBar: true,
@@ -229,7 +229,7 @@ Swal.fire({
 });
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt14', function(e) {
 	Swal.fire({
   title: 'هل تريد الاستمرار؟',
@@ -244,7 +244,7 @@ $(document).on('click', '#swt14', function(e) {
 
 
 
-// basic message 
+// basic message
 $(document).on('click', '#swt15', function(e) {
 	Swal.fire({
   title: 'Submit your Github username',
