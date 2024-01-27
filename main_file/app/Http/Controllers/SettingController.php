@@ -492,13 +492,7 @@ class SettingController extends Controller
             );
         }
 
-        if (!empty($request->timezone)) {
-            $arrEnv = [
-                'TIMEZONE' => $request->timezone,
-            ];
 
-            Custom::setCommon($arrEnv);
-        }
 
         return redirect()->back()->with('success', __('Company setting successfully saved.'));
     }

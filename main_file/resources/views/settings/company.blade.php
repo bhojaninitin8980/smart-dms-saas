@@ -67,20 +67,11 @@
                             <select type="text" name="timezone" class="form-control basic-select" id="timezone">
                                 <option value="">{{__('Select Timezone')}}</option>
                                 @foreach($timezones as $k=>$timezone)
-                                    <option value="{{$k}}" {{(env('TIMEZONE')==$k)?'selected':''}}>{{$timezone}}</option>
+                                    <option value="{{$k}}" {{($settings['timezone']==$k)?'selected':''}}>{{$timezone}}</option>
                                 @endforeach
                             </select>
                         </div>
 
-
-                        <div class="form-group col-md-6">
-                            {{Form::label('invoice_prefix',__('Invoice Prefix')) }}
-                            {{Form::text('invoice_prefix',$settings['invoice_prefix'],array('class'=>'form-control','placeholder'=>__('Enter invoice prefix')))}}
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{Form::label('expense_prefix',__('Invoice Prefix')) }}
-                            {{Form::text('expense_prefix',$settings['expense_prefix'],array('class'=>'form-control','placeholder'=>__('Enter expense prefix')))}}
-                        </div>
                         <div class="form-group col-md-3">
                             {{Form::label('company_zipcode',__('Company Date Format'),array('class'=>'form-label')) }}
                             <div class="">

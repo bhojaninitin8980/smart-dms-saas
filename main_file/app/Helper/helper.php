@@ -63,8 +63,7 @@ if (!function_exists('settings')) {
             'STRIPE_PAYMENT' => "off",
             'STRIPE_KEY' => "",
             'STRIPE_SECRET' => "",
-            "invoice_prefix" => "#INV-000",
-            "expense_prefix" => "#EXP-000",
+            'timezone' => "USD",
 
         ];
 

@@ -23,6 +23,9 @@ class XSS
         {
             \App::setLocale(\Auth::user()->lang);
 
+            $timezone= getSettingsValByName('timezone');
+            \Config::set('app.timezone', $timezone);
+
             $migrations             = $this->getMigrations();
             $dbMigrations           = $this->getExecutedMigrations();
             $numberOfUpdatesPending = count($migrations) - count($dbMigrations);
