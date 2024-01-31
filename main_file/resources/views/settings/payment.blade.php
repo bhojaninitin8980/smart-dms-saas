@@ -33,6 +33,26 @@
 
                     </div>
                     <hr>
+                    {{--------------------------Bank Transfer settings---------------------------------}}
+                    <div class="row mt-2">
+                        <div class="col-auto">
+                            {{Form::label('bank_transfer_payment',__('Bank Transfer Payment'),array('class'=>'form-label')) }}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-check custom-chek">
+                                    <input class="form-check-input" type="checkbox" name="bank_transfer_payment" id="bank_transfer_payment" {{ $settings['bank_transfer_payment'] == 'on' ? 'checked' : '' }}>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            {{Form::label('bank_details',__('Bank Details'),array('class'=>'form-label')) }}
+                            {{Form::textarea('bank_details',$settings['bank_details'],['class'=>'form-control','rows'=>3,'placeholder'=>__('Enter bank details')])}}
+                        </div>
+                    </div>
+                    <hr>
                     {{--------------------------Stripe Payment settings---------------------------------}}
                     <div class="row mt-2">
                         <div class="col-auto">
@@ -56,6 +76,44 @@
                             {{Form::text('stripe_secret',$settings['STRIPE_SECRET'],['class'=>'form-control ','placeholder'=>__('Enter stripe secret')])}}
                         </div>
                     </div>
+                    <hr>
+                    {{--------------------------Paypal Payment settings---------------------------------}}
+                    <div class="row mt-2">
+                        <div class="col-auto">
+                            {{Form::label('paypal_payment',__('Paypal Payment'),array('class'=>'form-label')) }}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-check custom-chek">
+                                    <input class="form-check-input" type="checkbox" name="paypal_payment"
+                                           id="paypal_payment" {{ $settings['paypal_payment'] == 'on' ? 'checked' : '' }}>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            {{Form::label('paypal_mode',__('Mode'),array('class'=>'form-label me-2')) }}
+                            <div class="form-check custom-chek form-check-inline">
+                                <input class="form-check-input" type="radio" value="sandbox" id="sandbox" name="paypal_mode" {{ $settings['paypal_mode'] == 'sandbox' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="sandbox">{{__('Sandbox')}} </label>
+                            </div>
+                            <div class="form-check custom-chek form-check-inline">
+                                <input class="form-check-input" type="radio" value="live" id="live"
+                                       name="paypal_mode" {{ $settings['paypal_mode'] == 'live' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="live">{{__('Live')}} </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{Form::label('paypal_client_id',__('Client ID'),array('class'=>'form-label')) }}
+                            {{Form::text('paypal_client_id',$settings['paypal_client_id'],['class'=>'form-control','placeholder'=>__('Enter client id')])}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{Form::label('paypal_secret_key',__('Secret Key'),array('class'=>'form-label')) }}
+                            {{Form::text('paypal_secret_key',$settings['paypal_secret_key'],['class'=>'form-control ','placeholder'=>__('Enter secret key')])}}
+                        </div>
+                    </div>
+
 
                     <div class="text-right">
                         {{Form::submit(__('Save'),array('class'=>'btn btn-primary btn-rounded'))}}

@@ -141,14 +141,9 @@ class SubscriptionController extends Controller
     public function transaction()
     {
         if (\Auth::user()->can('manage pricing transation')) {
-            $transactions = Order::select(
-                [
-                    'orders.*',
-                    'users.first_name as user_name',
-                ]
-            )->join('users', 'orders.user_id', '=', 'users.id')->orderBy('orders.created_at', 'DESC')->get();
-
-            return view('subscription.transaction', compact('transactions'));
+            $transactions = Order::orderBy('orders.created_at', 'DESC')->get();
+            $settings=settings();
+            return view('subscription.transaction', compact('transactions','settings'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -163,8 +158,7 @@ class SubscriptionController extends Controller
             $subscription = Subscription::find($id);
             if ($subscription) {
                 try {
-                    $price = Coupon::couponApply($request->coupon, $subscription);
-
+                    $price = Coupon::couponApply($id,$request->coupon);
                     $orderID = uniqid('', true);
                     if ($price > 0.0) {
 
@@ -196,6 +190,7 @@ class SubscriptionController extends Controller
                             $data['subscription'] = $subscription->name;
                             $data['subscription_id'] = $subscription->id;
                             $data['price'] = $price;
+                            $data['payment_type'] = 'Stripe';
                             Order::orderData($data);
 
                             if($subscription->couponCheck()>0){

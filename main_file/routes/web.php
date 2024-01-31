@@ -16,7 +16,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\ReminderController;
-
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -116,7 +116,7 @@ Route::group(
     Route::post('settings/smtp', [SettingController::class,'smtpData'])->name('setting.smtp');
 
     Route::get('settings/payment', [SettingController::class,'payment'])->name('setting.payment');
-    Route::post('settings/payment', [SettingController::class,'paymentData'])->name('setting.payment');
+
 
     Route::get('settings/company', [SettingController::class,'company'])->name('setting.company');
     Route::post('settings/company', [SettingController::class,'companyData'])->name('setting.company');
@@ -129,6 +129,16 @@ Route::group(
 
     Route::get('settings/google-recaptcha', [SettingController::class,'googleRecaptcha'])->name('setting.google.recaptcha');
     Route::post('settings/google-recaptcha', [SettingController::class,'googleRecaptchaData'])->name('setting.google.recaptcha');
+}
+);
+
+Route::group(
+    [
+        'middleware' => [
+            'auth',
+        ],
+    ], function (){
+    Route::post('settings/payment', [SettingController::class,'paymentData'])->name('setting.payment');
 }
 );
 
@@ -263,4 +273,22 @@ Route::resource('tag', TagController::class)->middleware(
         'auth',
         'XSS',
     ]
+);
+
+
+//-------------------------------Plan Payment-------------------------------------------
+
+Route::group(
+    [
+        'middleware' => [
+            'auth',
+            'XSS',
+        ],
+    ], function (){
+
+    Route::post('subscription/{id}/bank-transfer', [PaymentController::class, 'subscriptionBankTransfer'])->name('subscription.bank.transfer');
+    Route::get('subscription/{id}/bank-transfer/action/{status}', [PaymentController::class, 'subscriptionBankTransferAction'])->name('subscription.bank.transfer.action');
+    Route::post('subscription/{id}/paypal', [PaymentController::class, 'subscriptionPaypal'])->name('subscription.paypal');
+    Route::get('subscription/{id}/paypal/{status}', [PaymentController::class, 'subscriptionPaypalStatus'])->name('subscription.paypal.status');
+}
 );

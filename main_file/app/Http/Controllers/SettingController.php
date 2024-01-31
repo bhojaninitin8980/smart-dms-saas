@@ -414,15 +414,47 @@ class SettingController extends Controller
             );
         }
 
+        //        For Bank Transfer Settings
+        if(isset($request->bank_transfer_payment)){
+            $validator = \Validator::make(
+                $request->all(), [
+                    'bank_details' => 'required',
+                ]
+            );
+            if($validator->fails())
+            {
+                $messages = $validator->getMessageBag();
+                return redirect()->back()->with('error', $messages->first());
+            }
+
+            $stripeArray = [
+                'bank_transfer_payment' => $request->bank_transfer_payment ?? 'off',
+                'bank_details' => $request->bank_details,
+            ];
+
+            foreach($stripeArray as $key => $val)
+            {
+                \DB::insert(
+                    'insert into settings (`value`, `name`, `type`,`parent_id`) values (?, ?, ?,?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
+                        $val,
+                        $key,
+                        'payment',
+                        parentId(),
+                    ]
+                );
+            }
+        }
+
 //        For Strip Settings
-        if (isset($request->stripe_payment)) {
+        if(isset($request->stripe_payment)){
             $validator = \Validator::make(
                 $request->all(), [
                     'stripe_key' => 'required',
                     'stripe_secret' => 'required',
                 ]
             );
-            if ($validator->fails()) {
+            if($validator->fails())
+            {
                 $messages = $validator->getMessageBag();
                 return redirect()->back()->with('error', $messages->first());
             }
@@ -433,7 +465,43 @@ class SettingController extends Controller
                 'STRIPE_SECRET' => $request->stripe_secret,
             ];
 
-            foreach ($stripeArray as $key => $val) {
+            foreach($stripeArray as $key => $val)
+            {
+                \DB::insert(
+                    'insert into settings (`value`, `name`, `type`,`parent_id`) values (?, ?, ?,?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
+                        $val,
+                        $key,
+                        'payment',
+                        parentId(),
+                    ]
+                );
+            }
+        }
+
+
+        //        For Paypal Settings
+
+        if (isset($request->paypal_payment)) {
+            $validator = \Validator::make(
+                $request->all(), [
+                    'paypal_mode' => 'required',
+                    'paypal_client_id' => 'required',
+                    'paypal_secret_key' => 'required',
+                ]
+            );
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
+                return redirect()->back()->with('error', $messages->first());
+            }
+
+            $paypalArray = [
+                'paypal_payment' => $request->paypal_payment ?? 'off',
+                'paypal_mode' => $request->paypal_mode,
+                'paypal_client_id' => $request->paypal_client_id,
+                'paypal_secret_key' => $request->paypal_secret_key,
+            ];
+
+            foreach ($paypalArray as $key => $val) {
                 \DB::insert(
                     'insert into settings (`value`, `name`, `type`,`parent_id`) values (?, ?, ?,?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
                         $val,

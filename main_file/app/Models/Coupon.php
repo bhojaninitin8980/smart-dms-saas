@@ -41,10 +41,11 @@ class Coupon extends Model
         return $this->hasMany('App\Models\CouponHistory', 'coupon', 'id')->count();
     }
 
-    public static function couponApply($code,$package)
+    public static function couponApply($subscriptionId,$couponCode)
     {
-        $coupons = Coupon::where('code', $code)->where('status', '1')->first();
-        $package=Subscription::find($package->id);
+
+        $coupons = Coupon::where('code', $couponCode)->where('status', '1')->first();
+        $package=Subscription::find($subscriptionId);
         if (!empty($coupons)) {
             $applicable_packages = Coupon::whereRaw("find_in_set($package->id,applicable_packages)")->first();
 

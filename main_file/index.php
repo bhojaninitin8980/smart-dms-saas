@@ -1,7 +1,7 @@
 <?php
 
 // Product Name : Smart DRMS SaaS
-// Version      : 1.2
+// Version      : 1.3
 
 /**
  * Laravel - A PHP Framework For Web Artisans

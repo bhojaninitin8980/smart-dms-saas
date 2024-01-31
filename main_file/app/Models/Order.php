@@ -39,13 +39,18 @@ class Order extends Model
                 'price' => $data['price'],
                 'price_currency' => isset($data['currency']) ? $data['currency'] : '',
                 'txn_id' => isset($data['balance_transaction']) ? $data['balance_transaction'] : '',
-                'payment_status' => isset($data['status']) ? $data['status'] : 'succeeded',
-                'payment_type' => __('STRIPE'),
+                'payment_status' => isset($data['status']) ? $data['status'] : 'Success',
+                'payment_type' => $data['payment_type'],
                 'receipt' => isset($data['receipt_url']) ? $data['receipt_url'] : '',
                 'user_id' => \Auth::user()->id,
             ]
         );
         return $orders;
+    }
+
+    public function users()
+    {
+        return $this->hasOne('App\Models\User','id','user_id');
     }
 
 }

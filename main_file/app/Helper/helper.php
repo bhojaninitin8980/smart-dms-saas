@@ -63,6 +63,12 @@ if (!function_exists('settings')) {
             'STRIPE_PAYMENT' => "off",
             'STRIPE_KEY' => "",
             'STRIPE_SECRET' => "",
+            "paypal_payment" => "off",
+            "paypal_mode" => "",
+            "paypal_client_id" => "",
+            "paypal_secret_key" => "",
+            "bank_transfer_payment" => "off",
+            "bank_details" => "",
             'timezone' => "USD",
 
         ];
@@ -92,9 +98,15 @@ if (!function_exists('subscriptionPaymentSettings')) {
         $settings = [
             'CURRENCY' => "USD",
             'CURRENCY_SYMBOL' => "$",
-            'STRIPE_PAYMENT' => "",
+            'STRIPE_PAYMENT' => "off",
             'STRIPE_KEY' => "",
             'STRIPE_SECRET' => "",
+            "paypal_payment" => "off",
+            "paypal_mode" => "",
+            "paypal_client_id" => "",
+            "paypal_secret_key" => "",
+            "bank_transfer_payment" => "off",
+            "bank_details" => "",
         ];
 
         foreach ($data as $row) {
@@ -210,7 +222,6 @@ if (!function_exists('assignSubscription')) {
             \Auth::user()->save();
 
             $users = User::where('parent_id', '=', parentId())->whereNoIn('type', ['super admin', 'owner'])->get();
-            $propertys = Property::where('parent_id', '=',parentId())->get();
 
             if ($subscription->total_user == 0) {
                 foreach ($users as $user) {
@@ -231,29 +242,49 @@ if (!function_exists('assignSubscription')) {
                 }
             }
 
-            if($subscription->total_property == 0)
-            {
-                foreach($propertys as $property)
-                {
-                    $property->is_active = 1;
-                    $property->save();
-                }
+        } else {
+            return [
+                'is_success' => false,
+                'error' => 'Subscription is deleted.',
+            ];
+        }
+    }
+}
+if (!function_exists('assignManuallySubscription')) {
+    function assignManuallySubscription($id,$userId)
+    {
+        $owner = User::find($userId);
+        $subscription = Subscription::find($id);
+        if ($subscription) {
+            $owner->subscription = $subscription->id;
+            if ($subscription->duration == 'Monthly') {
+                $owner->subscription_expire_date = Carbon::now()->addMonths(1)->isoFormat('YYYY-MM-DD');
+            } elseif ($subscription->duration == 'Quarterly') {
+                $owner->subscription_expire_date = Carbon::now()->addMonths(3)->isoFormat('YYYY-MM-DD');
+            } elseif ($subscription->duration == 'Yearly') {
+                $owner->subscription_expire_date = Carbon::now()->addYears(1)->isoFormat('YYYY-MM-DD');
+            } else {
+                $owner->subscription_expire_date = null;
             }
-            else
-            {
-                $propertyCount = 0;
-                foreach($propertys as $property)
-                {
-                    $propertyCount++;
-                    if($propertyCount <= $subscription->total_property)
-                    {
-                        $property->is_active = 1;
-                        $property->save();
-                    }
-                    else
-                    {
-                        $property->is_active = 0;
-                        $property->save();
+            $owner->save();
+
+            $users = User::where('parent_id', $userId)->get();
+
+            if ($subscription->total_user == 0) {
+                foreach ($users as $user) {
+                    $user->is_active = 1;
+                    $user->save();
+                }
+            } else {
+                $userCount = 0;
+                foreach ($users as $user) {
+                    $userCount++;
+                    if ($userCount <= $subscription->total_user) {
+                        $user->is_active = 1;
+                        $user->save();
+                    } else {
+                        $user->is_active = 0;
+                        $user->save();
                     }
                 }
             }

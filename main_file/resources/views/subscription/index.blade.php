@@ -13,7 +13,7 @@
     </ul>
 @endsection
 @section('card-action-btn')
-    @if(\Auth::user()->type=='super admin' &&  (subscriptionPaymentSettings()['STRIPE_PAYMENT'] == 'on' ))
+    @if(\Auth::user()->type=='super admin' &&  (subscriptionPaymentSettings()['STRIPE_PAYMENT'] == 'on' || subscriptionPaymentSettings()['paypal_payment'] == 'on' || subscriptionPaymentSettings()['bank_transfer_payment'] == 'on' ))
         <a class="btn btn-primary btn-sm ml-20 customModal" href="#" data-size="md"
            data-url="{{ route('subscriptions.create') }}"
            data-title="{{__('Create Package')}}"> <i class="ti-plus mr-5"></i>{{__('Create Package')}}</a>

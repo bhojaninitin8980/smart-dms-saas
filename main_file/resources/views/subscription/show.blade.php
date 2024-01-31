@@ -141,6 +141,56 @@
         </div>
 
         <div class="col-lg-9">
+            @if($settings['bank_transfer_payment'] == 'on' && !empty($settings['bank_details']))
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>{{__('Bank Transfer Payment')}}</h5>
+                            </div>
+                            <div class="card-body profile-user-box">
+                                <form
+                                    action="{{ route('subscription.bank.transfer',\Illuminate\Support\Facades\Crypt::encrypt($subscription->id)) }}"
+                                    method="post" class="require-validation" id="bank-payment" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                {!! $settings['bank_details'] !!}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 ">
+                                            <div class="form-group">
+                                                <label for="card-name-on"
+                                                       class="form-label text-dark">{{__('Coupon Code')}}</label>
+                                                <input type="text" name="coupon"
+                                                       class="form-control required coupon_code"
+                                                       placeholder="{{__('Enter Coupon Code')}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="card-name-on"  class="form-label text-dark">{{__('Reciept')}}</label>
+                                                <input type="file" name="payment_receipt" id="payment_receipt" class="form-control" required>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-sm-12 ">
+                                            <input type="button" value="{{__('Coupon Apply')}}"
+                                                   class="btn btn-warning coupon_apply">
+                                            <input type="submit" value="{{__('Pay')}}" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             @if($settings['STRIPE_PAYMENT'] == 'on' && !empty($settings['STRIPE_KEY']) && !empty($settings['STRIPE_SECRET']))
                 <div class="row">
                     <div class="col-sm-12">
@@ -178,12 +228,54 @@
                                                            class="form-label text-dark">{{__('Coupon Code')}}</label>
                                                     <input type="text" name="coupon"
                                                            class="form-control required coupon_code"
-                                                           placeholder="{{__('Coupon Code')}}">
+                                                           placeholder="{{__('Enter Coupon Code')}}">
                                                 </div>
                                             </div>
                                         @endif
                                         <div class="col-sm-12 mt-15">
-                                            <input type="button" value="{{__('Coupon Apply')}}" class="btn btn-warning coupon_apply">
+                                            @if($subscription->couponCheck()>0)
+                                                <input type="button" value="{{__('Coupon Apply')}}"
+                                                       class="btn btn-warning coupon_apply">
+                                            @endif
+                                            <input type="submit" value="{{__('Pay')}}" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if($settings['paypal_payment'] == 'on' && !empty($settings['paypal_client_id']) && !empty($settings['paypal_secret_key']))
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>{{__('Paypal Payment')}}</h5>
+                            </div>
+                            <div class="card-body profile-user-box">
+                                <form
+                                    action="{{ route('subscription.paypal',\Illuminate\Support\Facades\Crypt::encrypt($subscription->id)) }}"
+                                    method="post" class="require-validation">
+                                    @csrf
+                                    <div class="row">
+                                        @if($subscription->couponCheck()>0)
+                                            <div class="col-md-12 mt-15">
+                                                <div class="form-group">
+                                                    <label for="card-name-on"
+                                                           class="form-label text-dark">{{__('Coupon Code')}}</label>
+                                                    <input type="text" name="coupon"
+                                                           class="form-control required coupon_code"
+                                                           placeholder="{{__('Enter Coupon Code')}}">
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <div class="col-sm-12 mt-15">
+                                            @if($subscription->couponCheck()>0)
+                                                <input type="button" value="{{__('Coupon Apply')}}"
+                                                       class="btn btn-warning coupon_apply">
+                                            @endif
                                             <input type="submit" value="{{__('Pay')}}" class="btn btn-primary">
                                         </div>
                                     </div>
