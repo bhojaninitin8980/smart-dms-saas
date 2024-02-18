@@ -21,45 +21,23 @@
                     {{Form::model($settings, array('route' => array('setting.company'), 'method' => 'post')) }}
                     <div class="row">
                         <div class="form-group col-md-6">
-                            {{Form::label('company_name',__('Company Name'),array('class'=>'form-label')) }}
+                            {{Form::label('company_name',__('Name'),array('class'=>'form-label')) }}
                             {{Form::text('company_name',$settings['company_name'],array('class'=>'form-control','placeholder'=>__('Enter company name')))}}
                         </div>
                         <div class="form-group col-md-6">
-                            {{Form::label('company_email',__('Company Email'),array('class'=>'form-label')) }}
-                            {{Form::text('company_email',$settings['company_email'],array('class'=>'form-control ','placeholder'=>__('Enter company email')))}}
+                            {{Form::label('company_email',__('Email'),array('class'=>'form-label')) }}
+                            {{Form::text('company_email',$settings['company_email'],array('class'=>'form-control','placeholder'=>__('Enter company email')))}}
                         </div>
                         <div class="form-group col-md-6">
-                            {{Form::label('company_phone',__('Company Phone'),array('class'=>'form-label')) }}
+                            {{Form::label('company_phone',__('Phone Number'),array('class'=>'form-label')) }}
                             {{Form::text('company_phone',$settings['company_phone'],array('class'=>'form-control','placeholder'=>__('Enter company phone')))}}
-
                         </div>
                         <div class="form-group col-md-6">
-                            {{Form::label('company_address',__('Company Address'),array('class'=>'form-label')) }}
+                            {{Form::label('company_address',__('Address'),array('class'=>'form-label')) }}
                             {{ Form::textarea('company_address',$settings['company_address'], array('class' => 'form-control','rows'=>'2')) }}
-
                         </div>
                         <div class="form-group col-md-6">
-                            {{Form::label('company_city',__('City'),array('class'=>'form-label')) }}
-                            {{Form::text('company_city',$settings['company_city'],array('class'=>'form-control','placeholder'=>__('Enter city')))}}
-
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{Form::label('company_state',__('State')) }}
-                            {{Form::text('company_state',$settings['company_state'],array('class'=>'form-control','placeholder'=>__('Enter state')))}}
-
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{Form::label('company_country',__('Country'),array('class'=>'form-label')) }}
-                            {{Form::text('company_country',$settings['company_country'],array('class'=>'form-control','placeholder'=>__('Enter country')))}}
-
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{Form::label('company_zipcode',__('Zip Code'),array('class'=>'form-label')) }}
-                            {{Form::text('company_zipcode',$settings['company_zipcode'],array('class'=>'form-control','placeholder'=>__('Enter zip code')))}}
-
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{Form::label('company_currency_symbol',__('Currency Symbol'),array('class'=>'form-label')) }}
+                            {{Form::label('company_currency_symbol',__('Currency Icon'),array('class'=>'form-label')) }}
                             {{Form::text('company_currency_symbol',$settings['company_currency_symbol'],array('class'=>'form-control','placeholder'=>__('Enter currency symbol')))}}
                         </div>
                         <div class="col-md-6">
@@ -67,13 +45,14 @@
                             <select type="text" name="timezone" class="form-control basic-select" id="timezone">
                                 <option value="">{{__('Select Timezone')}}</option>
                                 @foreach($timezones as $k=>$timezone)
-                                    <option value="{{$k}}" {{($settings['timezone']==$k)?'selected':''}}>{{$timezone}}</option>
+                                    <option value="{{$k}}" {{(env('TIMEZONE')==$k)?'selected':''}}>{{$timezone}}</option>
                                 @endforeach
                             </select>
                         </div>
 
+
                         <div class="form-group col-md-3">
-                            {{Form::label('company_zipcode',__('Company Date Format'),array('class'=>'form-label')) }}
+                            {{Form::label('company_zipcode',__('System Date Format'),array('class'=>'form-label')) }}
                             <div class="">
                                 <div class="custom-control custom-radio">
                                     <input type="radio" id="company_date_format1" name="company_date_format" class="custom-control-input" value="M j, Y" {{($settings['company_date_format'] =='M j, Y')?'checked':''}}>
@@ -94,7 +73,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-3">
-                            {{Form::label('company_zipcode',__('Company Time Format'),array('class'=>'form-label')) }}
+                            {{Form::label('company_zipcode',__('System Time Format'),array('class'=>'form-label')) }}
                             <div class="">
                                 <div class="custom-control custom-radio">
                                     <input type="radio" id="company_time_format1" name="company_time_format" class="custom-control-input" value="H:i" {{($settings['company_time_format'] =='H:i')?'checked':''}}>

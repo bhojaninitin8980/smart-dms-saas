@@ -13,11 +13,11 @@ class SubscriptionSeeder extends Seeder
     {
         \App\Models\Subscription::create(
             [
-                'name' => 'Basic',
-                'price' => 0,
-                'duration' => 'Unlimited',
-                'total_user' => 5,
-                'total_document' => 5,
+                'title' => 'Basic',
+                'package_amount' => 0,
+                'interval' => 'Unlimited',
+                'user_limit' => 5,
+                'document_limit' => 5,
                 'enabled_document_history' => 1 ,
                 'enabled_logged_history' => 1 ,
             ]

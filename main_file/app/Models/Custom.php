@@ -8,88 +8,50 @@ use Illuminate\Support\Facades\DB;
 class Custom extends Model
 {
 
-    public static function setCommon(array $data)
-    {
-        $env = app()->environmentFilePath();
-        $string = file_get_contents($env);
-        if (count($data) > 0) {
-            foreach ($data as $key => $val) {
-                $keyPos = strpos($string, "{$key}=");
-                $endLinePos = strpos($string, "\n", $keyPos);
-                $oldPos = substr($string, $keyPos, $endLinePos - $keyPos);
-                if (!$keyPos || !$endLinePos || !$oldPos) {
-                    $string .= "{$key}='{$val}'\n";
-                } else {
-                    $string = str_replace($oldPos, "{$key}='{$val}'", $string);
-                }
-            }
-        }
-        $string = substr($string, 0, -1);
-        $string .= "\n";
-        if (!file_put_contents($env, $string)) {
-            return false;
-        }
 
-        return true;
-    }
 
     public static function languages()
     {
-        $dir = base_path() . '/resources/lang/';
-        $glob = glob($dir . "*", GLOB_ONLYDIR);
-
-        $arrLang = array_map(
-            function ($value) use ($dir) {
-                return str_replace($dir, '', $value);
-            }, $glob
+        $directory = base_path() . '/resources/lang/';
+        $allFiles = glob($directory . "*", GLOB_ONLYDIR);
+        $language = array_map(
+            function ($envValue) use ($directory) {
+                return str_replace($directory, '', $envValue);
+            }, $allFiles
         );
-        $arrLang = array_map(
-            function ($value) use ($dir) {
-                return preg_replace('/[0-9]+/', '', $value);
-            }, $arrLang
+        $language = array_map(
+            function ($envValue) use ($directory) {
+                return preg_replace('/[0-9]+/', '', $envValue);
+            }, $language
         );
-        $arrLang = array_filter($arrLang);
-
-        return $arrLang;
+        $language = array_filter($language);
+        return $language;
     }
 
 
-
-    public static function permissionModules()
+    public static function setCommon(array $data)
     {
-        return $modules = [
-            'user',
-            'role',
-            'property',
-            'unit',
-            'tenant',
-            'invoice',
-            'invoice type',
-            'invoice payment',
-            'expense',
-            'maintainer',
-            'maintenance request',
-            'logged history',
-            'contact',
-            'support',
-            'note',
-            'account settings',
-            'password settings',
-            'general settings',
-            'company settings',
-           ];
+        $envData = app()->environmentFilePath();
+        $envString = file_get_contents($envData);
+        if (count($data) > 0) {
+            foreach ($data as $key => $val) {
+                $keyPosition = strpos($envString, "{$key}=");
+                $endLinePosition = strpos($envString, "\n", $keyPosition);
+                $oldPosition = substr($envString, $keyPosition, $endLinePosition - $keyPosition);
+                if (!$keyPosition || !$endLinePosition || !$oldPosition) {
+                    $envString .= "{$key}='{$val}'\n";
+                } else {
+                    $envString = str_replace($oldPosition, "{$key}='{$val}'", $envString);
+                }
+            }
+        }
+        $envString = substr($envString, 0, -1);
+        $envString .= "\n";
+        if (!file_put_contents($envData, $envString)) {
+            return false;
+        }
+        return true;
     }
 
-    public function langKeyword(){
-        $langKeyword=[
-            __('Own Property'),
-            __('Lease Property'),
-            __('Open'),
-            __('Paid'),
-            __('Partial Paid'),
-            __('Pending'),
-            __('In Progress'),
-            __('Completed'),
-        ];
-    }
+
 }

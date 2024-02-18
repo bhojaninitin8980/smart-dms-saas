@@ -25,10 +25,7 @@ class Coupon extends Model
         'Active',
     ];
 
-    public static $type = [
-        'fixed' => 'Fixed',
-        'percentage' => 'Percentage'
-    ];
+
 
     public function package($id)
     {
@@ -41,6 +38,11 @@ class Coupon extends Model
         return $this->hasMany('App\Models\CouponHistory', 'coupon', 'id')->count();
     }
 
+    public static $type = [
+        'fixed' => 'Fixed',
+        'percentage' => 'Percentage'
+    ];
+
     public static function couponApply($subscriptionId,$couponCode)
     {
 
@@ -50,23 +52,23 @@ class Coupon extends Model
             $applicable_packages = Coupon::whereRaw("find_in_set($package->id,applicable_packages)")->first();
 
             if (empty($applicable_packages)) {
-                return $package->price;
+                return $package->package_amount;
             }
 
             $usedCoupun = $coupons->usedCoupon();
             if (($coupons->use_limit == $usedCoupun) || $coupons->valid_for<date('Y-m-d')) {
-                return $package->price;
+                return $package->package_amount;
             } else {
                 if($coupons->type=='fixed'){
-                    $discoutedPrice = $package->price - $coupons->rate;
+                    $discoutedPrice = $package->package_amount - $coupons->rate;
                 }else{
-                    $discount_value = ($package->price / 100) * $coupons->rate;
-                    $discoutedPrice = $package->price - $discount_value;
+                    $discount_value = ($package->package_amount / 100) * $coupons->rate;
+                    $discoutedPrice = $package->package_amount - $discount_value;
                 }
                 return $discoutedPrice;
             }
         } else {
-            return $package->price;
+            return $package->package_amount;
         }
     }
 

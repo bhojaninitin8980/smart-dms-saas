@@ -33,7 +33,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($roles as $role)
+                        @foreach ($roleData as $role)
                             <tr>
                                 <td>{{ ucfirst($role->name) }} </td>
                                 <td>{{\Auth::user()->roleWiseUserCount($role->name)}}</td>
@@ -47,7 +47,7 @@
                                                href="{{ route('role.edit',$role->id) }}"> <i
                                                     data-feather="edit"></i></a>
                                         @endcan
-                                        @if($role->name !='employee' && $role->name !='customer')
+                                        @if($role->name !='tenant' && $role->name !='maintainer')
                                             @can('delete role')
                                                 <a class=" text-danger confirm_dialog" data-bs-toggle="tooltip"
                                                    data-bs-original-title="{{__('Detete')}}" href="#"> <i

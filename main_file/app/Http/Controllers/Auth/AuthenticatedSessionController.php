@@ -42,41 +42,36 @@ class AuthenticatedSessionController extends Controller
 
         $request->authenticate();
         $request->session()->regenerate();
-        $user = Auth::user();
-        if($user->is_active == 0)
+        $loginUser = Auth::user();
+        if($loginUser->is_active == 0)
         {
             auth()->logout();
         }
 
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
 
-        if(isset($query['status']) && $query['status'] == 'success')
+        $serverip = $_SERVER['REMOTE_ADDR'];
+        $data = @unserialize(file_get_contents('http://ip-api.com/php/' . $serverip));
+        if(isset($data['status']) && $data['status'] == 'success')
         {
-            $whichbrowser = new \WhichBrowser\Parser($_SERVER['HTTP_USER_AGENT']);
-            if ($whichbrowser->device->type == 'bot')
+            $browser = new \WhichBrowser\Parser($_SERVER['HTTP_USER_AGENT']);
+            if ($browser->device->type == 'bot')
             {
                 return redirect()->intended(RouteServiceProvider::HOME);
             }
-
-            $referrer = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : null;
-
-            /* Detect extra details about the user */
-            $query['browser_name'] = $whichbrowser->browser->name ?? null;
-            $query['os_name'] = $whichbrowser->os->name ?? null;
-            $query['browser_language'] = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? mb_substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : null;
-            $query['device_type'] = User::GetDeviceType($_SERVER['HTTP_USER_AGENT']);
-            $query['referrer_host'] = !empty($referrer['host']);
-            $query['referrer_path'] = !empty($referrer['path']);
-
-            $json = json_encode($query);
-
+            $referrerData = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : null;
+            $data['browser'] = $browser->browser->name ?? null;
+            $data['os'] = $browser->os->name ?? null;
+            $data['language'] = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? mb_substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : null;
+            $data['device'] = User::getDevice($_SERVER['HTTP_USER_AGENT']);
+            $data['referrer_host'] = !empty($referrerData['host']);
+            $data['referrer_path'] = !empty($referrerData['path']);
+            $result = json_encode($data);
             $details = new LoggedHistory();
-            $details->user_id = Auth::user()->id;
-            $details->ip = $ip;
-            $details->date = date('Y-m-d H:i:s');
-            $details->Details = $json;
             $details->type = Auth::user()->type;
+            $details->user_id = Auth::user()->id;
+            $details->date = date('Y-m-d H:i:s');
+            $details->Details = $result;
+            $details->ip = $serverip;
             $details->parent_id = parentId();
             $details->save();
         }

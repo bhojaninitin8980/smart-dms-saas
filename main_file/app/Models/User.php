@@ -14,7 +14,6 @@ class User extends Authenticatable
     use Notifiable;
 
 
-
     protected $fillable = [
         'first_name',
         'last_name',
@@ -41,15 +40,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function totalUser()
+    {
+        return User::where('type', '!=', 'super admin')->where('type', '!=', 'owner')->where('parent_id', $this->id)->count();
+    }
+
     public function getNameAttribute()
     {
         return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
     }
 
-    public function totalUser()
-    {
-        return User::where('type', '!=', 'super admin')->where('type', '!=', 'owner')->where('parent_id', '=', parentId())->count();
-    }
 
     public function totalContact()
     {
@@ -60,17 +61,17 @@ class User extends Authenticatable
     {
         return User::where('type', $role)->where('parent_id',parentId())->count();
     }
-    public static function GetDeviceType($user_agent)
+    public static function getDevice($user)
     {
-        $mobile_regex = '/(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera mini|avantgo|mobilesafari|docomo)/i';
-        $tablet_regex = '/(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))/i';
-        if(preg_match_all($mobile_regex, $user_agent))
+        $mobileType = '/(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera mini|avantgo|mobilesafari|docomo)/i';
+        $tabletType = '/(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))/i';
+        if(preg_match_all($mobileType, $user))
         {
             return 'mobile';
         }
         else
         {
-            if(preg_match_all($tablet_regex, $user_agent)) {
+            if(preg_match_all($tabletType, $user)) {
                 return 'tablet';
             } else {
                 return 'desktop';
@@ -78,10 +79,14 @@ class User extends Authenticatable
 
         }
     }
+
     public function totalDocument()
     {
         return Document::where('parent_id', '=', parentId())->count();
     }
 
-
+    public function subscriptions()
+    {
+        return $this->hasOne('App\Models\Subscription','id','subscription');
+    }
 }

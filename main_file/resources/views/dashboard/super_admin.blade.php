@@ -16,7 +16,7 @@
             series: [{
                 name: "{{__('Total Users')}}",
                 type: 'column',
-                data: {!! json_encode($data['organizationByMonth']['data']) !!},
+                data: {!! json_encode($result['organizationByMonth']['data']) !!},
             }],
             chart: {
                 height: 452,
@@ -95,7 +95,7 @@
                 },
             },
             xaxis: {
-                categories: {!! json_encode($data['organizationByMonth']['label']) !!},
+                categories: {!! json_encode($result['organizationByMonth']['label']) !!},
                 axisTicks: {
                     show:false
                 },
@@ -138,7 +138,7 @@
             series: [{
                 name: "{{__('Total Payment')}}",
                 type: 'line',
-                data: {!! json_encode($data['paymentByMonth']['data']) !!},
+                data: {!! json_encode($result['paymentByMonth']['data']) !!},
             }],
             chart: {
                 height: 452,
@@ -217,7 +217,7 @@
                 },
             },
             xaxis: {
-                categories: {!! json_encode($data['paymentByMonth']['label']) !!},
+                categories: {!! json_encode($result['paymentByMonth']['label']) !!},
                 axisTicks: {
                     show:false
                 },
@@ -266,7 +266,7 @@
                     <h4>{{__('Total Organization')}}</h4>
                 </div>
                 <div class="card-body progressCounter">
-                    <h2>{{$data['totalOrganization']}}</h2>
+                    <h2>{{$result['totalOrganization']}}</h2>
                 </div>
             </div>
         </div>
@@ -276,7 +276,7 @@
                     <h4>{{__('Total Subscription')}}</h4>
                 </div>
                 <div class="card-body progressCounter">
-                    <h2>{{$data['totalSubscription']}}</h2>
+                    <h2>{{$result['totalSubscription']}}</h2>
                 </div>
             </div>
         </div>
@@ -286,7 +286,7 @@
                     <h4>{{__('Total Transaction')}}</h4>
                 </div>
                 <div class="card-body progressCounter">
-                    <h2>{{$data['totalTransaction']}}</h2>
+                    <h2>{{$result['totalTransaction']}}</h2>
                 </div>
             </div>
         </div>
@@ -296,7 +296,7 @@
                     <h4>{{__('Total Income')}}</h4>
                 </div>
                 <div class="card-body progressCounter">
-                    <h2>{{env('CURRENCY_SYMBOL').$data['totalIncome']}}</h2>
+                    <h2>{{env('CURRENCY_SYMBOL').$result['totalIncome']}}</h2>
                 </div>
             </div>
         </div>
@@ -306,7 +306,7 @@
                     <h4>{{__('Total Notes')}}</h4>
                 </div>
                 <div class="card-body progressCounter">
-                    <h2>{{$data['totalNote']}}</h2>
+                    <h2>{{$result['totalNote']}}</h2>
                 </div>
             </div>
         </div>
@@ -317,7 +317,7 @@
                     <h4>{{__('Total Contact')}}</h4>
                 </div>
                 <div class="card-body progressCounter">
-                    <h2>{{$data['totalContact']}}</h2>
+                    <h2>{{$result['totalContact']}}</h2>
                 </div>
             </div>
         </div>
@@ -328,7 +328,7 @@
                     <h4>{{__('Total Support')}}</h4>
                 </div>
                 <div class="card-body progressCounter">
-                    <h2>{{$data['totalSupport']}}</h2>
+                    <h2>{{$result['totalSupport']}}</h2>
                 </div>
             </div>
         </div>
@@ -339,7 +339,7 @@
                     <h4>{{__('Today Support')}}</h4>
                 </div>
                 <div class="card-body progressCounter">
-                    <h2>{{$data['todaySupport']}}</h2>
+                    <h2>{{$result['todaySupport']}}</h2>
                 </div>
             </div>
         </div>

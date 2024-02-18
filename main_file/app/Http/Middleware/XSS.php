@@ -21,28 +21,27 @@ class XSS
     {
         if(\Auth::check())
         {
+
             \App::setLocale(\Auth::user()->lang);
 
             $timezone= getSettingsValByName('timezone');
             \Config::set('app.timezone', $timezone);
 
-            $migrations             = $this->getMigrations();
-            $dbMigrations           = $this->getExecutedMigrations();
-            $numberOfUpdatesPending = count($migrations) - count($dbMigrations);
-
-            if($numberOfUpdatesPending > 0)
+            $directoryMigrations             = $this->getMigrations();
+            $databaseMigrations           = $this->getExecutedMigrations();
+            $total = count($directoryMigrations) - count($databaseMigrations);
+            if($total > 0)
             {
                 return redirect()->route('LaravelUpdater::welcome');
             }
         }
-
-        $input = $request->all();
+        $data = $request->all();
         array_walk_recursive(
-            $input, function (&$input){
-            $input = strip_tags($input);
+            $data, function (&$data){
+            $data = strip_tags($data);
         }
         );
-        $request->merge($input);
+        $request->merge($data);
         return $next($request);
     }
 }

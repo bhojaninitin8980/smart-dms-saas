@@ -16,15 +16,13 @@ class CreateSubscriptionsTable extends Migration
         Schema::create(
             'subscriptions', function (Blueprint $table){
             $table->id();
-            $table->string('name')->unique();
-            $table->float('price')->default(0.00);
-            $table->string('duration')->nullable();
-            $table->string('image')->nullable();
-            $table->integer('total_user')->nullable();
-            $table->integer('total_document')->nullable();
+            $table->string('title')->unique();
+            $table->float('package_amount')->default(0.00);
+            $table->string('interval')->nullable();
+            $table->integer('user_limit')->nullable();
+            $table->integer('document_limit')->nullable();
             $table->integer('enabled_document_history')->default(0);
             $table->integer('enabled_logged_history')->default(0);
-            $table->text('description')->nullable();
             $table->timestamps();
         }
         );

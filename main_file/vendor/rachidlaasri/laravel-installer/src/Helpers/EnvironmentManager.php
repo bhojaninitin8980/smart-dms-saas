@@ -92,9 +92,9 @@ class EnvironmentManager
      */
     public function saveFileWizard(Request $request)
     {
-        $results = trans('installer_messages.environment.success');
+        $data = trans('installer_messages.environment.success');
 
-        $envFileData =
+        $defaultEnvData =
            "\n".
         'APP_NAME=\''.$request->app_name."'\n".
         'APP_ENV='.$request->environment."\n".
@@ -126,11 +126,11 @@ class EnvironmentManager
         'PUSHER_APP_SECRET='.$request->pusher_app_secret;
 
         try {
-            file_put_contents($this->envPath, $envFileData);
+            file_put_contents($this->envPath, $defaultEnvData);
         } catch (Exception $e) {
-            $results = trans('installer_messages.environment.errors');
+            $data = trans('installer_messages.environment.errors');
         }
 
-        return $results;
+        return $data;
     }
 }

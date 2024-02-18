@@ -7,19 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Subscription extends Model
 {
     protected $fillable = [
-        'name',
-        'price',
-        'duration',
-        'image',
-        'total_user',
-        'total_property',
-        'total_tenant',
+        'title',
+        'package_amount',
+        'interval',
+        'user_limit',
+        'property_limit',
+        'tenant_limit',
         'enabled_logged_history',
-        'description',
-
     ];
 
-    public static $duration = [
+    public static $intervals = [
         'Monthly' => 'Monthly',
         'Quarterly' => 'Quarterly',
         'Yearly' => 'Yearly',

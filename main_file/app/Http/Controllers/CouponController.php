@@ -154,61 +154,56 @@ class CouponController extends Controller
     public function apply(Request $request)
     {
         $settings=subscriptionPaymentSettings();
-
         $package = Subscription::find(\Illuminate\Support\Facades\Crypt::decrypt($request->package));
-
         if ($package && $request->coupon != '') {
             $currency = isset($settings['CURRENCY_SYMBOL'])?$settings['CURRENCY_SYMBOL']:'$';
-            $originalPrice=$currency.$package->price;
-            $coupons = Coupon::where('code', $request->coupon)->where('status', '1')->first();
-            if (!empty($coupons)) {
+            $originalPrice=$currency.$package->package_amount;
+            $couponData = Coupon::where('code', $request->coupon)->where('status', '1')->first();
+            if (!empty($couponData)) {
                 $applicable_packages = Coupon::whereRaw("find_in_set($package->id,applicable_packages)")->first();
 
                 if (empty($applicable_packages)) {
-                    return response()->json(
-                        [
-                            'is_success' => false,
-                            'final_price' => $originalPrice,
-                            'price' => $package->price,
-                            'message' => __('This coupon code do not applicable packages for this package.'),
-                        ]
-                    );
+                    $response=[
+                        'status' => false,
+                        'price' => $package->package_amount,
+                        'final_price' => $originalPrice,
+                        'msg' => __('This coupon do not applicable packages for this package.'),
+                    ];
+                    return response()->json($response);
                 }
-                $usedCoupun = $coupons->usedCoupon();
+                $usedCoupun = $couponData->usedCoupon();
 
-                if (($coupons->use_limit == $usedCoupun) || $coupons->valid_for<date('Y-m-d')) {
-                    return response()->json(
-                        [
-                            'is_success' => false,
-                            'discoutedPrice' => $originalPrice,
-                            'message' => __('This coupon code has expired.'),
-                        ]
-                    );
+                if (($couponData->use_limit == $usedCoupun) || $couponData->valid_for<date('Y-m-d')) {
+                    $response=[
+                        'status' => false,
+                        'discoutedPrice' => $originalPrice,
+                        'msg' => __('This coupon expired, please use another one.'),
+                    ];
+                    return response()->json($response);
+
                 } else {
 
-                    if($coupons->type=='fixed'){
-                        $discoutedPrice = $currency.($package->price - $coupons->rate);
+                    if($couponData->type=='fixed'){
+                        $discoutedPrice = $currency.($package->package_amount - $couponData->rate);
                     }else{
-                        $discount_value = ($package->price / 100) * $coupons->rate;
-                        $discoutedPrice = $currency.($package->price - $discount_value);
+                        $discount_value = ($package->package_amount / 100) * $couponData->rate;
+                        $discoutedPrice = $currency.($package->package_amount - $discount_value);
                     }
-
-                    return response()->json(
-                        [
-                            'is_success' => true,
-                            'discoutedPrice' => $discoutedPrice,
-                            'message' => __('Coupon code has applied successfully.'),
-                        ]
-                    );
+                    $response=[
+                        'status' => true,
+                        'discoutedPrice' => $discoutedPrice,
+                        'msg' => __('Coupon successfully applied.'),
+                    ];
+                    return response()->json($response);
                 }
             } else {
-                return response()->json(
-                    [
-                        'is_success' => false,
-                        'discoutedPrice' => $originalPrice,
-                        'message' => __('This coupon code is invalid or has expired.'),
-                    ]
-                );
+                $response=[
+                    'status' => false,
+                    'discoutedPrice' => $originalPrice,
+                    'msg' => __('This coupon is invalid or expired, please use another one.'),
+                ];
+                return response()->json($response);
+
             }
         }
 

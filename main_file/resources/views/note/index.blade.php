@@ -13,53 +13,65 @@
     </ul>
 @endsection
 @section('card-action-btn')
-    @if(Gate::check('create note') )
+    @if(Gate::check('create note') || \Auth::user()->type=='super admin')
         <a class="btn btn-primary btn-sm ml-20 customModal" href="#" data-size="md"
            data-url="{{ route('note.create') }}"
-           data-title="{{__('Create Note')}}"> <i class="ti-plus mr-5"></i>{{__('Create Note')}}</a>
+           data-title="{{__('Create New Note')}}"> <i class="ti-plus mr-5"></i>{{__('Create Note')}}</a>
     @endif
 @endsection
 @section('content')
     <div class="row">
-        @foreach($notes as $note)
-            <div class="col-xl-4 col-sm-6 cdx-xl-50">
-                <div class="card blog-wrapper">
-                    <div class="detailwrapper">
-                        <a href="#">
-                            <h4>{{$note->title}}</h4>
-                        </a>
-                        <ul class="blogsoc-list">
-                            <li><a href="#"><i
-                                        data-feather="calendar"></i>{{dateFormat($note->created_at)}}</a>
-                            </li>
-                            <li><a href="{{asset('/storage/upload/applicant/attachment/'.$note->attachment)}}"
-                                   target="_blank"><i data-feather="download"></i>{{__('Attachment')}}</a></li>
-                        </ul>
-                        <p>{{$note->description}}</p>
-                        @if(Gate::check('edit notes') || Gate::check('delete notes') )
-                            <div class="blog-footer">
-                                {!! Form::open(['method' => 'DELETE', 'route' => ['note.destroy', $note->id]]) !!}
-                                <div class="date-info">
-                                    @if(Gate::check('edit note') )
-                                        <a class="text-success customModal" data-bs-toggle="tooltip"
-                                           data-bs-original-title="{{__('Edit')}}" href="#"
-                                           data-url="{{ route('note.edit',$note->id) }}"
-                                           data-title="{{__('Edit Note')}}">
-                                            <i data-feather="edit"></i></a>
-                                    @endif
-                                    @if(Gate::check('delete note') )
-                                        <a class=" text-danger confirm_dialog" data-bs-toggle="tooltip"
-                                           data-bs-original-title="{{__('Detete')}}" href="#"> <i
-                                                data-feather="trash-2"></i></a>
-                                    @endif
-                                </div>
-                                {!! Form::close() !!}
-                            </div>
-                        @endif
-                    </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="display dataTable cell-border datatbl-advance">
+                        <thead>
+                        <tr>
+                            <th>{{__('Title')}}</th>
+                            <th>{{__('Description')}}</th>
+                            <th>{{__('Created At')}}</th>
+                            @if(Gate::check('edit note') || Gate::check('delete note') || \Auth::user()->type=='super admin')
+                                <th>{{__('Action')}}</th>
+                            @endif
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($notes as $note)
+                            <tr>
+                                <td>{{ $note->title }} </td>
+                                <td>{{ !empty($note->description)?$note->description:'-' }} </td>
+                                <td>{{dateFormat($note->created_at)}}</td>
+                                @if(Gate::check('edit note') || Gate::check('delete note') || \Auth::user()->type=='super admin')
+                                    <td>
+                                        <div class="cart-action">
+                                            {!! Form::open(['method' => 'DELETE', 'route' => ['note.destroy', $note->id]]) !!}
+                                            @if(!empty($note->attachment))
+                                                <a href="{{asset('/storage/upload/applicant/attachment/'.$note->attachment)}}"
+                                                   target="_blank"><i data-feather="download"></i></a>
+                                            @endif
+                                            @if(Gate::check('edit note') || \Auth::user()->type=='super admin')
+                                                <a class="text-success customModal" data-bs-toggle="tooltip"
+                                                   data-bs-original-title="{{__('Edit')}}" href="#"
+                                                   data-url="{{ route('note.edit',$note->id) }}"
+                                                   data-title="{{__('Edit Note')}}"> <i data-feather="edit"></i></a>
+                                            @endcan
+                                            @if(Gate::check('delete note') || \Auth::user()->type=='super admin')
+                                                <a class=" text-danger confirm_dialog" data-bs-toggle="tooltip"
+                                                   data-bs-original-title="{{__('Detete')}}" href="#"> <i
+                                                        data-feather="trash-2"></i></a>
+                                            @endcan
+                                            {!! Form::close() !!}
+                                        </div>
+                                    </td>
+                                @endif
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        @endforeach
+        </div>
     </div>
 @endsection
 

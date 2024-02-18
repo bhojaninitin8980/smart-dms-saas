@@ -54,7 +54,7 @@
                                 <td>
 
                                     @foreach($coupon->package($coupon->applicable_packages) as $package)
-                                        <span class="badge badge-primary mb-5"> {{$package->name}} </span>
+                                        <span class="badge badge-primary mb-5"> {{$package->title}} </span>
                                     @endforeach
 
                                 </td>

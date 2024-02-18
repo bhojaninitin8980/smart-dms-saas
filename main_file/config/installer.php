@@ -43,12 +43,12 @@ return [
     |
     */
     'permissions' => [
+        'resources/lang/' => '777',
+        'bootstrap/cache/' => '777',
         'storage/' => '777',
+        'storage/upload/' => '777',
         'storage/framework/' => '777',
         'storage/logs/' => '777',
-        'storage/upload/' => '777',
-        'bootstrap/cache/' => '777',
-        'resources/lang/' => '777',
     ],
 
     /*

@@ -18,11 +18,9 @@ $(document).on('click', '.customModal', function () {
             $('#customModal .body').html(data);
             $("#customModal").modal('show');
             select2();
-
         },
         error: function (data) {
             data = data.responseJSON;
-            console.log(data)
         }
     });
 

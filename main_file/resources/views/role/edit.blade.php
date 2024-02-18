@@ -16,9 +16,6 @@
     </ul>
 @endsection
 @section('content')
-    @php
-        $modules=\App\Models\Custom::permissionModules();
-    @endphp
     <div class="row">
         <div class="col-xl-12 col-md-12">
             <div class="card">
@@ -26,91 +23,25 @@
                     <h4>{{__('Edit Role And Permissions')}}</h4>
                 </div>
                 <div class="card-body">
-                    {{Form::model($role, array('route' => array('role.update', $role->id), 'method' => 'PUT')) }}
+                    {{Form::model($role,array('route' => array('role.update', $role->id), 'method' => 'PUT')) }}
                     <div class="form-group">
                         <div class="small-group">
                             <div>
-                                {{Form::label('name',__('Role Name'),['class'=>'form-label'])}}
-                                {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter role name'),  ($role->name =='employee' || $role->name =='customer')?'readonly':''))}}
+                                {{Form::label('title',__('Role Title'),['class'=>'form-label'])}}
+                                {{Form::text('title',$role->name,array('class'=>'form-control','placeholder'=>__('Enter role title'),in_array($role->name,['tenant','maintainer'])?'readonly':''))}}
                             </div>
                         </div>
                     </div>
-                    @if(!empty($permissions))
-                        @foreach($modules as $module)
-                            <div class="custom-card">
-                                <div class="card-header">
-                                    <h5>{{ucfirst($module)}}</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach($permissionList as $permission)
+                                <div class="form-check custom-chek form-check-inline col-md-3">
+                                    {{Form::checkbox('user_permission[]',$permission->id,null, ['class'=>'form-check-input','id' =>'user_permission'.$permission->id,in_array($permission->id,$assignPermission)?'checked':''])}}
+                                    {{Form::label('user_permission'.$permission->id,ucfirst($permission->name),['class'=>'form-check-label'])}}
                                 </div>
-                                <div class="card-body">
-                                    @if(in_array('manage '.$module,(array) $permissions))
-                                        @if($key = array_search('manage '.$module,$permissions))
-                                            <div class="form-check custom-chek form-check-inline">
-                                                {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
-                                                {{Form::label('permission'.$key,'Manage',['class'=>'form-check-label'])}}
-                                            </div>
-                                        @endif
-                                    @endif
-                                    @if(in_array('create '.$module,(array) $permissions))
-                                        @if($key = array_search('create '.$module,$permissions))
-                                            <div class="form-check custom-chek form-check-inline">
-                                                {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
-                                                {{Form::label('permission'.$key,'Create',['class'=>'form-check-label'])}}
-                                            </div>
-                                        @endif
-                                    @endif
-                                    @if(in_array('edit '.$module,(array) $permissions))
-                                        @if($key = array_search('edit '.$module,$permissions))
-                                            <div class="form-check custom-chek form-check-inline">
-                                                {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
-                                                {{Form::label('permission'.$key,'Edit',['class'=>'form-check-label'])}}
-                                            </div>
-                                        @endif
-                                    @endif
-                                    @if(in_array('delete '.$module,(array) $permissions))
-                                        @if($key = array_search('delete '.$module,$permissions))
-                                            <div class="form-check custom-chek form-check-inline">
-                                                {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
-                                                {{Form::label('permission'.$key,'Delete',['class'=>'form-check-label'])}}
-                                            </div>
-                                        @endif
-                                    @endif
-                                    @if(in_array('show '.$module,(array) $permissions))
-                                        @if($key = array_search('show '.$module,$permissions))
-                                            <div class="form-check custom-chek form-check-inline">
-                                                {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
-                                                {{Form::label('permission'.$key,'Show',['class'=>'form-check-label'])}}
-                                            </div>
-                                        @endif
-                                    @endif
-                                    @if(in_array('reply '.$module,(array) $permissions))
-                                        @if($key = array_search('reply '.$module,$permissions))
-                                            <div class="form-check custom-chek form-check-inline">
-                                                {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
-                                                {{Form::label('permission'.$key,'Reply',['class'=>'form-check-label'])}}
-                                            </div>
-                                        @endif
-                                    @endif
-                                        @if(in_array('send '.$module,(array) $permissions))
-                                            @if($key = array_search('send '.$module,$permissions))
-                                                <div class="form-check custom-chek form-check-inline">
-                                                    {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
-                                                    {{Form::label('permission'.$key,'Send',['class'=>'form-check-label'])}}
-                                                </div>
-                                            @endif
-                                        @endif
-
-                                        @if(in_array('preview '.$module,(array) $permissions))
-                                            @if($key = array_search('preview '.$module,$permissions))
-                                                <div class="form-check custom-chek form-check-inline">
-                                                    {{Form::checkbox('permissions[]',$key,null, ['class'=>'form-check-input','id' =>'permission'.$key])}}
-                                                    {{Form::label('permission'.$key,'Preview',['class'=>'form-check-label'])}}
-                                                </div>
-                                            @endif
-                                        @endif
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
+                            @endforeach
+                        </div>
+                    </div>
                     <div class="form-group mt-20 text-end">
                         {{Form::submit(__('Update'),array('class'=>'btn btn-primary btn-rounded'))}}
                     </div>

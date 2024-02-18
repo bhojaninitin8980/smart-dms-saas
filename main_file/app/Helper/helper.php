@@ -1,50 +1,36 @@
 <?php
 
 use App\Models\Custom;
-use App\Models\Property;
 use App\Models\Subscription;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-if (!function_exists('settings')) {
-    function settings()
+if (!function_exists('settingsKeys')) {
+    function settingsKeys()
     {
-        $data = DB::table('settings');
-        if (\Auth::check()) {
-            $userId = parentId();
-            $data = $data->where('parent_id', '=', $userId);
-        } else {
-            $data = $data->where('parent_id', '=', 1);
-        }
-        $data = $data->get();
-        $settings = [
+        return $settingsKeys = [
             "app_name" => "",
-            "company_logo" => "logo.png",
-            "company_favicon" => "favicon.png",
-            "landing_logo" => "landing_logo.png",
-            "company_currency" => "USD",
-            "company_currency_symbol" => "$",
-            "company_currency_symbol_position" => "pre",
-            "company_date_format" => "M j, Y",
-            "company_time_format" => "g:i A",
-            "company_name" => "",
-            "company_address" => "",
-            "company_city" => "",
-            "company_state" => "",
-            "company_zipcode" => "",
-            "company_country" => "",
-            "company_phone" => "",
-            "company_email" => "",
-            "company_email_from_name" => "",
             "theme_color" => "color1",
             "sidebar_mode" => "light",
             "layout_direction" => "ltrmode",
             "layout_mode" => "lightmode",
+            "company_logo" => "logo.png",
+            "company_favicon" => "favicon.png",
+            "landing_logo" => "landing_logo.png",
             "meta_seo_title" => "",
             "meta_seo_keyword" => "",
             "meta_seo_description" => "",
             "meta_seo_image" => "",
+            "company_currency" => "USD",
+            "company_currency_symbol" => "$",
+            "company_date_format" => "M j, Y",
+            "company_time_format" => "g:i A",
+            "company_name" => "",
+            "company_phone" => "",
+            "company_address" => "",
+            "company_email" => "",
+            "company_email_from_name" => "",
             "google_recaptcha" => "off",
             "recaptcha_key" => "",
             "recaptcha_secret" => "",
@@ -68,34 +54,51 @@ if (!function_exists('settings')) {
             "paypal_client_id" => "",
             "paypal_secret_key" => "",
             "bank_transfer_payment" => "off",
-            "bank_details" => "",
-            'timezone' => "USD",
-
+            "bank_name" => "",
+            "bank_holder_name" => "",
+            "bank_account_number" => "",
+            "bank_ifsc_code" => "",
+            "bank_other_details" => "",
         ];
+    }
+}
 
-        foreach ($data as $row) {
-            $settings[$row->name] = $row->value;
+if (!function_exists('settings')) {
+    function settings()
+    {
+        $settingData = DB::table('settings');
+        if (\Auth::check()) {
+            $userId = parentId();
+            $settingData = $settingData->where('parent_id', $userId);
+        } else {
+            $settingData = $settingData->where('parent_id',1);
+        }
+        $settingData = $settingData->get();
+        $details = settingsKeys();
+
+        foreach ($settingData as $row) {
+            $details[$row->name] = $row->value;
         }
 
         config(
             [
-                'captcha.secret' => $settings['recaptcha_key'],
-                'captcha.sitekey' => $settings['recaptcha_secret'],
+                'captcha.secret' => $details['recaptcha_key'],
+                'captcha.sitekey' => $details['recaptcha_secret'],
                 'options' => [
                     'timeout' => 30,
                 ],
             ]
         );
 
-        return $settings;
+        return $details;
     }
 }
 
 if (!function_exists('subscriptionPaymentSettings')) {
     function subscriptionPaymentSettings()
     {
-        $data = DB::table('settings')->where('type', 'payment')->where('parent_id', '=', 1)->get();
-        $settings = [
+        $settingData = DB::table('settings')->where('type', 'payment')->where('parent_id', '=', 1)->get();
+        $result = [
             'CURRENCY' => "USD",
             'CURRENCY_SYMBOL' => "$",
             'STRIPE_PAYMENT' => "off",
@@ -106,37 +109,70 @@ if (!function_exists('subscriptionPaymentSettings')) {
             "paypal_client_id" => "",
             "paypal_secret_key" => "",
             "bank_transfer_payment" => "off",
-            "bank_details" => "",
+            "bank_name" => "",
+            "bank_holder_name" => "",
+            "bank_account_number" => "",
+            "bank_ifsc_code" => "",
+            "bank_other_details" => "",
         ];
 
-        foreach ($data as $row) {
-            $settings[$row->name] = $row->value;
+        foreach ($settingData as $setting) {
+            $result[$setting->name] = $setting->value;
         }
 
-        return $settings;
+        return $result;
+    }
+}
+
+if (!function_exists('invoicePaymentSettings')) {
+    function invoicePaymentSettings($id)
+    {
+        $settingData = DB::table('settings')->where('type', 'payment')->where('parent_id', $id)->get();
+        $result = [
+            'CURRENCY' => "USD",
+            'CURRENCY_SYMBOL' => "$",
+            'STRIPE_PAYMENT' => "off",
+            'STRIPE_KEY' => "",
+            'STRIPE_SECRET' => "",
+            "paypal_payment" => "off",
+            "paypal_mode" => "",
+            "paypal_client_id" => "",
+            "paypal_secret_key" => "",
+            "bank_transfer_payment" => "off",
+            "bank_name" => "",
+            "bank_holder_name" => "",
+            "bank_account_number" => "",
+            "bank_ifsc_code" => "",
+            "bank_other_details" => "",
+        ];
+
+        foreach ($settingData as $row) {
+            $result[$row->name] = $row->value;
+        }
+        return $result;
     }
 }
 
 if (!function_exists('emailSettings')) {
     function emailSettings($id)
     {
-        $data = DB::table('settings')->where('type', 'smtp')->where('parent_id', $id)->get();
-        $settings = [
+        $settingData = DB::table('settings')->where('type', 'smtp')->where('parent_id', $id)->get();
+        $result = [
+            'FROM_EMAIL' => "",
+            'FROM_NAME' => "",
             'SERVER_DRIVER' => "",
             'SERVER_HOST' => "",
             'SERVER_PORT' => "",
             'SERVER_USERNAME' => "",
             'SERVER_PASSWORD' => "",
             'SERVER_ENCRYPTION' => "",
-            'FROM_EMAIL' => "",
-            'FROM_NAME' => "",
         ];
 
-        foreach ($data as $row) {
-            $settings[$row->name] = $row->value;
+        foreach ($settingData as $setting) {
+            $result[$setting->name] = $setting->value;
         }
 
-        return $settings;
+        return $result;
     }
 }
 
@@ -210,11 +246,11 @@ if (!function_exists('assignSubscription')) {
         $subscription = Subscription::find($id);
         if ($subscription) {
             \Auth::user()->subscription = $subscription->id;
-            if ($subscription->duration == 'Monthly') {
+            if ($subscription->interval == 'Monthly') {
                 \Auth::user()->subscription_expire_date = Carbon::now()->addMonths(1)->isoFormat('YYYY-MM-DD');
-            } elseif ($subscription->duration == 'Quarterly') {
+            } elseif ($subscription->interval == 'Quarterly') {
                 \Auth::user()->subscription_expire_date = Carbon::now()->addMonths(3)->isoFormat('YYYY-MM-DD');
-            } elseif ($subscription->duration == 'Yearly') {
+            } elseif ($subscription->interval == 'Yearly') {
                 \Auth::user()->subscription_expire_date = Carbon::now()->addYears(1)->isoFormat('YYYY-MM-DD');
             } else {
                 \Auth::user()->subscription_expire_date = null;
@@ -223,7 +259,8 @@ if (!function_exists('assignSubscription')) {
 
             $users = User::where('parent_id', '=', parentId())->whereNoIn('type', ['super admin', 'owner'])->get();
 
-            if ($subscription->total_user == 0) {
+
+            if ($subscription->user_limit == 0) {
                 foreach ($users as $user) {
                     $user->is_active = 1;
                     $user->save();
@@ -232,7 +269,7 @@ if (!function_exists('assignSubscription')) {
                 $userCount = 0;
                 foreach ($users as $user) {
                     $userCount++;
-                    if ($userCount <= $subscription->total_user) {
+                    if ($userCount <= $subscription->user_limit) {
                         $user->is_active = 1;
                         $user->save();
                     } else {
@@ -241,6 +278,7 @@ if (!function_exists('assignSubscription')) {
                     }
                 }
             }
+
 
         } else {
             return [
@@ -257,20 +295,21 @@ if (!function_exists('assignManuallySubscription')) {
         $subscription = Subscription::find($id);
         if ($subscription) {
             $owner->subscription = $subscription->id;
-            if ($subscription->duration == 'Monthly') {
+            if ($subscription->interval == 'Monthly') {
                 $owner->subscription_expire_date = Carbon::now()->addMonths(1)->isoFormat('YYYY-MM-DD');
-            } elseif ($subscription->duration == 'Quarterly') {
+            } elseif ($subscription->interval == 'Quarterly') {
                 $owner->subscription_expire_date = Carbon::now()->addMonths(3)->isoFormat('YYYY-MM-DD');
-            } elseif ($subscription->duration == 'Yearly') {
+            } elseif ($subscription->interval == 'Yearly') {
                 $owner->subscription_expire_date = Carbon::now()->addYears(1)->isoFormat('YYYY-MM-DD');
             } else {
                 $owner->subscription_expire_date = null;
             }
             $owner->save();
 
-            $users = User::where('parent_id', $userId)->get();
+            $users = User::where('parent_id', '=', parentId())->whereNoIn('type', ['super admin', 'owner'])->get();
 
-            if ($subscription->total_user == 0) {
+
+            if ($subscription->user_limit == 0) {
                 foreach ($users as $user) {
                     $user->is_active = 1;
                     $user->save();
@@ -279,7 +318,7 @@ if (!function_exists('assignManuallySubscription')) {
                 $userCount = 0;
                 foreach ($users as $user) {
                     $userCount++;
-                    if ($userCount <= $subscription->total_user) {
+                    if ($userCount <= $subscription->user_limit) {
                         $user->is_active = 1;
                         $user->save();
                     } else {
@@ -288,6 +327,7 @@ if (!function_exists('assignManuallySubscription')) {
                     }
                 }
             }
+
 
         } else {
             return [
@@ -319,17 +359,26 @@ if (!function_exists('smtpDetail')) {
     }
 }
 
-if (!function_exists('invoicePrefix')) {
-    function invoicePrefix()
+if (!function_exists('timeCalculation')) {
+     function timeCalculation($startDate,$startTime,$endDate,$endTime)
     {
-        $settings = settings();
-        return $settings["invoice_prefix"];
+        $startdate= $startDate.' '.$startTime;
+        $enddate=$endDate.' '.$endTime;
+
+        $startDateTime = new DateTime($startdate);
+        $endDateTime = new DateTime($enddate);
+
+         $interval = $startDateTime->diff($endDateTime);
+         $totalHours = $interval->h + $interval->i / 60;
+
+        return number_format($totalHours,2);
     }
 }
-if (!function_exists('expensePrefix')) {
-    function expensePrefix()
+
+if (!function_exists('setup')) {
+     function setup()
     {
-        $settings = settings();
-        return $settings["expense_prefix"];
+        $setupPath=storage_path() . "/installed";
+        return $setupPath;
     }
 }

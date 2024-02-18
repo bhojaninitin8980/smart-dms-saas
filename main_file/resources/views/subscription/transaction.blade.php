@@ -20,11 +20,10 @@
                     <table class="display dataTable cell-border datatbl-advance">
                         <thead>
                         <tr>
-                            <th>{{__('Transaction ID')}}</th>
                             <th>{{__('User')}}</th>
                             <th>{{__('Date')}}</th>
                             <th>{{__('Subscription')}}</th>
-                            <th>{{__('Price')}}</th>
+                            <th>{{__('Amount')}}</th>
                             <th>{{__('Payment Type')}}</th>
                             <th>{{__('Payment Status')}}</th>
                             <th>{{__('Receipt')}}</th>
@@ -33,11 +32,10 @@
                         <tbody>
                         @foreach ($transactions as $transaction)
                             <tr>
-                                <td>{{$transaction->order_id}}</td>
                                 <td>{{!empty($transaction->users)?$transaction->users->name:''}}</td>
                                 <td>{{dateFormat($transaction->created_at)}}</td>
                                 <td>{{$transaction->subscription}}</td>
-                                <td>{{$settings['CURRENCY_SYMBOL'].$transaction->price}}</td>
+                                <td>{{$settings['CURRENCY_SYMBOL'].$transaction->amount}}</td>
                                 <td>{{$transaction->payment_type}}</td>
                                 <td>
                                     @if($transaction->payment_status=='Pending')

@@ -19,7 +19,7 @@
                 </div>
                 <div class="card-body progressCounter">
                     <h2>
-                        <span class="count">{{$data['totalUser']}}</span>
+                        <span class="count">{{$result['totalUser']}}</span>
                     </h2>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="card-body progressCounter">
                     <h2>
-                        <span class="count">{{$data['totalDocument']}}</span>
+                        <span class="count">{{$result['totalDocument']}}</span>
                     </h2>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="card-body progressCounter">
                     <h2>
-                        <span class="count">{{$data['todayDocument']}}</span>
+                        <span class="count">{{$result['todayDocument']}}</span>
                     </h2>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="card-body progressCounter">
                     <h2>
-                        <span class="count">{{$data['totalCategory']}}</span>
+                        <span class="count">{{$result['totalCategory']}}</span>
                     </h2>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="card-body progressCounter">
                     <h2>
-                        <span class="count">{{$data['totalReminder']}}</span>
+                        <span class="count">{{$result['totalReminder']}}</span>
                     </h2>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="card-body progressCounter">
                     <h2>
-                        <span class="count">{{$data['todayReminder']}}</span>
+                        <span class="count">{{$result['todayReminder']}}</span>
                     </h2>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="card-body progressCounter">
                     <h2>
-                        <span class="count">{{$data['totalContact']}}</span>
+                        <span class="count">{{$result['totalContact']}}</span>
                     </h2>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                 </div>
                 <div class="card-body progressCounter">
                     <h2>
-                        <span class="count">{{$data['totalSupport']}}</span>
+                        <span class="count">{{$result['totalSupport']}}</span>
                     </h2>
                 </div>
             </div>
@@ -136,10 +136,10 @@
 
 @push('script-page')
     <script>
-        var documentByCategoryData={!! json_encode($data['documentByCategory']['data']) !!};
-        var documentByCategory= {!! json_encode($data['documentByCategory']['category']) !!};
-        var documentBySubCategoryData= {!! json_encode($data['documentBySubCategory']['data']) !!};
-        var documentBySubCategory= {!! json_encode($data['documentBySubCategory']['category']) !!};
+        var documentByCategoryData={!! json_encode($result['documentByCategory']['data']) !!};
+        var documentByCategory= {!! json_encode($result['documentByCategory']['category']) !!};
+        var documentBySubCategoryData= {!! json_encode($result['documentBySubCategory']['data']) !!};
+        var documentBySubCategory= {!! json_encode($result['documentBySubCategory']['category']) !!};
     </script>
 
     <script src="{{ asset('js/custom/dashboard.js') }}"></script>

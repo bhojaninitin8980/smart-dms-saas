@@ -79,3 +79,6 @@
 .head-invoice img{
     width: 250px;
 }
+.cdx-invoice .body-invoice .table tr td{
+    padding: 10px 10px !important;
+}

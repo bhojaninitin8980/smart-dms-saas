@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('page-title')
-    {{__('Email Settings')}}
+    {{__('SMTP Settings')}}
 @endsection
 @php
 $settings=settings();
@@ -11,7 +11,7 @@ $settings=settings();
             <a href="{{route('dashboard')}}"><h1>{{__('Dashboard')}}</h1></a>
         </li>
         <li class="breadcrumb-item active">
-            <a href="#">{{__('Email Settings')}}</a>
+            <a href="#">{{__('SMTP Settings')}}</a>
         </li>
     </ul>
 @endsection
@@ -23,42 +23,39 @@ $settings=settings();
                     {{Form::model($settings, array('route' => array('setting.smtp'), 'method' => 'post')) }}
                     <div class="row">
                         <div class="form-group col-md-6">
-                            {{Form::label('server_driver',__('Email Server Driver'),array('class'=>'form-label')) }}
-                            {{Form::text('server_driver',$settings['SERVER_DRIVER'],array('class'=>'form-control','placeholder'=>__('Enter email server host')))}}
+                            {{Form::label('sender_name',__('Sender Name'),array('class'=>'form-label')) }}
+                            {{Form::text('sender_name',$settings['FROM_NAME'],array('class'=>'form-control','placeholder'=>__('Enter sender name')))}}
                         </div>
                         <div class="form-group col-md-6">
-                            {{Form::label('server_host',__('Email Server Host'),array('class'=>'form-label')) }}
-                            {{Form::text('server_host',$settings['SERVER_HOST'],array('class'=>'form-control ','placeholder'=>__('Enter email server driver')))}}
+                            {{Form::label('sender_email',__('Sender Email'),array('class'=>'form-label')) }}
+                            {{Form::text('sender_email',$settings['FROM_EMAIL'],array('class'=>'form-control','placeholder'=>__('Enter sender email')))}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{Form::label('server_driver',__('SMTP Driver'),array('class'=>'form-label')) }}
+                            {{Form::text('server_driver',$settings['SERVER_DRIVER'],array('class'=>'form-control','placeholder'=>__('Enter smtp host')))}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{Form::label('server_host',__('SMTP Host'),array('class'=>'form-label')) }}
+                            {{Form::text('server_host',$settings['SERVER_HOST'],array('class'=>'form-control ','placeholder'=>__('Enter smtp driver')))}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{Form::label('server_username',__('SMTP Username'),array('class'=>'form-label')) }}
+                            {{Form::text('server_username',$settings['SERVER_USERNAME'],array('class'=>'form-control','placeholder'=>__('Enter smtp username')))}}
 
                         </div>
                         <div class="form-group col-md-6">
-                            {{Form::label('server_port',__('Email Server Port'),array('class'=>'form-label')) }}
-                            {{Form::text('server_port',$settings['SERVER_PORT'],array('class'=>'form-control','placeholder'=>__('Enter email server port')))}}
+                            {{Form::label('server_password',__('SMTP Password'),array('class'=>'form-label')) }}
+                            {{Form::text('server_password',$settings['SERVER_PASSWORD'],array('class'=>'form-control','placeholder'=>__('Enter smtp password')))}}
 
                         </div>
                         <div class="form-group col-md-6">
-                            {{Form::label('server_username',__('Email Server Username'),array('class'=>'form-label')) }}
-                            {{Form::text('server_username',$settings['SERVER_USERNAME'],array('class'=>'form-control','placeholder'=>__('Enter email server username')))}}
+                            {{Form::label('server_encryption',__('SMTP Encryption'),array('class'=>'form-label')) }}
+                            {{Form::text('server_encryption',$settings['SERVER_ENCRYPTION'],array('class'=>'form-control','placeholder'=>__('Enter smtp encryption')))}}
 
                         </div>
                         <div class="form-group col-md-6">
-                            {{Form::label('server_password',__('Email Server Password'),array('class'=>'form-label')) }}
-                            {{Form::text('server_password',$settings['SERVER_PASSWORD'],array('class'=>'form-control','placeholder'=>__('Enter email server password')))}}
-
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{Form::label('server_encryption',__('Email Server Encryption'),array('class'=>'form-label')) }}
-                            {{Form::text('server_encryption',$settings['SERVER_ENCRYPTION'],array('class'=>'form-control','placeholder'=>__('Enter email server encryption')))}}
-
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{Form::label('from_email',__('From Email'),array('class'=>'form-label')) }}
-                            {{Form::text('from_email',$settings['FROM_EMAIL'],array('class'=>'form-control','placeholder'=>__('Enter from email')))}}
-
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{Form::label('from_name',__('From Name'),array('class'=>'form-label')) }}
-                            {{Form::text('from_name',$settings['FROM_NAME'],array('class'=>'form-control','placeholder'=>__('Enter from name')))}}
+                            {{Form::label('server_port',__('SMTP Port'),array('class'=>'form-label')) }}
+                            {{Form::text('server_port',$settings['SERVER_PORT'],array('class'=>'form-control','placeholder'=>__('Enter smtp port')))}}
 
                         </div>
                     </div>

@@ -18,8 +18,9 @@ class UserController extends Controller
         if (\Auth::user()->can('manage user')) {
             if (\Auth::user()->type == 'super admin') {
                 $users = User::where('parent_id', parentId())->where('type', 'owner')->get();
+
             } else {
-                $users = User::where('parent_id', parentId())->whereNotIn('type',['tenant','maintainer'])->get();
+                $users = User::where('parent_id', '=', parentId())->get();
             }
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
@@ -31,9 +32,7 @@ class UserController extends Controller
 
     public function create()
     {
-
-        $roles = Role::where('parent_id', parentId())->whereNotIn('name', ['tenant','maintainer'])->get()->pluck('name', 'id');
-
+        $roles = Role::where('parent_id', parentId())->get()->pluck('name', 'id');
         return view('user.create', compact('roles'));
     }
 
@@ -91,12 +90,11 @@ class UserController extends Controller
                 $authUser = \App\Models\User::find($ids);
                 $total_user = $authUser->totalUser();
                 $subscription = Subscription::find($authUser->subscription);
-                if ($total_user < $subscription->total_user || $subscription->total_user == 0) {
+                if ($total_user < $subscription->user_limit || $subscription->user_limit == 0) {
                     $role_r = Role::findById($request->role);
                     $user = new User();
                     $user->first_name = $request->first_name;
                     $user->last_name = $request->last_name;
-                    $user->email = $request->email;
                     $user->phone_number = $request->phone_number;
                     $user->password = \Hash::make($request->password);
                     $user->type = $role_r->name;
@@ -128,7 +126,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::where('parent_id', '=', parentId())->whereNotIn('name', ['employee'])->get()->pluck('name', 'id');
+        $roles = Role::where('parent_id', '=', parentId())->get()->pluck('name', 'id');
 
         return view('user.edit', compact('user', 'roles'));
     }

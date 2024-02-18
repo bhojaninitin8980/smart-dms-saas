@@ -11,101 +11,50 @@ class PermissionController extends Controller
 
     public function index()
     {
-        $permissions = Permission::all();
-
-        return view('permission.index')->with('permissions', $permissions);
+        $permissionData = Permission::all();
+        return view('user_permission.index', compact('permissionData'));
     }
 
 
     public function create()
     {
-
-        $roles = Role::get();
-//        $roles = Role::where('parent_id', '=', parentId())->get();
-
-        return view('permission.create')->with('roles', $roles);
+        $userRoles = Role::get();
+        return view('user_permission.create', compact('userRoles'));
     }
 
 
     public function store(Request $request)
     {
+
         $validator = \Validator::make(
             $request->all(), [
-                               'name' => 'required',
-                           ]
+                'title' => 'required',
+            ]
         );
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             $messages = $validator->getMessageBag();
-
             return redirect()->back()->with('error', $messages->first());
         }
 
-        $name             = $request['name'];
-        $permission       = new Permission();
-        $permission->name = $name;
+        $userPermission = new Permission();
+        $userPermission->name = $request->title;
+        $userPermission->save();
 
-        $roles = $request['roles'];
-
-        $permission->save();
-
-        if(!empty($request['roles']))
-        {
-            foreach($roles as $role)
-            {
-                $r          = Role::where('id', '=', $role)->firstOrFail();
-                $permission = Permission::where('name', '=', $name)->first();
-                $r->givePermissionTo($permission);
+        if (!empty($request->user_roles)) {
+            foreach ($request->user_roles as $userRole) {
+                $role = Role::find($userRole);
+                $permission = Permission::where('name', $request->title)->first();
+                $role->givePermissionTo($permission);
             }
         }
-
         return redirect()->back()->with('success', 'Permission successfully created.');
-
-    }
-
-
-    public function show($id)
-    {
-        //
-    }
-
-
-    public function edit($id)
-    {
-        $permission = Permission::find($id);
-        $roles      = Role::where('parent_id', '=', parentId())->get();
-
-        return view('permission.edit', compact('roles', 'permission'));
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        $permission = Permission::find($id);
-        $validator  = \Validator::make(
-            $request->all(), [
-                               'name' => 'required',
-                           ]
-        );
-        if($validator->fails())
-        {
-            $messages = $validator->getMessageBag();
-
-            return redirect()->back()->with('error', $messages->first());
-        }
-
-        $input = $request->all();
-        $permission->fill($input)->save();
-
-        return redirect()->back()->with('success', 'Permission successfully updated.');
     }
 
 
     public function destroy($id)
     {
-        $permission = Permission::findOrFail($id);
+        $permission = Permission::find($id);
         $permission->delete();
-
         return redirect()->back()->with('success', 'Permission successfully deleted.');
     }
 }

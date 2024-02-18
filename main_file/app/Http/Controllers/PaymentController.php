@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Coupon;
 use App\Models\CouponHistory;
-use App\Models\Order;
+use App\Models\PackageTransaction;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
@@ -51,16 +51,17 @@ class PaymentController extends Controller
         $coupon = $request->coupon;
         $subscription=Subscription::find($subscriptionId);
 
-        $price = Coupon::couponApply($subscriptionId,$coupon);
-        $orderID = uniqid('', true);
-        $data['order_id'] = $orderID;
-        $data['name'] = $request->name;
-        $data['subscription'] = $subscription->name;
+        $amount = Coupon::couponApply($subscriptionId,$coupon);
+        $packageTransId = uniqid('', true);
+
+        $data['holder_name'] = $request->name;
         $data['subscription_id'] = $subscription->id;
-        $data['price'] = $price;
+        $data['amount'] = $amount;
+        $data['subscription_transactions_id'] = $packageTransId;
         $data['payment_type'] = 'Bank Transfer';
         $data['status'] = 'Pending';
-        Order::orderData($data);
+        PackageTransaction::transactionData($data);
+
         if($subscription->couponCheck()>0){
             $couhis['coupon']=$request->coupon;
             $couhis['package']=$subscription->id;
@@ -124,7 +125,7 @@ class PaymentController extends Controller
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
 
-        $paypalToken = $provider->getAccessToken();
+        $token = $provider->getAccessToken();
 
         $response = $provider->createOrder([
             "intent" => "CAPTURE",
@@ -169,15 +170,15 @@ class PaymentController extends Controller
             if (isset($response['status']) && $response['status'] == 'COMPLETED') {
                 $coupon = $request->coupon;
                 $subscription=Subscription::find($subscriptionId);
-                $price = Coupon::couponApply($subscriptionId,$coupon);
-                $orderID = uniqid('', true);
-                $data['order_id'] = $orderID;
-                $data['name'] = $request->name;
-                $data['subscription'] = $subscription->name;
+                $amount = Coupon::couponApply($subscriptionId,$coupon);
+                $packageTransId = uniqid('', true);
+
+                $data['holder_name'] = $request->name;
                 $data['subscription_id'] = $subscription->id;
-                $data['price'] = $price;
+                $data['amount'] = $amount;
+                $data['subscription_transactions_id'] = $packageTransId;
                 $data['payment_type'] = 'Paypal';
-                Order::orderData($data);
+                PackageTransaction::transactionData($data);
 
                 if($subscription->couponCheck()>0){
                     $couhis['coupon']=$request->coupon;
@@ -185,7 +186,7 @@ class PaymentController extends Controller
                     CouponHistory::couponData($couhis);
                 }
 
-                $assignPlan = assignSubscription($subscription->id);
+                 assignSubscription($subscription->id);
 
                 return redirect()
                     ->back()
@@ -199,7 +200,7 @@ class PaymentController extends Controller
         } else {
             return redirect()
                 ->back()
-                ->with('error', __('Transaction has been failed.'));
+                ->with('error', __('Transaction failed.'));
         }
 
     }

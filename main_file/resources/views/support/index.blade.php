@@ -13,10 +13,10 @@
     </ul>
 @endsection
 @section('card-action-btn')
-    @if(Gate::check('create support') )
+    @if(Gate::check('create support') || \Auth::user()->type=='super admin')
         <a class="btn btn-primary btn-sm ml-20 customModal" href="#" data-size="md"
            data-url="{{ route('support.create') }}"
-           data-title="{{__('Create Support')}}"> <i class="ti-plus mr-5"></i>{{__('Create Support')}}</a>
+           data-title="{{__('Add New Support')}}"> <i class="ti-plus mr-5"></i>{{__('Create Support')}}</a>
     @endif
 @endsection
 @section('content')
@@ -29,10 +29,9 @@
                         <thead>
                         <tr>
                             <th>{{__('Subject')}}</th>
-                            <th>{{__('Attachment')}}</th>
-                            <th>{{__('Created Date')}}</th>
-                            <th>{{__('Created By')}}</th>
                             <th>{{__('Assign User')}}</th>
+                            <th>{{__('Created Date')}}</th>
+                            <th>{{__('Created User')}}</th>
                             <th>{{__('Priority')}}</th>
                             <th>{{__('Status')}}</th>
                             @if(Gate::check('edit support') ||  Gate::check('delete support') || Gate::check('reply support') ||  \Auth::user()->type=='super admin')
@@ -49,22 +48,13 @@
                                        class="text-body">{{$support->subject}}</a>
                                 </td>
                                 <td>
-                                    @if(!empty($support->attachment))
-                                        <a href="{{asset('/storage/upload/support/'.$support->attachment)}}"
-                                           download=""><i
-                                                data-feather="download"></i></a>
-                                    @else
-                                        -
-                                    @endif
+                                    {{ !empty($support->assignUser)?$support->assignUser->name:__('All') }}
                                 </td>
                                 <td>
                                     {{dateFormat($support->created_at)}}
                                 </td>
                                 <td>
                                     {{ !empty($support->createdUser)?$support->createdUser->name:'-' }}
-                                </td>
-                                <td>
-                                    {{ !empty($support->assignUser)?$support->assignUser->name:__('All') }}
                                 </td>
                                 <td>
                                     @if($support->priority=='low')
@@ -102,9 +92,9 @@
                                             {!! Form::open(['method' => 'DELETE', 'route' => ['support.destroy', $support->id]]) !!}
                                             @if(Gate::check('reply support') ||  \Auth::user()->type=='super admin')
                                                 <a class="text-secondary" data-bs-toggle="tooltip"
-                                                   data-bs-original-title="{{__('Replay')}}"
+                                                   data-bs-original-title="{{__('Detail')}}"
                                                    href="{{ route('support.show',\Crypt::encrypt($support->id)) }}"> <i
-                                                        data-feather="send"></i></a>
+                                                        data-feather="eye"></i></a>
                                             @endcan
 
                                             @if($support->created_id == \Auth::user()->id)

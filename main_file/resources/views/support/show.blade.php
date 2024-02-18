@@ -71,7 +71,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4><i class="fa fa-commenting mr-10"></i>{{__('Comments')}}</h4>
+                    <h4><i class="fa fa-commenting mr-10"></i>{{__('Discussion')}}</h4>
                 </div>
                 <div class="card-body">
                     <ul class="blgcomment-list">
@@ -80,12 +80,10 @@
                         <li>
                             <div class="comment-item">
                                 <div class="media">
-                                    <img class="img-fluid " src="{{(!empty($reply->user) && !empty($reply->user->profile))?asset(Storage::url('upload/profile')).'/'.$reply->user->profile:asset(Storage::url('upload/profile')).'/avatar.png'}}" alt="">
                                     <div class="media-body">
                                         <a href="#">
                                             <h5>{{!empty($reply->user)?$reply->user->name:''}}<span class="comment-time">    <i class="fa fa-calendar"></i>{{dateFormat($reply->created_at)}}</span></h5>
                                         </a>
-
                                         <p>  {{$reply->description}}</p>
                                     </div>
                                 </div>
@@ -95,12 +93,10 @@
                         <li class="reply-comment">
                             <div class="comment-item">
                                 <div class="media">
-                                    <img class="img-fluid" src="{{(!empty($reply->user) && !empty($reply->user->profile))?asset(Storage::url('upload/profile')).'/'.$reply->user->profile:asset(Storage::url('upload/profile')).'/avatar.png'}}" alt="">
                                     <div class="media-body">
                                         <a href="#">
                                             <h5> {{!empty($reply->user)?$reply->user->name:''}} <span class="comment-time">    <i class="fa fa-calendar"></i>{{dateFormat($reply->created_at)}}</span></h5>
                                         </a>
-
                                         <p>  {{$reply->description}}</p>
                                     </div>
                                 </div>
@@ -116,14 +112,14 @@
         <div class="col-md-12">
             <div class="card addblg-comment">
                 <div class="card-header">
-                    <h4> <i class="fa fa-plus-square mr-10"></i>{{__('Add comment')}}</h4>
+                    <h4> <i class="fa fa-plus-square mr-10"></i>{{__('Add discussion')}}</h4>
                 </div>
                 <div class="card-body">
                     {{Form::open(array('route'=>array('support.reply',$support->id),'method'=>'post'))}}
                         <div class="form-group">
-                            <textarea class="form-control" rows="5" name="comment" placeholder="{{__('write a comment...')}}"></textarea>
+                            <textarea class="form-control" rows="5" name="comment" placeholder="{{__('Write a discussion...')}}"></textarea>
                         </div>
-                        <div class="form-group mb-0"><button type="submit" class="btn btn-primary">{{__('Add Comment')}}</button></div>
+                        <div class="form-group mb-0"><button type="submit" class="btn btn-primary">{{__('Add discussion')}}</button></div>
                     {{Form::close()}}
                 </div>
             </div>

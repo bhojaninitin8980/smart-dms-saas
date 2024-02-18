@@ -18,45 +18,7 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-xl-4 col-lg-5">
-            <div class="card text-center">
-                <div class="card-body">
-                    <div class="col-12">
-                        <h4 class="mb-0 mt-2">
-                            @if(\Auth::user()->type=='super admin')
-                                {{env('APP_NAME')}}
-                            @else
-                                {{!empty($settings['app_name'])?$settings['app_name']:env('APP_NAME')}}
-                            @endif
-                        </h4>
-                        <p class="text-muted font-14">{{__('Application Name')}}</p>
-                    </div>
-                    <hr>
-                    <div class="col-12 mt-20">
-                        <img src="{{asset(Storage::url('upload/logo')).'/'.$settings['company_logo']}}"
-                             class="setting-logo" alt="">
-                        <h4 class="mb-0 mt-2">{{__('Logo')}}</h4>
-                    </div>
-
-                    @if(\Auth::user()->type=='super admin')
-                        <hr>
-                        <div class="col-12 mt-20">
-                            <img src="{{asset(Storage::url('upload/logo')).'/'.$settings['landing_logo']}}"
-                                 class="setting-logo landing_logo" alt="">
-                            <h4 class="mb-0 mt-2">{{__('Landing Page Logo')}}</h4>
-                        </div>
-                    @endif
-                    <hr>
-                    <div class="col-12 mt-20">
-                        <img src="{{asset(Storage::url('upload/logo')).'/'.$settings['company_favicon']}}" class=""
-                             alt="">
-                        <h4 class="mb-0 mt-2">{{__('Favicon')}}</h4>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-8 col-lg-7">
+        <div class="col-xl-12 col-lg-12">
             <div class="card">
                 <div class="card-body">
                     {{Form::model($settings, array('route' => array('setting.general'), 'method' => 'post', 'enctype' => "multipart/form-data")) }}
@@ -86,30 +48,7 @@
                                     {{Form::file('landing_logo',array('class'=>'form-control'))}}
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group col-md-6">
-                                    <label for="landing_page" class="form-label">{{__('Landing Page')}}</label>
-                                    <div>
-                                        <label class="switch with-icon switch-primary">
-                                            <input type="checkbox" name="landing_page"
-                                                   id="landing_page" {{$settings['landing_page']=='on'?'checked':''}}>
-                                            <span class="switch-btn"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group col-md-6">
-                                    <label for="register_page" class="form-label">{{__('Register Page')}}</label>
-                                    <div>
-                                        <label class="switch with-icon switch-primary">
-                                            <input type="checkbox" name="register_page"
-                                                   id="register_page" {{$settings['register_page']=='on'?'checked':''}}>
-                                            <span class="switch-btn"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+
                         @endif
                     </div>
                     <div class="text-right">

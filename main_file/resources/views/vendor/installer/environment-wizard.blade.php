@@ -17,11 +17,7 @@
 
 
         <form method="post" action="{{ route('LaravelInstaller::environmentSaveWizard') }}">
-            <label for="tab1" class="tab-label">
-                <i class="fa fa-cog fa-2x fa-fw" aria-hidden="true"></i>
-                <br />
-                {{ trans('installer_messages.environment.wizard.tabs.environment') }}
-            </label>
+
             <div id="tab1content">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -63,23 +59,10 @@
 
             </div>
 
-            <label for="tab2" class="tab-label">
-                <i class="fa fa-database fa-2x fa-fw" aria-hidden="true"></i>
-                <br />
-                {{ trans('installer_messages.environment.wizard.tabs.database') }}
-            </label>
+
             <div id="tab2content">
 
                 <input type="hidden" name="database_connection" value="mysql"/>
-                <div class="form-group {{ $errors->has('database_connection') ? ' has-error ' : '' }}">
-                    <label for="database_connection">
-                        {{ trans('installer_messages.environment.wizard.form.db_connection_label') }}
-                    </label>
-                    <b>{{ trans('installer_messages.environment.wizard.form.db_connection_label_mysql') }}</b>
-                    <br><br>
-
-                </div>
-
                 <div class="form-group {{ $errors->has('database_hostname') ? ' has-error ' : '' }}">
                     <label for="database_hostname">
                         {{ trans('installer_messages.environment.wizard.form.db_host_label') }}

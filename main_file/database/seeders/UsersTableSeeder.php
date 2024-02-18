@@ -528,13 +528,13 @@ class UsersTableSeeder extends Seeder
         Permission::insert($allPermission);
 
         // Default Super Admin Role
-        $superAdminRole = Role::create(
+        $systemSuperAdminRole = Role::create(
             [
                 'name' => 'super admin',
                 'parent_id' => 0,
             ]
         );
-        $superAdminPermission = [
+        $systemSuperAdminPermission = [
             ['name' => 'manage user'],
             ['name' => 'create user'],
             ['name' => 'edit user'],
@@ -573,9 +573,9 @@ class UsersTableSeeder extends Seeder
 
 
         ];
-        $superAdminRole->givePermissionTo($superAdminPermission);
+        $systemSuperAdminRole->givePermissionTo($systemSuperAdminPermission);
         // Default Super Admin
-        $superAdmin = User::create(
+        $systemSuperAdmin = User::create(
             [
                 'first_name' => 'Super Admin',
                 'email' => 'superadmin@gmail.com',
@@ -586,18 +586,18 @@ class UsersTableSeeder extends Seeder
                 'parent_id' => 0,
             ]
         );
-        $superAdmin->assignRole($superAdminRole);
+        $systemSuperAdmin->assignRole($systemSuperAdminRole);
 
         // Default Owner Role
-        $ownerRole = Role::create(
+        $systemOwnerRole = Role::create(
             [
                 'name' => 'owner',
-                'parent_id' => $superAdmin->id,
+                'parent_id' => $systemSuperAdmin->id,
             ]
         );
 
         // Default Owner All Permissions
-        $ownerPermission = [
+        $systemOwnerPermission = [
             ['name' => 'manage user'],
             ['name' => 'create user'],
             ['name' => 'edit user'],
@@ -671,10 +671,10 @@ class UsersTableSeeder extends Seeder
             ['name'=>'manage mail'],
             ['name'=>'send mail'],
         ];
-        $ownerRole->givePermissionTo($ownerPermission);
+        $systemOwnerRole->givePermissionTo($systemOwnerPermission);
 
         // Default Owner Create
-        $owner = User::create(
+        $systemOwner = User::create(
             [
                 'first_name' => 'Owner',
                 'email' => 'owner@gmail.com',
@@ -683,22 +683,22 @@ class UsersTableSeeder extends Seeder
                 'lang' => 'english',
                 'profile' => 'avatar.png',
                 'subscription' => 1,
-                'parent_id' => $superAdmin->id,
+                'parent_id' => $systemSuperAdmin->id,
             ]
         );
         // Default Owner Role Assign
-        $owner->assignRole($ownerRole);
+        $systemOwner->assignRole($systemOwnerRole);
 
 
         // Default Owner Role
-        $managerRole = Role::create(
+        $systemManagerRole = Role::create(
             [
                 'name' => 'manager',
-                'parent_id' => $owner->id,
+                'parent_id' => $systemOwner->id,
             ]
         );
         // Default Manager All Permissions
-        $managerPermission = [
+        $systemManagerPermission = [
             ['name' => 'manage user'],
             ['name' => 'create user'],
             ['name' => 'edit user'],
@@ -758,9 +758,9 @@ class UsersTableSeeder extends Seeder
             ['name'=>'manage mail'],
             ['name'=>'send mail'],
         ];
-        $managerRole->givePermissionTo($managerPermission);
+        $systemManagerRole->givePermissionTo($systemManagerPermission);
         // Default Manager Create
-        $manager = User::create(
+        $systemManager = User::create(
             [
                 'first_name' => 'Manager',
                 'email' => 'manager@gmail.com',
@@ -769,22 +769,22 @@ class UsersTableSeeder extends Seeder
                 'lang' => 'english',
                 'profile' => 'avatar.png',
                 'subscription' => 0,
-                'parent_id' => $owner->id,
+                'parent_id' => $systemOwner->id,
             ]
         );
         // Default Manager Role Assign
-        $manager->assignRole($managerRole);
+        $systemManager->assignRole($systemManagerRole);
 
 
         // Default employee role
-        $employeeRole = Role::create(
+        $systemEmployeeRole = Role::create(
             [
                 'name' => 'employee',
-                'parent_id' => $owner->id,
+                'parent_id' => $systemOwner->id,
             ]
         );
         // Default employee permissions
-        $employeePermissions = [
+        $systemEmployeePermissions = [
             ['name'=>'manage contact'],
             ['name'=>'create contact'],
             ['name'=>'edit contact'],
@@ -813,10 +813,10 @@ class UsersTableSeeder extends Seeder
             ['name'=>'manage share document'],
             ['name'=>'create share document'],
         ];
-        $employeeRole->givePermissionTo($employeePermissions);
+        $systemEmployeeRole->givePermissionTo($systemEmployeePermissions);
 
         // Default employee
-        $employee = User::create(
+        $systemEmployee = User::create(
             [
                 'first_name' => 'Employee',
                 'email' => 'employee@gmail.com',
@@ -825,12 +825,12 @@ class UsersTableSeeder extends Seeder
                 'lang' => 'english',
                 'profile' => 'avatar.png',
                 'subscription' => 0,
-                'parent_id' => $owner->id,
+                'parent_id' => $systemOwner->id,
             ]
         );
 
         // Default employee role assign
-        $employee->assignRole($employeeRole);
+        $systemEmployee->assignRole($systemEmployeeRole);
 
 
     }

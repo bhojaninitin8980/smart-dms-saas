@@ -2,91 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+
 
 class RoleController extends Controller
 {
 
     public function index()
     {
-        if(\Auth::user()->can('manage role'))
-        {
-
-            $roles = Role::where('parent_id', '=', parentId())->get();
-
-            return view('role.index', compact('roles'));
-        }
-        else
-        {
-            return redirect()->back()->with('error', __('Permission denied.'));
-        }
-
+        $roleData = Role::where('parent_id', parentId())->get();
+        return view('role.index', compact('roleData'));
     }
 
 
     public function create()
     {
-        if(\Auth::user()->type == 'super admin')
-        {
-            $permissions = Permission::all()->pluck('name', 'id')->toArray();
-
+        $permissionList = new Collection();
+        foreach (\Auth::user()->roles as $role) {
+            $permissionList = $permissionList->merge($role->permissions);
         }
-        else
-        {
-            $permissions = new Collection();
-            foreach(\Auth::user()->roles as $role)
-            {
-                $permissions = $permissions->merge($role->permissions);
-            }
-            $permissions = $permissions->pluck('name', 'id')->toArray();
-        }
-
-        return view('role.create', compact('permissions'));
+        return view('role.create', compact('permissionList'));
     }
 
 
     public function store(Request $request)
     {
-
-        if(\Auth::user()->can('create role'))
-        {
-
-            $validator = \Validator::make(
-                $request->all(), [
-                                   'name' => 'required|unique:roles,name,NULL,id,parent_id,' . parentId(),
-                                   'permissions' => 'required',
-                               ]
-            );
-            if($validator->fails())
-            {
-                $messages = $validator->getMessageBag();
-
-                return redirect()->back()->with('error', $messages->first());
-            }
-
-            $name             = $request['name'];
-            $role             = new Role();
-            $role->name       = $name;
-            $role->parent_id = parentId();
-            $permissions      = $request['permissions'];
-            $role->save();
-
-            foreach($permissions as $permission)
-            {
-                $p = Permission::where('id', '=', $permission)->firstOrFail();
-                $role->givePermissionTo($p);
-            }
-
-            return redirect()->back()->with('success', __('Role successfully created.'));
-        }
-        else
-        {
-            return redirect()->back()->with('error', __('Permission denied.'));
+        $validator = \Validator::make(
+            $request->all(), [
+                'title' => 'required|unique:roles,name,null,id,parent_id,' . parentId(),
+                'user_permission' => 'required',
+            ]
+        );
+        if ($validator->fails()) {
+            $messages = $validator->getMessageBag();
+            return redirect()->route('role.index')->with('error', $messages->first());
         }
 
+        $userRole = new Role();
+        $userRole->name = $request->title;
+        $userRole->parent_id = parentId();
+        $userRole->save();
+        foreach ($request->user_permission as $permission) {
+            $result = Permission::find($permission);
+            $userRole->givePermissionTo($result);
+        }
+        return redirect()->route('role.index')->with('success', __('Role successfully created.'));
 
     }
 
@@ -99,91 +62,53 @@ class RoleController extends Controller
 
     public function edit($id)
     {
-        $user = \Auth::user();
         $role = Role::find($id);
-        if($user->type == 'super admin')
-        {
-            $permissions = Permission::all()->pluck('name', 'id')->toArray();
-        }
-        else
-        {
-            $permissions = new Collection();
-            foreach($user->roles as $role1)
-            {
-                $permissions = $permissions->merge($role1->permissions);
-            }
-            $permissions = $permissions->pluck('name', 'id')->toArray();
+        $permissionList = new Collection();
+        foreach (\Auth::user()->roles as $userRole) {
+            $permissionList = $permissionList->merge($userRole->permissions);
         }
 
+        $assignPermission = $role->permissions;
+        $assignPermission = $assignPermission->pluck('id')->toArray();
 
-        return view('role.edit', compact('role','permissions'));
+        return view('role.edit', compact('role', 'permissionList', 'assignPermission'));
     }
 
 
     public function update(Request $request, $id)
     {
-        if(\Auth::user()->can('edit role'))
-        {
-
-            $role = Role::find($id);
-
-            $validator = \Validator::make(
-                $request->all(), [
-
-                                   'name' => 'required|unique:roles,name,' . $role['id'] . ',id,parent_id,' . parentId(),
-                                   'permissions' => 'required',
-                               ]
-            );
-            if($validator->fails())
-            {
-                $messages = $validator->getMessageBag();
-
-                return redirect()->back()->with('error', $messages->first());
-            }
-
-
-            $input       = $request->except(['permissions']);
-            $permissions = $request['permissions'];
-            $role->fill($input)->save();
-
-            $p_all = Permission::all();
-
-            foreach($p_all as $p)
-            {
-                $role->revokePermissionTo($p);
-            }
-
-            foreach($permissions as $permission)
-            {
-                $p = Permission::where('id', '=', $permission)->firstOrFail();
-                $role->givePermissionTo($p);
-            }
-
-            return redirect()->back()->with('success', __('Role successfully updated.'));
+        $userRole = Role::find($id);
+        $validator = \Validator::make(
+            $request->all(), [
+                'title' => 'required|unique:roles,name,' . $userRole->id . ',id,parent_id,' . parentId(),
+                'user_permission' => 'required',
+            ]
+        );
+        if ($validator->fails()) {
+            $messages = $validator->getMessageBag();
+            return redirect()->route('role.index')->with('error', $messages->first());
         }
-        else
-        {
-            return redirect()->back()->with('error', __('Permission denied.'));
-        }
+        $permissionData = $request->except(['permissions']);
+        $assignPermissions = $request->user_permission;
+        $userRole->fill($permissionData)->save();
 
+        $permissionList = Permission::all();
+        foreach ($permissionList as $revokePermission) {
+            $userRole->revokePermissionTo($revokePermission);
+        }
+        foreach ($assignPermissions as $assignPermission) {
+            $assign = Permission::find($assignPermission);
+            $userRole->givePermissionTo($assign);
+        }
+        return redirect()->route('role.index')->with('success', __('Role successfully updated.'));
     }
 
 
     public function destroy($id)
     {
-        if(\Auth::user()->can('delete role'))
-        {
-            $role = Role::find($id);
-            $role->delete();
-
-            return redirect()->back()->with('success', 'Role successfully deleted.');
-        }
-        else
-        {
-            return redirect()->back()->with('error', __('Permission denied.'));
-        }
-
+        $userRole = Role::find($id);
+        $userRole->delete();
+        return redirect()->route('role.index')->with('success', 'Role successfully deleted.');
     }
-
 
 }

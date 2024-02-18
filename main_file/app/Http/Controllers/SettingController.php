@@ -25,8 +25,7 @@ class SettingController extends Controller
         $user = User::find($loginUser->id);
         $validator = \Validator::make(
             $request->all(), [
-                'first_name' => 'required',
-                'last_name' => 'required',
+                'name' => 'required',
                 'email' => 'required|email|unique:users,email,' . $user->id,
             ]
         );
@@ -61,8 +60,7 @@ class SettingController extends Controller
         if (!empty($request->profile)) {
             $user->profile = $fileNameToStore;
         }
-        $user->first_name  = $request->first_name;
-        $user->last_name  = $request->last_name;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->save();
 
@@ -198,33 +196,7 @@ class SettingController extends Controller
 
             }
 
-            $datas = [];
-            if (isset($request->landing_page)) {
-                $datas['landing_page'] = $request->landing_page;
-            } else {
-                $datas['landing_page'] = 'off';
-            }
 
-            if (isset($request->register_page)) {
-                $datas['register_page'] = $request->register_page;
-            } else {
-                $datas['register_page'] = 'off';
-            }
-
-            if (!empty($datas['register_page']) || !empty($datas['landing_page'])) {
-                foreach ($datas as $key => $data) {
-
-                    \DB::insert(
-                        'insert into settings (`value`, `name`,`type`,`parent_id`) values (?, ?, ?,?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
-                            $data,
-                            $key,
-                            'common',
-                            parentId(),
-                        ]
-                    );
-                }
-
-            }
         } elseif (\Auth::user()->type == 'owner') {
             $validator = \Validator::make(
                 $request->all(), [
@@ -247,13 +219,7 @@ class SettingController extends Controller
                     ]
                 );
             }
-            if ($request->front_website_logo) {
-                $validator = \Validator::make(
-                    $request->all(), [
-                        'front_website_logo' => 'required|mimes:png',
-                    ]
-                );
-            }
+
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
 
@@ -299,18 +265,7 @@ class SettingController extends Controller
                     ]
                 );
             }
-            if ($request->front_website_logo) {
-                $logoName = \Auth::user()->id . '_front_logo.png';
-                $path = $request->file('favicon')->storeAs('upload/logo/', $logoName);
 
-                \DB::insert(
-                    'insert into settings (`value`, `name`,`parent_id`) values (?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
-                        $logoName,
-                        'front_website_logo',
-                        parentId(),
-                    ]
-                );
-            }
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -333,14 +288,14 @@ class SettingController extends Controller
         if (\Auth::Check()) {
             $validator = \Validator::make(
                 $request->all(), [
+                    'sender_name' => 'required',
+                    'sender_email' => 'required',
                     'server_driver' => 'required',
                     'server_host' => 'required',
                     'server_port' => 'required',
                     'server_username' => 'required',
                     'server_password' => 'required',
                     'server_encryption' => 'required',
-                    'from_email' => 'required',
-                    'from_name' => 'required',
                 ]
             );
             if ($validator->fails()) {
@@ -350,14 +305,14 @@ class SettingController extends Controller
             }
 
             $smtpArray = [
+                'FROM_NAME' => $request->sender_name,
+                'FROM_EMAIL' => $request->sender_email,
                 'SERVER_DRIVER' => $request->server_driver,
                 'SERVER_HOST' => $request->server_host,
                 'SERVER_PORT' => $request->server_port,
                 'SERVER_USERNAME' => $request->server_username,
                 'SERVER_PASSWORD' => $request->server_password,
                 'SERVER_ENCRYPTION' => $request->server_encryption,
-                'FROM_EMAIL' => $request->from_email,
-                'FROM_NAME' => $request->from_name,
             ];
             foreach ($smtpArray as $key => $val) {
                 \DB::insert(
@@ -415,25 +370,30 @@ class SettingController extends Controller
         }
 
         //        For Bank Transfer Settings
-        if(isset($request->bank_transfer_payment)){
+        if (isset($request->bank_transfer_payment)) {
             $validator = \Validator::make(
                 $request->all(), [
-                    'bank_details' => 'required',
+                    'bank_name' => 'required',
+                    'bank_holder_name' => 'required',
+                    'bank_account_number' => 'required',
+                    'bank_ifsc_code' => 'required',
                 ]
             );
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
                 return redirect()->back()->with('error', $messages->first());
             }
 
-            $stripeArray = [
+            $bankArray = [
                 'bank_transfer_payment' => $request->bank_transfer_payment ?? 'off',
-                'bank_details' => $request->bank_details,
+                'bank_name' => $request->bank_name,
+                'bank_holder_name' => $request->bank_holder_name,
+                'bank_account_number' => $request->bank_account_number,
+                'bank_ifsc_code' => $request->bank_ifsc_code,
+                'bank_other_details' => !empty($request->bank_other_details) ? $request->bank_other_details : '',
             ];
 
-            foreach($stripeArray as $key => $val)
-            {
+            foreach ($bankArray as $key => $val) {
                 \DB::insert(
                     'insert into settings (`value`, `name`, `type`,`parent_id`) values (?, ?, ?,?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
                         $val,
@@ -446,15 +406,14 @@ class SettingController extends Controller
         }
 
 //        For Strip Settings
-        if(isset($request->stripe_payment)){
+        if (isset($request->stripe_payment)) {
             $validator = \Validator::make(
                 $request->all(), [
                     'stripe_key' => 'required',
                     'stripe_secret' => 'required',
                 ]
             );
-            if($validator->fails())
-            {
+            if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
                 return redirect()->back()->with('error', $messages->first());
             }
@@ -465,8 +424,7 @@ class SettingController extends Controller
                 'STRIPE_SECRET' => $request->stripe_secret,
             ];
 
-            foreach($stripeArray as $key => $val)
-            {
+            foreach ($stripeArray as $key => $val) {
                 \DB::insert(
                     'insert into settings (`value`, `name`, `type`,`parent_id`) values (?, ?, ?,?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
                         $val,
@@ -561,7 +519,6 @@ class SettingController extends Controller
         }
 
 
-
         return redirect()->back()->with('success', __('Company setting successfully saved.'));
     }
 
@@ -578,14 +535,28 @@ class SettingController extends Controller
 
     public function themeSettings(Request $request)
     {
-        $settings = $request->all();
-        unset($settings['_token']);
+        $themeSettings = $request->all();
+        unset($themeSettings['_token']);
+        if (\Auth::user()->type == 'super admin') {
+            if (isset($request->landing_page)) {
+                $themeSettings['landing_page'] = $request->landing_page;
+            } else {
+                $themeSettings['landing_page'] = 'off';
+            }
 
-        foreach ($settings as $key => $val) {
+            if (isset($request->register_page)) {
+                $themeSettings['register_page'] = $request->register_page;
+            } else {
+                $themeSettings['register_page'] = 'off';
+            }
+        }
+
+        foreach ($themeSettings as $key => $val) {
             \DB::insert(
-                'insert into settings (`value`, `name`,`parent_id`) values (?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
+                'insert into settings (`value`, `name`,`type`,`parent_id`) values (?, ?, ?,?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
                     $val,
                     $key,
+                    'common',
                     parentId(),
                 ]
             );
@@ -680,13 +651,13 @@ class SettingController extends Controller
         $settings = $request->all();
         unset($settings['_token']);
 
-        $stripeArray = [
+        $recaptchaArray = [
             'google_recaptcha' => $request->google_recaptcha ?? 'off',
             'recaptcha_key' => $request->recaptcha_key,
             'recaptcha_secret' => $request->recaptcha_secret,
         ];
 
-        foreach ($stripeArray as $key => $val) {
+        foreach ($recaptchaArray as $key => $val) {
             \DB::insert(
                 'insert into settings (`value`, `name`, `type`,`parent_id`) values (?, ?, ?,?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
                     $val,
