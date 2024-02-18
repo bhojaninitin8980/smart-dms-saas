@@ -82,13 +82,13 @@
                                                href="{{route('subscriptions.show',\Illuminate\Support\Facades\Crypt::encrypt($subscription->id))}}"><i data-feather="eye"></i></a>
                                         @endif
 
-                                        @can('edit user')
+                                        @can('edit pricing packages')
                                             <a class="text-success customModal" data-bs-toggle="tooltip"
                                                data-bs-original-title="{{__('Edit')}}" href="#"
                                                data-url="{{ route('subscriptions.edit',$subscription->id) }}"
                                                data-title="{{__('Edit Package')}}"> <i data-feather="edit"></i></a>
                                         @endcan
-                                        @can('delete user')
+                                        @can('delete pricing packages')
                                             <a class=" text-danger confirm_dialog" data-bs-toggle="tooltip"
                                                data-bs-original-title="{{__('Detete')}}" href="#"> <i
                                                     data-feather="trash-2"></i></a>

@@ -1,7 +1,7 @@
 <?php
 
-// Product Name : Smart Tenant SaaS
-// Version      : 1.5
+// Product Name : DRMS SaaS
+// Version      : 1.3
 
 /**
  * Laravel - A PHP Framework For Web Artisans

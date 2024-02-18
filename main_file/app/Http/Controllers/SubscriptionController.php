@@ -42,7 +42,7 @@ class SubscriptionController extends Controller
                     'package_amount' => 'required',
                     'interval' => 'required',
                     'user_limit' => 'required',
-                    'parking_zone_limit' => 'required',
+                    'document_limit' => 'required',
                 ]
             );
             if ($validator->fails()) {
@@ -56,7 +56,8 @@ class SubscriptionController extends Controller
             $subscription->interval = $request->interval;
             $subscription->package_amount = $request->package_amount;
             $subscription->user_limit = $request->user_limit;
-            $subscription->parking_zone_limit = $request->parking_zone_limit;
+            $subscription->document_limit = $request->document_limit;
+             $subscription->enabled_document_history = isset($request->enabled_document_history) ? 1 : 0;
             $subscription->enabled_logged_history = isset($request->enabled_logged_history) ? 1 : 0;
             $subscription->save();
 
@@ -99,7 +100,7 @@ class SubscriptionController extends Controller
                     'package_amount' => 'required',
                     'interval' => 'required',
                     'user_limit' => 'required',
-                    'parking_zone_limit' => 'required',
+                    'document_limit' => 'required',
                 ]
             );
             if ($validator->fails()) {
@@ -112,7 +113,8 @@ class SubscriptionController extends Controller
             $subscription->interval = $request->interval;
             $subscription->package_amount = $request->package_amount;
             $subscription->user_limit = $request->user_limit;
-            $subscription->parking_zone_limit = $request->parking_zone_limit;
+             $subscription->document_limit = $request->document_limit;
+             $subscription->enabled_document_history = isset($request->enabled_document_history) ? 1 : 0;
             $subscription->enabled_logged_history = isset($request->enabled_logged_history) ? 1 : 0;
             $subscription->save();
 

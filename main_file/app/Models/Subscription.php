@@ -11,8 +11,8 @@ class Subscription extends Model
         'package_amount',
         'interval',
         'user_limit',
-        'property_limit',
-        'tenant_limit',
+        'document_limit',
+        'enabled_document_history',
         'enabled_logged_history',
     ];
 
