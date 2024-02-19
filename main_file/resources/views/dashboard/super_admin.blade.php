@@ -322,27 +322,6 @@
             </div>
         </div>
 
-        <div class="col-xxl-3 col-sm-6 cdx-xxl-50">
-            <div class="card sale-revenue">
-                <div class="card-header">
-                    <h4>{{__('Total Support')}}</h4>
-                </div>
-                <div class="card-body progressCounter">
-                    <h2>{{$result['totalSupport']}}</h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xxl-3 col-sm-6 cdx-xxl-50">
-            <div class="card sale-revenue">
-                <div class="card-header">
-                    <h4>{{__('Today Support')}}</h4>
-                </div>
-                <div class="card-body progressCounter">
-                    <h2>{{$result['todaySupport']}}</h2>
-                </div>
-            </div>
-        </div>
 
         <div class="col-xxl-12 cdx-xxl-50">
             <div class="card overall-revenuetbl">

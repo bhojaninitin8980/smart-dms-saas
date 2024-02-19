@@ -9,7 +9,6 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\NoticeBoardController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\SupportController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\CategoryController;
@@ -178,20 +177,6 @@ Route::resource('contact', ContactController::class)->middleware(
 );
 
 
-//-------------------------------Support-------------------------------------------
-
-Route::post('support/reply/{id}', [SupportController::class,'reply'])->name('support.reply')->middleware(
-    [
-        'auth',
-        'XSS',
-    ]
-);
-Route::resource('support', SupportController::class)->middleware(
-    [
-        'auth',
-        'XSS',
-    ]
-);
 
 //-------------------------------logged History-------------------------------------------
 

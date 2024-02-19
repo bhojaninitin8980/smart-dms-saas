@@ -124,14 +124,6 @@
                 @endif
 
 
-                @if(Gate::check('manage support'))
-                    <li class="menu-item {{in_array($routeName,['support.index','support.show'])?'active':''}}">
-                        <a href="{{route('support.index')}}">
-                            <div class="icon-item"><i data-feather="headphones"></i></div>
-                            <span>{{__('Supports')}}</span>
-                        </a>
-                    </li>
-                @endif
                 @if(Gate::check('manage contact'))
                     <li class="menu-item {{in_array($routeName,['contact.index'])?'active':''}}">
                         <a href="{{route('contact.index')}}">

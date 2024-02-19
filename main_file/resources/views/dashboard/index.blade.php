@@ -96,18 +96,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xxl-3 col-sm-6 cdx-xxl-50">
-            <div class="card sale-revenue">
-                <div class="card-header">
-                    <h4>{{__('Total Support')}}</h4>
-                </div>
-                <div class="card-body progressCounter">
-                    <h2>
-                        <span class="count">{{$result['totalSupport']}}</span>
-                    </h2>
-                </div>
-            </div>
-        </div>
+
 
     </div>
     <div class="row">

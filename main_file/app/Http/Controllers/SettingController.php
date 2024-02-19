@@ -179,20 +179,20 @@ class SettingController extends Controller
 
 
             if ($request->logo) {
-                $logoName = 'logo.png';
-                $path = $request->file('logo')->storeAs('upload/logo/', $logoName);
+                $superadminLogoName = 'logo.png';
+                $request->file('logo')->storeAs('upload/logo/', $superadminLogoName);
 
             }
 
             if ($request->landing_logo) {
-                $logoName = 'landing_logo.png';
-                $path = $request->file('landing_logo')->storeAs('upload/logo/', $logoName);
+                $superadminLandLogoName = 'landing_logo.png';
+                $request->file('landing_logo')->storeAs('upload/logo/', $superadminLandLogoName);
 
             }
 
             if ($request->favicon) {
-                $favicon = 'favicon.png';
-                $path = $request->file('favicon')->storeAs('upload/logo/', $favicon);
+                $superadminFavicon = 'favicon.png';
+                $request->file('favicon')->storeAs('upload/logo/', $superadminFavicon);
 
             }
 
@@ -239,12 +239,12 @@ class SettingController extends Controller
 
 
             if ($request->logo) {
-                $logoName = \Auth::user()->id . '_logo.png';
-                $path = $request->file('logo')->storeAs('upload/logo/', $logoName);
+                $ownerLogoName = parentId() . '_logo.png';
+                $request->file('logo')->storeAs('upload/logo/', $ownerLogoName);
 
                 \DB::insert(
                     'insert into settings (`value`, `name`,`parent_id`) values (?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
-                        $logoName,
+                        $ownerLogoName,
                         'company_logo',
                         parentId(),
                     ]
@@ -254,12 +254,12 @@ class SettingController extends Controller
             }
 
             if ($request->favicon) {
-                $logoName = \Auth::user()->id . '_favicon.png';
-                $path = $request->file('favicon')->storeAs('upload/logo/', $logoName);
+                $ownerFaviconName = parentId() . '_favicon.png';
+                $request->file('favicon')->storeAs('upload/logo/', $ownerFaviconName);
 
                 \DB::insert(
                     'insert into settings (`value`, `name`,`parent_id`) values (?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`) ', [
-                        $logoName,
+                        $ownerFaviconName,
                         'company_favicon',
                         parentId(),
                     ]

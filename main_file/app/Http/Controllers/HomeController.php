@@ -10,7 +10,6 @@ use App\Models\PackageTransaction;
 use App\Models\Reminder;
 use App\Models\SubCategory;
 use App\Models\Subscription;
-use App\Models\Support;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -26,8 +25,6 @@ class HomeController extends Controller
                 $result['totalIncome'] = PackageTransaction::sum('amount');
                 $result['totalNote'] = NoticeBoard::where('parent_id', parentId())->count();
                 $result['totalContact'] = Contact::where('parent_id', parentId())->count();
-                $result['totalSupport'] = Support::where('created_id', parentId())->orWhere('assign_user', parentId())->count();
-                $result['todaySupport'] = Support::whereDate('created_at', '=', date('Y-m-d'))->where('created_id', parentId())->orWhere('assign_user', parentId())->count();
 
                 $result['organizationByMonth'] = $this->organizationByMonth();
                 $result['paymentByMonth'] = $this->paymentByMonth();
@@ -42,8 +39,6 @@ class HomeController extends Controller
                 $result['todayReminder'] = Reminder::whereDate('date',Carbon::today())->where('parent_id', parentId())->count();
 
                 $result['totalContact'] = Contact::where('parent_id', \Auth::user()->id)->count();
-                $result['totalSupport'] = Support::where('created_id', \Auth::user()->id)->orWhere('assign_user', \Auth::user()->id)->count();
-                $result['todaySupport'] = Support::whereDate('created_at', '=', date('Y-m-d'))->where('created_id', \Auth::user()->id)->orWhere('assign_user', \Auth::user()->id)->count();
 
                 $result['documentByCategory'] = $this->documentByCategory();
                 $result['documentBySubCategory'] = $this->documentBySubCategory();
