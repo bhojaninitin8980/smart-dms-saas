@@ -33,11 +33,9 @@ class SubCategoryController extends Controller
         if (\Auth::user()->can('create sub category')) {
             $validator = \Validator::make(
                 $request->all(), [
-                'title' => 'required|regex:/^[\s\w-]*$/',
+                'title' => 'required',
                 'category_id' => 'required',
-            ], [
-                    'regex' => __('The Title format is invalid, Contains letter, number and only alphanum'),
-                ]
+            ]
             );
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
@@ -81,11 +79,9 @@ class SubCategoryController extends Controller
         if (\Auth::user()->can('edit sub category')) {
             $validator = \Validator::make(
                 $request->all(), [
-                'title' => 'required|regex:/^[\s\w-]*$/',
+                'title' => 'required',
                 'category_id' => 'required',
-            ], [
-                    'regex' => __('The Title format is invalid, Contains letter, number and only alphanum'),
-                ]
+            ]
             );
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();

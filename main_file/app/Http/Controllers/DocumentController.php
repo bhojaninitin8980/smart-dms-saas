@@ -47,13 +47,11 @@ class DocumentController extends Controller
         if (\Auth::user()->can('create document') || \Auth::user()->can('create my document')) {
             $validator = \Validator::make(
                 $request->all(), [
-                'name' => 'required|regex:/^[\s\w-]*$/',
+                'name' => 'required',
                 'category_id' => 'required',
                 'sub_category_id' => 'required',
                 'document' => 'required',
-            ], [
-                    'regex' => __('The Name format is invalid, Contains letter, number and only alphanum'),
-                ]
+            ]
             );
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
@@ -63,48 +61,48 @@ class DocumentController extends Controller
 
             $ids = parentId();
             $authUser = \App\Models\User::find($ids);
-            $total_document = $authUser->totalDocument();
+            $totalDocument = $authUser->totalDocument();
             $subscription = Subscription::find($authUser->subscription);
-            if ($total_document < $subscription->total_document || $subscription->total_document == 0) {
-                $document = new Document();
-                $document->name = $request->name;
-                $document->category_id = $request->category_id;
-                $document->sub_category_id = $request->sub_category_id;
-                $document->description = $request->description;
-                $document->tages = !empty($request->tages) ? implode(',', $request->tages) : '';
-                $document->created_by = \Auth::user()->id;
-                $document->parent_id = parentId();
-                $document->save();
-
-                if (!empty($request->document)) {
-                    $documentFilenameWithExt = $request->file('document')->getClientOriginalName();
-                    $documentFilename = pathinfo($documentFilenameWithExt, PATHINFO_FILENAME);
-                    $documentExtension = $request->file('document')->getClientOriginalExtension();
-                    $documentFileName = time() . '.' . $documentExtension;
-
-                    $dir = storage_path('upload/document');
-                    if (!file_exists($dir)) {
-                        mkdir($dir, 0777, true);
-                    }
-                    $request->file('document')->storeAs('upload/document/', $documentFileName);
-                    $version = new VersionHistory();
-                    $version->document = $documentFileName;
-                    $version->current_version = 1;
-                    $version->document_id = $document->id;
-                    $version->created_by = \Auth::user()->id;
-                    $version->parent_id = parentId();
-                    $version->save();
-                }
-
-                $data['document_id'] = $document->id;
-                $data['action'] = __('Document Create');
-                $data['description'] = __('New document') . ' ' . $document->name . ' ' . __('created by') . ' ' . \Auth::user()->name;
-                $data['document_id'] = $document->id;
-                DocumentHistory::history($data);
-                return redirect()->back()->with('success', __('Document successfully created!'));
-            } else {
-                return redirect()->back()->with('error', __('Your document limit is over, Please upgrade your subscription.'));
+            if ($totalDocument >= $subscription->total_document || $subscription->total_document != 0) {
+                return redirect()->back()->with('error', __('Your document limit is over, please upgrade your subscription.'));
             }
+
+            $document = new Document();
+            $document->name = $request->name;
+            $document->category_id = $request->category_id;
+            $document->sub_category_id = $request->sub_category_id;
+            $document->description = $request->description;
+            $document->tages = !empty($request->tages) ? implode(',', $request->tages) : '';
+            $document->created_by = \Auth::user()->id;
+            $document->parent_id = parentId();
+            $document->save();
+
+            if (!empty($request->document)) {
+                $documentFilenameWithExt = $request->file('document')->getClientOriginalName();
+                $documentFilename = pathinfo($documentFilenameWithExt, PATHINFO_FILENAME);
+                $documentExtension = $request->file('document')->getClientOriginalExtension();
+                $documentFileName = time() . '.' . $documentExtension;
+
+                $dir = storage_path('upload/document');
+                if (!file_exists($dir)) {
+                    mkdir($dir, 0777, true);
+                }
+                $request->file('document')->storeAs('upload/document/', $documentFileName);
+                $version = new VersionHistory();
+                $version->document = $documentFileName;
+                $version->current_version = 1;
+                $version->document_id = $document->id;
+                $version->created_by = \Auth::user()->id;
+                $version->parent_id = parentId();
+                $version->save();
+            }
+
+            $data['document_id'] = $document->id;
+            $data['action'] = __('Document Create');
+            $data['description'] = __('New document') . ' ' . $document->name . ' ' . __('created by') . ' ' . \Auth::user()->name;
+            $data['document_id'] = $document->id;
+            DocumentHistory::history($data);
+            return redirect()->back()->with('success', __('Document successfully created!'));
 
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));
@@ -136,12 +134,10 @@ class DocumentController extends Controller
         if (\Auth::user()->can('edit document') || \Auth::user()->can('create my document')) {
             $validator = \Validator::make(
                 $request->all(), [
-                'name' => 'required|regex:/^[\s\w-]*$/',
+                'name' => 'required',
                 'category_id' => 'required',
                 'sub_category_id' => 'required',
-            ], [
-                    'regex' => __('The Name format is invalid, Contains letter, number and only alphanum'),
-                ]
+            ]
             );
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();

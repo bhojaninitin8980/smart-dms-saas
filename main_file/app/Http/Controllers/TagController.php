@@ -30,10 +30,8 @@ class TagController extends Controller
         if (\Auth::user()->can('create tag')) {
             $validator = \Validator::make(
                 $request->all(), [
-                'title' => 'required|regex:/^[\s\w-]*$/',
-            ], [
-                    'regex' => __('The Title format is invalid, Contains letter, number and only alphanum'),
-                ]
+                'title' => 'required',
+            ]
             );
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
@@ -74,10 +72,8 @@ class TagController extends Controller
         if (\Auth::user()->can('edit tag')) {
             $validator = \Validator::make(
                 $request->all(), [
-                'title' => 'required|regex:/^[\s\w-]*$/',
-            ], [
-                    'regex' => __('The Title format is invalid, Contains letter, number and only alphanum'),
-                ]
+                'title' => 'required',
+            ]
             );
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
