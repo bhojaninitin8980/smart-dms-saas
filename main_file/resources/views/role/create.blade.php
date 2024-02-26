@@ -16,7 +16,9 @@
     </ul>
 @endsection
 @section('content')
-
+    @php
+        $systemModules=\App\Models\User::$systemModules;
+    @endphp
     <div class="row">
         <div class="col-xl-12 col-md-12">
             <div class="card">
@@ -26,22 +28,28 @@
                 <div class="card-body">
                     {{ Form::open(array('url' => 'role')) }}
                     <div class="form-group">
-                        <div class="small-group">
-                            <div>
-                                {{Form::label('title',__('Role Title'),['class'=>'form-label'])}}
-                                {{Form::text('title',null,array('class'=>'form-control','placeholder'=>__('Enter role title')))}}
-                            </div>
-                        </div>
+                        {{Form::label('title',__('Role Title'),['class'=>'form-label'])}}
+                        {{Form::text('title',null,array('class'=>'form-control','placeholder'=>__('Enter role title')))}}
                     </div>
 
                     <div class="card-body">
                         <div class="row">
-                            @foreach($permissionList as $permission)
-                                <div class="form-check custom-chek form-check-inline col-md-3">
-                                    {{Form::checkbox('user_permission[]',$permission->id,null, ['class'=>'form-check-input','id' =>'user_permission'.$permission->id])}}
-                                    {{Form::label('user_permission'.$permission->id,ucfirst($permission->name),['class'=>'form-check-label'])}}
-                                </div>
-                            @endforeach
+                            <div class="col-xl-12 col-md-12">
+                                @foreach($systemModules as $module)
+                                    <div class="row">
+                                        @foreach($permissionList as $permission)
+                                            @if (str_contains(strtolower($permission->name), strtolower($module)))
+                                                <div class="form-check custom-chek form-check-inline col-md-2">
+                                                    {{ Form::checkbox('user_permission[]', $permission->id, null, ['class'=>'form-check-input', 'id' => $module.'_permission'.$permission->id]) }}
+                                                    {{ Form::label($module.'_permission'.$permission->id, ucfirst($permission->name), ['class'=>'form-check-label']) }}
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <hr>
+                                @endforeach
+
+                            </div>
                         </div>
                     </div>
                     <div class="form-group mt-20 text-end">

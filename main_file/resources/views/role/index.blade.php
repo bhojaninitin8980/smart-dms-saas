@@ -27,8 +27,8 @@
                         <thead>
                         <tr>
                             <th>{{__('Role')}}</th>
-                            <th>{{__('User Count')}}</th>
-                            <th>{{__('Permissions Count')}}</th>
+                            <th>{{__('Assigned Users')}}</th>
+                            <th>{{__('Assigned Permissions')}}</th>
                             <th class="text-right">{{__('Action')}}</th>
                         </tr>
                         </thead>
@@ -47,14 +47,12 @@
                                                href="{{ route('role.edit',$role->id) }}"> <i
                                                     data-feather="edit"></i></a>
                                         @endcan
-                                        @if($role->name !='tenant' && $role->name !='maintainer')
-                                            @can('delete role')
-                                                <a class=" text-danger confirm_dialog" data-bs-toggle="tooltip"
-                                                   data-bs-original-title="{{__('Detete')}}" href="#"> <i
-                                                        data-feather="trash-2"></i></a>
-                                                {!! Form::close() !!}
-                                            @endcan
-                                        @endif
+                                        @can('delete role')
+                                            <a class=" text-danger confirm_dialog" data-bs-toggle="tooltip"
+                                               data-bs-original-title="{{__('Detete')}}" href="#"> <i
+                                                    data-feather="trash-2"></i></a>
+                                            {!! Form::close() !!}
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

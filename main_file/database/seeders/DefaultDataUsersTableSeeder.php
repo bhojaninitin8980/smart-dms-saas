@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class UsersTableSeeder extends Seeder
+class DefaultDataUsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,518 +22,330 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'manage user',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'create user',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'edit user',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'delete user',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage role',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'create role',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'edit role',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'delete role',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage contact',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'create contact',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'edit contact',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'delete contact',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'manage support',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'create support',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'edit support',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'delete support',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'reply support',
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage note',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'create note',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'edit note',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'delete note',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage logged history',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
 
             ],
             [
                 'name' => 'delete logged history',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
 
             ],
             [
                 'name' => 'manage pricing packages',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'create pricing packages',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'edit pricing packages',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'delete pricing packages',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'buy pricing packages',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage coupon',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'create coupon',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'edit coupon',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'delete coupon',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage coupon history',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'delete coupon history',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage pricing transation',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage account settings',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
 
             ],
             [
                 'name' => 'manage password settings',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage general settings',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
 
             ],
             [
                 'name' => 'manage company settings',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage email settings',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage payment settings',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage seo settings',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'manage google recaptcha settings',
                 'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ],
 
 
             [
                 'name'=>'manage category',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'create category',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'edit category',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'delete category',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage sub category',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'create sub category',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'edit sub category',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'delete sub category',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage tag',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'create tag',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'edit tag',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'delete tag',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'create document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'edit document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'delete document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'show document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage my document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'edit my document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'delete my document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'show my document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'create my document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage reminder',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'create reminder',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'edit reminder',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'delete reminder',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'show reminder',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage my reminder',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage document history',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'download document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'preview document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage comment',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'create comment',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage version',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'create version',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage share document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'delete share document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'create share document',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'manage mail',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
             [
                 'name'=>'send mail',
                 'gaurd_name'=>'web',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s')
             ],
 
         ];
         Permission::insert($allPermission);
 
         // Default Super Admin Role
-        $systemSuperAdminRole = Role::create(
-            [
-                'name' => 'super admin',
-                'parent_id' => 0,
-            ]
-        );
+        $superAdminRoleData=  [
+            'name' => 'super admin',
+        ];
+        $systemSuperAdminRole = Role::create($superAdminRoleData);
         $systemSuperAdminPermission = [
             ['name' => 'manage user'],
             ['name' => 'create user'],
@@ -543,11 +355,6 @@ class UsersTableSeeder extends Seeder
             ['name' => 'create contact'],
             ['name' => 'edit contact'],
             ['name' => 'delete contact'],
-            ['name' => 'manage support'],
-            ['name' => 'create support'],
-            ['name' => 'edit support'],
-            ['name' => 'delete support'],
-            ['name' => 'reply support'],
             ['name' => 'manage note'],
             ['name' => 'create note'],
             ['name' => 'edit note'],
@@ -575,26 +382,23 @@ class UsersTableSeeder extends Seeder
         ];
         $systemSuperAdminRole->givePermissionTo($systemSuperAdminPermission);
         // Default Super Admin
-        $systemSuperAdmin = User::create(
-            [
-                'first_name' => 'Super Admin',
-                'email' => 'superadmin@gmail.com',
-                'password' => Hash::make('123456'),
-                'type' => 'super admin',
-                'lang' => 'english',
-                'profile' => 'avatar.png',
-                'parent_id' => 0,
-            ]
-        );
+        $superAdminData=     [
+            'first_name' => 'Super Admin',
+            'email' => 'superadmin@gmail.com',
+            'password' => Hash::make('123456'),
+            'type' => 'super admin',
+            'lang' => 'english',
+            'profile' => 'avatar.png',
+        ];
+        $systemSuperAdmin = User::create($superAdminData);
         $systemSuperAdmin->assignRole($systemSuperAdminRole);
 
         // Default Owner Role
-        $systemOwnerRole = Role::create(
-            [
-                'name' => 'owner',
-                'parent_id' => $systemSuperAdmin->id,
-            ]
-        );
+        $ownerRoleData= [
+            'name' => 'owner',
+            'parent_id' => $systemSuperAdmin->id,
+        ];
+        $systemOwnerRole = Role::create($ownerRoleData);
 
         // Default Owner All Permissions
         $systemOwnerPermission = [
@@ -610,11 +414,6 @@ class UsersTableSeeder extends Seeder
             ['name' => 'create contact'],
             ['name' => 'edit contact'],
             ['name' => 'delete contact'],
-            ['name' => 'manage support'],
-            ['name' => 'create support'],
-            ['name' => 'edit support'],
-            ['name' => 'delete support'],
-            ['name' => 'reply support'],
             ['name' => 'manage note'],
             ['name' => 'create note'],
             ['name' => 'edit note'],
@@ -674,29 +473,27 @@ class UsersTableSeeder extends Seeder
         $systemOwnerRole->givePermissionTo($systemOwnerPermission);
 
         // Default Owner Create
-        $systemOwner = User::create(
-            [
-                'first_name' => 'Owner',
-                'email' => 'owner@gmail.com',
-                'password' => Hash::make('123456'),
-                'type' => 'owner',
-                'lang' => 'english',
-                'profile' => 'avatar.png',
-                'subscription' => 1,
-                'parent_id' => $systemSuperAdmin->id,
-            ]
-        );
+        $ownerData=    [
+            'first_name' => 'Owner',
+            'email' => 'owner@gmail.com',
+            'password' => Hash::make('123456'),
+            'type' => 'owner',
+            'lang' => 'english',
+            'profile' => 'avatar.png',
+            'subscription' => 1,
+            'parent_id' => $systemSuperAdmin->id,
+        ];
+        $systemOwner = User::create($ownerData);
         // Default Owner Role Assign
         $systemOwner->assignRole($systemOwnerRole);
 
 
         // Default Owner Role
-        $systemManagerRole = Role::create(
-            [
-                'name' => 'manager',
-                'parent_id' => $systemOwner->id,
-            ]
-        );
+        $managerRoleData=  [
+            'name' => 'manager',
+            'parent_id' => $systemOwner->id,
+        ];
+        $systemManagerRole = Role::create($managerRoleData);
         // Default Manager All Permissions
         $systemManagerPermission = [
             ['name' => 'manage user'],
@@ -707,11 +504,6 @@ class UsersTableSeeder extends Seeder
             ['name' => 'create contact'],
             ['name' => 'edit contact'],
             ['name' => 'delete contact'],
-            ['name' => 'manage support'],
-            ['name' => 'create support'],
-            ['name' => 'edit support'],
-            ['name' => 'delete support'],
-            ['name' => 'reply support'],
             ['name' => 'manage note'],
             ['name' => 'create note'],
             ['name' => 'edit note'],
@@ -760,40 +552,34 @@ class UsersTableSeeder extends Seeder
         ];
         $systemManagerRole->givePermissionTo($systemManagerPermission);
         // Default Manager Create
-        $systemManager = User::create(
-            [
-                'first_name' => 'Manager',
-                'email' => 'manager@gmail.com',
-                'password' => Hash::make('123456'),
-                'type' => 'manager',
-                'lang' => 'english',
-                'profile' => 'avatar.png',
-                'subscription' => 0,
-                'parent_id' => $systemOwner->id,
-            ]
-        );
+        $managerData=   [
+            'first_name' => 'Manager',
+            'email' => 'manager@gmail.com',
+            'password' => Hash::make('123456'),
+            'type' => 'manager',
+            'lang' => 'english',
+            'profile' => 'avatar.png',
+            'subscription' => 0,
+            'parent_id' => $systemOwner->id,
+        ];
+        $systemManager = User::create($managerData);
         // Default Manager Role Assign
         $systemManager->assignRole($systemManagerRole);
 
 
         // Default employee role
-        $systemEmployeeRole = Role::create(
-            [
-                'name' => 'employee',
-                'parent_id' => $systemOwner->id,
-            ]
-        );
+        $employeeRoleData=  [
+            'name' => 'employee',
+            'parent_id' => $systemOwner->id,
+        ];
+        $systemEmployeeRole = Role::create($employeeRoleData);
+
         // Default employee permissions
         $systemEmployeePermissions = [
             ['name'=>'manage contact'],
             ['name'=>'create contact'],
             ['name'=>'edit contact'],
             ['name'=>'delete contact'],
-            ['name'=>'manage support'],
-            ['name'=>'create support'],
-            ['name'=>'edit support'],
-            ['name'=>'delete support'],
-            ['name'=>'reply support'],
             ['name'=>'manage note'],
             ['name'=>'create note'],
             ['name'=>'edit note'],
@@ -816,22 +602,32 @@ class UsersTableSeeder extends Seeder
         $systemEmployeeRole->givePermissionTo($systemEmployeePermissions);
 
         // Default employee
-        $systemEmployee = User::create(
-            [
-                'first_name' => 'Employee',
-                'email' => 'employee@gmail.com',
-                'password' => Hash::make('123456'),
-                'type' => 'employee',
-                'lang' => 'english',
-                'profile' => 'avatar.png',
-                'subscription' => 0,
-                'parent_id' => $systemOwner->id,
-            ]
-        );
+        $employeeData= [
+            'first_name' => 'Employee',
+            'email' => 'employee@gmail.com',
+            'password' => Hash::make('123456'),
+            'type' => 'employee',
+            'lang' => 'english',
+            'profile' => 'avatar.png',
+            'subscription' => 0,
+            'parent_id' => $systemOwner->id,
+        ];
+        $systemEmployee = User::create($employeeData);
 
         // Default employee role assign
         $systemEmployee->assignRole($systemEmployeeRole);
 
 
+        // Subscription default data
+        $subscriptionData=[
+            'title' => 'Basic',
+            'package_amount' => 0,
+            'interval' => 'Unlimited',
+            'user_limit' => 10,
+            'document_limit' => 10,
+            'enabled_document_history' => 1 ,
+            'enabled_logged_history' => 1 ,
+        ];
+        \App\Models\Subscription::create($subscriptionData );
     }
 }

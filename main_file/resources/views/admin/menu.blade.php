@@ -137,7 +137,7 @@
                     <li class="menu-item {{in_array($routeName,['note.index'])?'active':''}} ">
                         <a href="{{route('note.index')}}">
                             <div class="icon-item"><i data-feather="file-text"></i></div>
-                            <span>{{__('Notes')}}</span>
+                            <span>{{__('Note')}}</span>
                         </a>
                     </li>
                 @endif

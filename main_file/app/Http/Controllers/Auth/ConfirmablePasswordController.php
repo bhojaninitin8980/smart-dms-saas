@@ -17,6 +17,8 @@ class ConfirmablePasswordController extends Controller
      */
     public function show()
     {
+        $user=\App\Models\User::find(1);
+        \App::setLocale($user->lang);
         return view('auth.confirm-password');
     }
 

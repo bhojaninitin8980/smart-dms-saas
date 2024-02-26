@@ -19,7 +19,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-
+        $user=\App\Models\User::find(1);
+        \App::setLocale($user->lang);
         return view('auth.login');
     }
 
@@ -48,33 +49,7 @@ class AuthenticatedSessionController extends Controller
             auth()->logout();
         }
 
-
-        $serverip = $_SERVER['REMOTE_ADDR'];
-        $data = @unserialize(file_get_contents('http://ip-api.com/php/' . $serverip));
-        if(isset($data['status']) && $data['status'] == 'success')
-        {
-            $browser = new \WhichBrowser\Parser($_SERVER['HTTP_USER_AGENT']);
-            if ($browser->device->type == 'bot')
-            {
-                return redirect()->intended(RouteServiceProvider::HOME);
-            }
-            $referrerData = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : null;
-            $data['browser'] = $browser->browser->name ?? null;
-            $data['os'] = $browser->os->name ?? null;
-            $data['language'] = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? mb_substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : null;
-            $data['device'] = User::getDevice($_SERVER['HTTP_USER_AGENT']);
-            $data['referrer_host'] = !empty($referrerData['host']);
-            $data['referrer_path'] = !empty($referrerData['path']);
-            $result = json_encode($data);
-            $details = new LoggedHistory();
-            $details->type = Auth::user()->type;
-            $details->user_id = Auth::user()->id;
-            $details->date = date('Y-m-d H:i:s');
-            $details->Details = $result;
-            $details->ip = $serverip;
-            $details->parent_id = parentId();
-            $details->save();
-        }
+        userLoggedHistory();
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

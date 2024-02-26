@@ -1,17 +1,13 @@
-{{ Form::open(array('url' => 'user_permission')) }}
+{{ Form::open(array('url' => 'permission')) }}
 <div class="modal-body">
     <div class="row">
         <div class="form-group ">
-            {{Form::label('title',__('Title'))}}
+            {{Form::label('title',__('Permission Title'),['class'=>'form-label '])}}
             {{Form::text('title',null,array('class'=>'form-control'))}}
         </div>
         <div class="form-group">
-            @foreach ($userRoles as $userRole)
-                <div class="custom-control">
-                    {{Form::checkbox('user_roles[]',$userRole->id,null, ['class'=>'custom-control-input'])}}
-                    {{Form::label('user_role'.$userRole->id,$userRole->name,['class'=>'form-control-label '])}}
-                </div>
-            @endforeach
+            {{ Form::label('user_roles', __('User Roles'),['class'=>'form-label']) }}
+            {!! Form::select('user_roles[]', $userRoles, null,array('class' => 'form-control hidesearch','multiple','required'=>'required')) !!}
         </div>
         <div class="col-md-12">
             {{Form::submit(__('Create'),array('class'=>'btn btn-primary btn-rounded'))}}

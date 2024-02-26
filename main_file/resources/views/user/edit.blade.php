@@ -4,7 +4,7 @@
         @if(\Auth::user()->type != 'super admin')
             <div class="form-group col-md-6">
                 {{ Form::label('role', __('Assign Role'),['class'=>'form-label']) }}
-                {!! Form::select('role', $roles, !empty($user->roles)?$user->roles[0]->id:null,array('class' => 'form-control hidesearch ','required'=>'required')) !!}
+                {!! Form::select('role', $userRoles, !empty($user->roles)?$user->roles[0]->id:null,array('class' => 'form-control hidesearch ','required'=>'required')) !!}
             </div>
         @endif
             @if(\Auth::user()->type == 'super admin')
@@ -28,7 +28,7 @@
         </div>
         <div class="form-group col-md-6">
             {{Form::label('phone_number',__('User Phone Number'),array('class'=>'form-label')) }}
-            {{Form::text('phone_number',null,array('class'=>'form-control','placeholder'=>__('Enter Phone Number'),'required'=>'required'))}}
+            {{Form::text('phone_number',null,array('class'=>'form-control','placeholder'=>__('Enter Phone Number')))}}
         </div>
 
     </div>

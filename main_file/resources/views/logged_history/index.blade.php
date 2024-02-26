@@ -24,9 +24,12 @@
                         <tr>
                             <th>{{ __('User') }}</th>
                             <th>{{ __('Email') }}</th>
-                            <th>{{ __('Role') }}</th>
                             <th>{{ __('Login Date') }}</th>
                             <th>{{ __('System IP') }}</th>
+                            <th>{{ __('City') }}</th>
+                            <th>{{ __('State') }}</th>
+                            <th>{{ __('Country') }}</th>
+                            <th>{{ __('System') }}</th>
                             <th>{{ __('Action') }}</th>
                         </tr>
                         </thead>
@@ -38,9 +41,12 @@
                             <tr>
                                 <td>{{ !empty($history->user)?$history->user->name:'-' }}</td>
                                 <td>{{ !empty($history->user)?$history->user->email:'-' }}</td>
-                                <td> {{ucfirst($history->type)}} </td>
                                 <td>{{ !empty($history->date) ? dateFormat($history->date) : '-' }}</td>
                                 <td>{{ $history->ip }}</td>
+                                <td>{{!empty($historydetail)?$historydetail->city:'-'}}</td>
+                                <td>{{!empty($historydetail)?$historydetail->regionName:'-'}}</td>
+                                <td>{{!empty($historydetail)?$historydetail->country:'-'}}</td>
+                                <td>{{!empty($historydetail)?$historydetail->os:'-'}}</td>
                                 <td class="text-right">
                                     <div class="cart-action">
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['logged.history.destroy', $history->id]]) !!}

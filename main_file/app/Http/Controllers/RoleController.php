@@ -30,6 +30,7 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
+
         $validator = \Validator::make(
             $request->all(), [
                 'title' => 'required|unique:roles,name,null,id,parent_id,' . parentId(),
@@ -101,6 +102,7 @@ class RoleController extends Controller
             $userRole->givePermissionTo($assign);
         }
         return redirect()->route('role.index')->with('success', __('Role successfully updated.'));
+
     }
 
 

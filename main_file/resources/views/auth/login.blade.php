@@ -24,7 +24,7 @@
         </div>
         {{Form::open(array('route'=>'login','method'=>'post','id'=>'loginForm','class'=> 'login-form' ))}}
         <div class="form-group">
-            {{Form::label('email','Email',array('class'=>'form-label'))}}
+            {{Form::label('email',__('Email'),array('class'=>'form-label'))}}
             {{Form::text('email',null,array('class'=>'form-control','placeholder'=>__('Enter Your Email')))}}
             @error('email')
             <span class="invalid-email text-danger" role="alert">

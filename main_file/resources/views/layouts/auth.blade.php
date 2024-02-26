@@ -54,7 +54,7 @@
     <link href="{{ asset('assets/css/style.css')}} " id="customstyle" rel="stylesheet">
 
 </head>
-<body>
+<body class="{{$settings['layout_direction']}} {{$settings['layout_mode']}}">
 <!-- Login Start-->
 <div class="auth-main">
     @yield('content')

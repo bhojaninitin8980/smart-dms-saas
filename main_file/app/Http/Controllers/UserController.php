@@ -18,22 +18,21 @@ class UserController extends Controller
         if (\Auth::user()->can('manage user')) {
             if (\Auth::user()->type == 'super admin') {
                 $users = User::where('parent_id', parentId())->where('type', 'owner')->get();
-
+                return view('user.index', compact('users'));
             } else {
-                $users = User::where('parent_id', '=', parentId())->get();
+                $users = User::where('parent_id', parentId())->get();
+                return view('user.index', compact('users'));
             }
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
         }
-
-        return view('user.index', compact('users'));
     }
 
 
     public function create()
     {
-        $roles = Role::where('parent_id', parentId())->get()->pluck('name', 'id');
-        return view('user.create', compact('roles'));
+        $userRoles = Role::where('parent_id', parentId())->get()->pluck('name', 'id');
+        return view('user.create', compact('userRoles'));
     }
 
 
@@ -65,8 +64,8 @@ class UserController extends Controller
                 $user->parent_id = parentId();
                 $user->save();
 
-                $role_r = Role::findByName('owner');
-                $user->assignRole($role_r);
+                $userRole = Role::findByName('owner');
+                $user->assignRole($userRole);
 
                 return redirect()->route('users.index')->with('success', __('User successfully created.'));
             } else {
@@ -88,28 +87,24 @@ class UserController extends Controller
 
                 $ids = parentId();
                 $authUser = \App\Models\User::find($ids);
-                $total_user = $authUser->totalUser();
+                $totalUser = $authUser->totalUser();
                 $subscription = Subscription::find($authUser->subscription);
-                if ($total_user < $subscription->user_limit || $subscription->user_limit == 0) {
-                    $role_r = Role::findById($request->role);
-                    $user = new User();
-                    $user->first_name = $request->first_name;
-                    $user->last_name = $request->last_name;
-                    $user->phone_number = $request->phone_number;
-                    $user->password = \Hash::make($request->password);
-                    $user->type = $role_r->name;
-                    $user->profile = 'avatar.png';
-                    $user->lang = 'english';
-                    $user->parent_id = parentId();
-                    $user->save();
-
-                    $user->assignRole($role_r);
-
-                    return redirect()->route('users.index')->with('success', __('User successfully created.'));
-
-                } else {
+                if ($totalUser >= $subscription->user_limit || $subscription->user_limit != 0) {
                     return redirect()->back()->with('error', __('Your user limit is over, Please upgrade your subscription.'));
                 }
+                $userRole = Role::findById($request->role);
+                $user = new User();
+                $user->first_name = $request->first_name;
+                $user->last_name = $request->last_name;
+                $user->phone_number = $request->phone_number;
+                $user->password = \Hash::make($request->password);
+                $user->type = $userRole->name;
+                $user->profile = 'avatar.png';
+                $user->lang = 'english';
+                $user->parent_id = parentId();
+                $user->save();
+                $user->assignRole($userRole);
+                return redirect()->route('users.index')->with('success', __('User successfully created.'));
             }
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
@@ -126,9 +121,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::where('parent_id', '=', parentId())->get()->pluck('name', 'id');
+        $userRoles = Role::where('parent_id', '=', parentId())->get()->pluck('name', 'id');
 
-        return view('user.edit', compact('user', 'roles'));
+        return view('user.edit', compact('user', 'userRoles'));
     }
 
 
@@ -150,9 +145,9 @@ class UserController extends Controller
                     return redirect()->back()->with('error', $messages->first());
                 }
 
-                $input = $request->all();
-                $input['first_name']= $input['name'];
-                $user->fill($input)->save();
+                $userData = $request->all();
+                $userData['first_name'] = $userData['name'];
+                $user->fill($userData)->save();
 
                 return redirect()->route('users.index')->with('success', 'User successfully updated.');
             } else {
@@ -172,15 +167,15 @@ class UserController extends Controller
                     return redirect()->back()->with('error', $messages->first());
                 }
 
-                $role = Role::findById($request->role);
+                $userRole = Role::findById($request->role);
                 $user = User::findOrFail($id);
                 $user->first_name = $request->first_name;
                 $user->last_name = $request->last_name;
                 $user->email = $request->email;
                 $user->phone_number = $request->phone_number;
-                $user->type = $role->name;
+                $user->type = $userRole->name;
                 $user->save();
-                $user->assignRole($role);
+                $user->assignRole($userRole);
                 return redirect()->route('users.index')->with('success', 'User successfully updated.');
             }
         } else {
@@ -192,7 +187,7 @@ class UserController extends Controller
     public function destroy($id)
     {
 
-        if (\Auth::user()->can('delete user') ) {
+        if (\Auth::user()->can('delete user')) {
             $user = User::find($id);
             $user->delete();
 

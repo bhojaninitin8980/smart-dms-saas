@@ -13,7 +13,7 @@
     </ul>
 @endsection
 @section('card-action-btn')
-    <a class="btn btn-primary btn-sm ml-20 customModal" href="#" data-size="md" data-url="{{ route('user_permission.create') }}"
+    <a class="btn btn-primary btn-sm ml-20 customModal" href="#" data-size="md" data-url="{{ route('permission.create') }}"
        data-title="{{__('Create New Permission')}}"> <i class="ti-plus mr-5"></i>{{__('Create Permission')}}</a>
 @endsection
 
@@ -25,7 +25,7 @@
                     <table class="display dataTable cell-border datatbl-advance" >
                         <thead>
                         <tr>
-                            <th>{{__('Permissions')}}</th>
+                            <th>{{__('Title')}}</th>
                             <th class="text-right">{{__('Action')}}</th>
                         </tr>
                         </thead>
@@ -35,7 +35,7 @@
                                 <td>{{ $data->name }} </td>
                                 <td class="text-right">
                                     <div class="cart-action">
-                                        {!! Form::open(['method' => 'DELETE', 'route' => ['user_permission.destroy', $data->id]]) !!}
+                                        {!! Form::open(['method' => 'DELETE', 'route' => ['permission.destroy', $data->id]]) !!}
                                         <a class=" text-danger confirm_dialog" data-bs-toggle="tooltip" data-bs-original-title="{{__('Detete')}}" href="#"> <i data-feather="trash-2"></i></a>
                                         {!! Form::close() !!}
                                     </div>

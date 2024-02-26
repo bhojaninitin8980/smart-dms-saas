@@ -20,12 +20,27 @@
                     <div class="info-group">
                         {{Form::model($loginUser, array('route' => array('setting.account'), 'method' => 'post', 'enctype' => "multipart/form-data")) }}
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    {{Form::label('name',__('Name'),array('class'=>'form-label'))}}
-                                    {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter your name'),'required'=>'required'))}}
+                            @if(\Auth::user()->type=='super admin')
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{Form::label('first_name',__('Name'),array('class'=>'form-label'))}}
+                                        {{Form::text('first_name',null,array('class'=>'form-control','placeholder'=>__('Enter your name'),'required'=>'required'))}}
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{Form::label('first_name',__('First Name'),array('class'=>'form-label'))}}
+                                        {{Form::text('first_name',null,array('class'=>'form-control','placeholder'=>__('Enter your first name'),'required'=>'required'))}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{Form::label('last_name',__('Last Name'),array('class'=>'form-label'))}}
+                                        {{Form::text('last_name',null,array('class'=>'form-control','placeholder'=>__('Enter your last name')))}}
+                                    </div>
+                                </div>
+                            @endif
                             <div class="col-md-6">
                                 <div class="form-group">
                                     {{Form::label('email',__('Email Address'),array('class'=>'form-label'))}}

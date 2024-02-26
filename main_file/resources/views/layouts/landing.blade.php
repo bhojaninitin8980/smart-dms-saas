@@ -2,6 +2,8 @@
 <html lang="en">
 @php
     $settings=settings();
+  $user=\App\Models\User::find(1);
+ \App::setLocale($user->lang);
 @endphp
 
 <head>
@@ -58,7 +60,7 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 </head>
 
-<body>
+<body  class="{{$settings['layout_direction']}} {{$settings['layout_mode']}}">
 <!-- header start-->
 <header class="land-header fixed">
     <div class="container">

@@ -43,7 +43,7 @@ class User extends Authenticatable
 
     public function totalUser()
     {
-        return User::where('type', '!=', 'super admin')->where('type', '!=', 'owner')->where('parent_id', $this->id)->count();
+        return User::where('parent_id', $this->id)->count();
     }
 
     public function getNameAttribute()
@@ -89,4 +89,23 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Subscription','id','subscription');
     }
+
+    public static $systemModules=[
+        'user',
+        'document',
+        'reminder',
+        'comment',
+        'version',
+        'mail',
+        'category',
+        'tag',
+        'contact',
+        'note',
+        'logged history',
+        'pricing transation',
+        'account settings',
+        'password settings',
+        'general settings',
+        'company settings',
+    ];
 }

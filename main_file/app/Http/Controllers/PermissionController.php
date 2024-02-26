@@ -18,7 +18,7 @@ class PermissionController extends Controller
 
     public function create()
     {
-        $userRoles = Role::get();
+        $userRoles = Role::get()->pluck('name','id');
         return view('user_permission.create', compact('userRoles'));
     }
 

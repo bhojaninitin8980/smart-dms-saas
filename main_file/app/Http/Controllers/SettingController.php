@@ -25,45 +25,43 @@ class SettingController extends Controller
         $user = User::find($loginUser->id);
         $validator = \Validator::make(
             $request->all(), [
-                'name' => 'required',
+                'first_name' => 'required',
                 'email' => 'required|email|unique:users,email,' . $user->id,
             ]
         );
         if ($validator->fails()) {
             $messages = $validator->getMessageBag();
-
             return redirect()->back()->with('error', $messages->first());
         }
 
-
         if ($request->hasFile('profile')) {
-            $filenameWithExt = $request->file('profile')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $profileWithExt = $request->file('profile')->getClientOriginalName();
+            $profile = pathinfo($profileWithExt, PATHINFO_FILENAME);
             $extension = $request->file('profile')->getClientOriginalExtension();
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $profileToStore = $profile . '_' . time() . '.' . $extension;
 
-            $dir = storage_path('uploads/profile/');
-            $image_path = $dir . $loginUser->avatar;
+            $directory = storage_path('uploads/profile/');
+            $profilePath = $directory . $loginUser->avatar;
 
-            if (\File::exists($image_path)) {
-                \File::delete($image_path);
+            if (\File::exists($profilePath)) {
+                \File::delete($profilePath);
             }
 
-            if (!file_exists($dir)) {
-                mkdir($dir, 0777, true);
+            if (!file_exists($directory)) {
+                mkdir($directory, 0777, true);
             }
 
-            $path = $request->file('profile')->storeAs('upload/profile/', $fileNameToStore);
+            $request->file('profile')->storeAs('upload/profile/', $profileToStore);
 
         }
 
         if (!empty($request->profile)) {
-            $user->profile = $fileNameToStore;
+            $user->profile = $profileToStore;
         }
-        $user->name = $request->name;
+        $user->first_name = $request->first_name;
+        $user->last_name = !empty($request->last_name)?$request->last_name:null;
         $user->email = $request->email;
         $user->save();
-
 
         return redirect()->back()->with('success', 'Account settings successfully updated.');
     }
@@ -493,10 +491,6 @@ class SettingController extends Controller
                 'company_email' => 'required',
                 'company_phone' => 'required',
                 'company_address' => 'required',
-                'company_city' => 'required',
-                'company_state' => 'required',
-                'company_country' => 'required',
-                'company_zipcode' => 'required',
             ]
         );
         if ($validator->fails()) {

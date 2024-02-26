@@ -7,20 +7,19 @@ $(document).ready(function() {
 
 $(document).on('click', '.customModal', function () {
     "use strict";
-    var title = $(this).data('title');
-    var url = $(this).data('url');
-    var size = ($(this).data('size') == '') ? 'md' : $(this).data('size');
-    $("#customModal .modal-title").html(title);
-    $("#customModal .modal-dialog").addClass('modal-' + size);
+    var modalTitle = $(this).data('title');
+    var modalUrl = $(this).data('url');
+    var modalSize = ($(this).data('size') == '') ? 'md' : $(this).data('size');
+    $("#customModal .modal-title").html(modalTitle);
+    $("#customModal .modal-dialog").addClass('modal-' + modalSize);
     $.ajax({
-        url: url,
-        success: function (data) {
-            $('#customModal .body').html(data);
+        url: modalUrl,
+        success: function (result) {
+            $('#customModal .body').html(result);
             $("#customModal").modal('show');
             select2();
         },
-        error: function (data) {
-            data = data.responseJSON;
+        error: function (result) {
         }
     });
 
@@ -29,8 +28,7 @@ $(document).on('click', '.customModal', function () {
 // basic message
 $(document).on('click', '.confirm_dialog', function(e) {
     "use strict";
-    var form = $(this).closest("form");
-
+    var dialogForm = $(this).closest("form");
     Swal.fire({
         title: 'Are you sure you want to delete this record ?',
         text: "This record can not be restore after delete. Do you want to confirm?",
@@ -39,9 +37,9 @@ $(document).on('click', '.confirm_dialog', function(e) {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            form.submit();
+    }).then((data) => {
+        if (data.isConfirmed) {
+            dialogForm.submit();
         }
     })
 });
@@ -51,21 +49,18 @@ $(document).on('click', '.fc-day-grid-event', function (e) {
     "use strict";
     e.preventDefault();
     var event = $(this);
-    var title = $(this).find('.fc-content .fc-title').html();
-    var size = 'md';
-    var url = $(this).attr('href');
-    $("#customModal .modal-title").html(title);
-    $("#customModal .modal-dialog").addClass('modal-' + size);
+    var modalTitle = $(this).find('.fc-content .fc-title').html();
+    var modalSize = 'md';
+    var modalUrl = $(this).attr('href');
+    $("#customModal .modal-title").html(modalTitle);
+    $("#customModal .modal-dialog").addClass('modal-' + modalSize);
     $.ajax({
-        url: url,
-        success: function (data) {
-            $('#customModal .modal-body').html(data);
+        url: modalUrl,
+        success: function (result) {
+            $('#customModal .modal-body').html(result);
             $("#customModal").modal('show');
-
         },
-        error: function (data) {
-            data = data.responseJSON;
-            $.NotificationApp.send("Error", data.error, "top-right", "rgba(0,0,0,0.2)", "error");
+        error: function (result) {
         }
     });
 });
@@ -135,7 +130,6 @@ function select2(){
 
 function datatable(){
     "use strict";
-    //Local Datatable JS
     $('.basicdata-tbl').DataTable({
         "scrollX": true,
     });
