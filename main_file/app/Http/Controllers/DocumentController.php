@@ -63,7 +63,7 @@ class DocumentController extends Controller
             $authUser = \App\Models\User::find($ids);
             $totalDocument = $authUser->totalDocument();
             $subscription = Subscription::find($authUser->subscription);
-            if ($totalDocument >= $subscription->total_document || $subscription->total_document != 0) {
+            if ($totalDocument >= $subscription->total_document && $subscription->total_document != 0) {
                 return redirect()->back()->with('error', __('Your document limit is over, please upgrade your subscription.'));
             }
 
@@ -100,7 +100,6 @@ class DocumentController extends Controller
             $data['document_id'] = $document->id;
             $data['action'] = __('Document Create');
             $data['description'] = __('New document') . ' ' . $document->name . ' ' . __('created by') . ' ' . \Auth::user()->name;
-            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
             return redirect()->back()->with('success', __('Document successfully created!'));
 
@@ -155,7 +154,6 @@ class DocumentController extends Controller
             $data['document_id'] = $document->id;
             $data['action'] = __('Document Update');
             $data['description'] = __('Document update') . ' ' . $document->name . ' ' . __('updated by') . ' ' . \Auth::user()->name;
-            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', __('Document successfully created!'));
@@ -173,7 +171,6 @@ class DocumentController extends Controller
             $data['document_id'] = $document->id;
             $data['action'] = __('Document Delete');
             $data['description'] = __('Document delete') . ' ' . $document->name . ' ' . __('deleted by') . ' ' . \Auth::user()->name;
-            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', 'Document successfully deleted!');
@@ -240,7 +237,6 @@ class DocumentController extends Controller
             $data['document_id'] = $document->id;
             $data['action'] = __('Comment Create');
             $data['description'] = __('Comment create for') . ' ' . $document->name . ' ' . __('commented by') . ' ' . \Auth::user()->name;
-            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', 'Document comment successfully created!');
@@ -314,7 +310,6 @@ class DocumentController extends Controller
             $data['document_id'] = $id;
             $data['action'] = __('New version');
             $data['description'] = __('Upload new version for') . ' ' . $document->name . ' ' . __('uploaded by') . ' ' . \Auth::user()->name;
-            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', __('New version successfully uploaded!'));
@@ -373,7 +368,6 @@ class DocumentController extends Controller
             $data['document_id'] = $id;
             $data['action'] = __('Share document');
             $data['description'] = __('Share document') . ' ' . $document->name . ' ' . __('shared by') . ' ' . \Auth::user()->name;
-            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', 'Document successfully assigned!');
@@ -392,7 +386,6 @@ class DocumentController extends Controller
             $data['document_id'] = $id;
             $data['action'] = __('Share document delete');
             $data['description'] = __('Share document') . ' ' . $document->name . ' ' . __('delete,deleted by') . ' ' . \Auth::user()->name;
-            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', 'Assigned document successfully removed!');
@@ -447,7 +440,6 @@ class DocumentController extends Controller
             $data['document_id'] = $id;
             $data['action'] = __('Mail send');
             $data['description'] = __('Mail send for') . ' ' . $document->name . ' ' . __('sended by') . ' ' . \Auth::user()->name;
-            $data['document_id'] = $document->id;
             DocumentHistory::history($data);
 
             return redirect()->back()->with('success', 'Mail successfully sent!');

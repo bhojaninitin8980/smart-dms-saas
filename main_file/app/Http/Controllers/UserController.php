@@ -89,8 +89,8 @@ class UserController extends Controller
                 $authUser = \App\Models\User::find($ids);
                 $totalUser = $authUser->totalUser();
                 $subscription = Subscription::find($authUser->subscription);
-                if ($totalUser >= $subscription->user_limit || $subscription->user_limit != 0) {
-                    return redirect()->back()->with('error', __('Your user limit is over, Please upgrade your subscription.'));
+                if ($totalUser >= $subscription->user_limit && $subscription->user_limit != 0) {
+                    return redirect()->back()->with('error', __('Your user limit is over, please upgrade your subscription.'));
                 }
                 $userRole = Role::findById($request->role);
                 $user = new User();
