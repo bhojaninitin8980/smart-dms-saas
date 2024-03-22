@@ -45,7 +45,7 @@
                             <select type="text" name="timezone" class="form-control basic-select" id="timezone">
                                 <option value="">{{__('Select Timezone')}}</option>
                                 @foreach($timezones as $k=>$timezone)
-                                    <option value="{{$k}}" {{(env('TIMEZONE')==$k)?'selected':''}}>{{$timezone}}</option>
+                                    <option value="{{$k}}" {{($settings['timezone']==$k)?'selected':''}}>{{$timezone}}</option>
                                 @endforeach
                             </select>
                         </div>

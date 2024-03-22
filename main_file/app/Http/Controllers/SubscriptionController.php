@@ -187,11 +187,13 @@ class SubscriptionController extends Controller
                             $data['payment_type'] = 'Stripe';
                             PackageTransaction::transactionData($data);
 
-                            if($subscription->couponCheck()>0){
+
+                            if($subscription->couponCheck()>0 && !empty($request->coupon)){
                                 $couhis['coupon']=$request->coupon;
                                 $couhis['package']=$subscription->id;
                                 CouponHistory::couponData($couhis);
                             }
+
 
                             $assignPlan = assignSubscription($subscription->id);
                             if ($assignPlan['is_success']) {

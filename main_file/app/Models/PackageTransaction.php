@@ -49,5 +49,8 @@ class PackageTransaction extends Model
     {
         return $this->hasOne('App\Models\User','id','user_id');
     }
-
+    public function subscriptions()
+    {
+        return $this->hasOne('App\Models\Subscription','id','subscription_id');
+    }
 }

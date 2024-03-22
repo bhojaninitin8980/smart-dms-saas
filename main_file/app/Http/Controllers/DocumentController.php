@@ -182,7 +182,7 @@ class DocumentController extends Controller
     public function myDocument()
     {
         if (\Auth::user()->can('manage my document')) {
-            $assign_doc=shareDocument::where('user_id',\Auth::user()->id)->get()->pluck('id');
+            $assign_doc=shareDocument::where('user_id',\Auth::user()->id)->get()->pluck('document_id');
 
             $documents = Document::where('created_by', '=', \Auth::user()->id);
             if(!empty($assign_doc)){
@@ -379,8 +379,9 @@ class DocumentController extends Controller
     public function shareDocumentDelete($id)
     {
         if (\Auth::user()->can('delete share document')) {
-            $document = Document::find($id);
+
             $shareDoc = shareDocument::find($id);
+            $document = Document::find($shareDoc->document_id);
             $shareDoc->delete();
 
             $data['document_id'] = $id;

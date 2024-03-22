@@ -11,7 +11,7 @@ class NoticeBoardController extends Controller
     public function index()
     {
         if (\Auth::user()->can('manage note')) {
-            $notes = NoticeBoard::where('parent_id', '=', parentId())->get();
+            $notes = NoticeBoard::where('parent_id', \Auth::user()->id)->get();
 
             return view('note.index', compact('notes'));
         } else {
@@ -46,13 +46,9 @@ class NoticeBoardController extends Controller
                 $noteFilename = pathinfo($noteFilenameWithExt, PATHINFO_FILENAME);
                 $noteExtension = $request->file('attachment')->getClientOriginalExtension();
                 $noteFileName = $noteFilename . '_' . time() . '.' . $noteExtension;
-
-                $dir = storage_path('upload/applicant/attachment');
-                $image_path = $dir . $noteFilenameWithExt;
-
-
-                if (!file_exists($dir)) {
-                    mkdir($dir, 0777, true);
+                $directory = storage_path('upload/applicant/attachment');
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0777, true);
                 }
                 $request->file('attachment')->storeAs('upload/applicant/attachment/', $noteFileName);
             }
@@ -61,7 +57,7 @@ class NoticeBoardController extends Controller
             $note->title = $request->title;
             $note->description = $request->description;
             $note->attachment = !empty($request->attachment) ? $noteFileName : '';
-            $note->parent_id = parentId();
+            $note->parent_id = \Auth::user()->id;
             $note->save();
 
             return redirect()->back()->with('success', __('Note successfully created.'));
@@ -110,19 +106,12 @@ class NoticeBoardController extends Controller
                 $noteFilename = pathinfo($noteFilenameWithExt, PATHINFO_FILENAME);
                 $noteExtension = $request->file('attachment')->getClientOriginalExtension();
                 $noteFileName = $noteFilename . '_' . time() . '.' . $noteExtension;
-
-                $dir = storage_path('upload/applicant/attachment');
-
-                $image_path = $dir . $noteFilenameWithExt;
-
+                $directory = storage_path('upload/applicant/attachment');
                 if (!empty($note->attachment)) {
-
-                    unlink($dir . '/' . $note->attachment);
+                    unlink($directory . '/' . $note->attachment);
                 }
-
-
-                if (!file_exists($dir)) {
-                    mkdir($dir, 0777, true);
+                if (!file_exists($directory)) {
+                    mkdir($directory, 0777, true);
                 }
                 $request->file('attachment')->storeAs('upload/applicant/attachment/', $noteFileName);
                 $note->attachment = !empty($request->attachment) ? $noteFileName : '';
@@ -145,9 +134,9 @@ class NoticeBoardController extends Controller
     {
         if (\Auth::user()->can('delete note')) {
             $note = NoticeBoard::find($id);
-            $dir = storage_path('upload/applicant/attachment');
+            $directory = storage_path('upload/applicant/attachment');
             if ($note->attachment) {
-                unlink($dir . '/' . $note->attachment);
+                unlink($directory . '/' . $note->attachment);
             }
 
             $note->delete();

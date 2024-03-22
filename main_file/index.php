@@ -1,7 +1,7 @@
 <?php
 
 // Product Name : DRMS SaaS
-// Version      : 1.4
+// Version      : 1.5
 
 /**
  * Laravel - A PHP Framework For Web Artisans

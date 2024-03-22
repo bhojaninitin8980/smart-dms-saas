@@ -23,7 +23,7 @@ class CouponController extends Controller
 
     public function create()
     {
-        $packages = Subscription::get()->pluck('name', 'id');
+        $packages = Subscription::get()->pluck('title', 'id');
         $status = Coupon::$status;
         $type = Coupon::$type;
         return view('coupon.create', compact('packages', 'status', 'type'));
@@ -76,7 +76,7 @@ class CouponController extends Controller
 
     public function edit(Coupon $coupon)
     {
-        $packages = Subscription::get()->pluck('name', 'id');
+        $packages = Subscription::get()->pluck('title', 'id');
         $status = Coupon::$status;
         $type = Coupon::$type;
         return view('coupon.edit', compact('coupon', 'packages', 'status', 'type'));

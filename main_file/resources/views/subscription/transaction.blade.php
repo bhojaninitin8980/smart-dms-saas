@@ -34,7 +34,7 @@
                             <tr>
                                 <td>{{!empty($transaction->users)?$transaction->users->name:''}}</td>
                                 <td>{{dateFormat($transaction->created_at)}}</td>
-                                <td>{{$transaction->subscription}}</td>
+                                <td>{{!empty($transaction->subscriptions)?$transaction->subscriptions->title:'-'}}</td>
                                 <td>{{$settings['CURRENCY_SYMBOL'].$transaction->amount}}</td>
                                 <td>{{$transaction->payment_type}}</td>
                                 <td>

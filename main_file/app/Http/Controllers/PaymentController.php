@@ -62,11 +62,13 @@ class PaymentController extends Controller
         $data['status'] = 'Pending';
         PackageTransaction::transactionData($data);
 
-        if($subscription->couponCheck()>0){
+
+        if($subscription->couponCheck()>0 && !empty($request->coupon)){
             $couhis['coupon']=$request->coupon;
             $couhis['package']=$subscription->id;
             CouponHistory::couponData($couhis);
         }
+
         return redirect()
             ->back()
             ->with('success', __('Subscription payment successfully completed.'));
@@ -75,20 +77,20 @@ class PaymentController extends Controller
 
     public function subscriptionBankTransferAction($id,$status)
     {
-        $order=Order::find($id);
+        $packageTransaction=PackageTransaction::find($id);
         if($status=='accept'){
-            $subscription=Subscription::find($order->subscription_id);
-            $assignPlan = assignManuallySubscription($subscription->id,$order->user_id);
-            if(!empty($order)){
-                $order->payment_status='Success';
-                $order->save();
+            $subscription=Subscription::find($packageTransaction->subscription_id);
+             assignManuallySubscription($subscription->id,$packageTransaction->user_id);
+            if(!empty($packageTransaction)){
+                $packageTransaction->payment_status='Success';
+                $packageTransaction->save();
             }
         }else{
 
-            $order->payment_status='Reject';
-            $order->save();
+            $packageTransaction->payment_status='Reject';
+            $packageTransaction->save();
 
-            $couponHistory=CouponHistory::where('package',$id)->where('user_id',$order->user_id)->latest()->first();
+            $couponHistory=CouponHistory::where('package',$id)->where('user_id',$packageTransaction->user_id)->latest()->first();
             if(!empty($couponHistory)){
                 $couponHistory->delete();
             }
@@ -180,11 +182,12 @@ class PaymentController extends Controller
                 $data['payment_type'] = 'Paypal';
                 PackageTransaction::transactionData($data);
 
-                if($subscription->couponCheck()>0){
+                if($subscription->couponCheck()>0 && !empty($request->coupon)){
                     $couhis['coupon']=$request->coupon;
                     $couhis['package']=$subscription->id;
                     CouponHistory::couponData($couhis);
                 }
+
 
                  assignSubscription($subscription->id);
 

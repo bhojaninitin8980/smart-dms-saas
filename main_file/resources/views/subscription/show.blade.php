@@ -7,9 +7,9 @@
     <script>
         $(document).on('click', '.have_coupon', function () {
             var element = $(this).parent().parent().parent().parent().parent().find('.coupon_div');
-            if($(this).is(":checked")){
+            if ($(this).is(":checked")) {
                 $(element).removeClass('d-none');
-            }else{
+            } else {
                 $(element).addClass('d-none');
             }
         });
@@ -159,15 +159,20 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5>{{__('Bank Transfer Payment')}}</h5>
-                                <div class="setting-card action-menu">
-                                    <div class="form-group">
-                                        <div class="form-check custom-chek">
-                                            <input class="form-check-input have_coupon" type="checkbox" value="" id="have_bank_tran_coupon" >
-                                            <label class="form-check-label" for="have_bank_tran_coupon">{{__('Have a Discount Coupon Code?')}} </label>
+                                @if($subscription->couponCheck()>0)
+                                    <div class="setting-card action-menu">
+                                        <div class="form-group">
+                                            <div class="form-check custom-chek">
+                                                <input class="form-check-input have_coupon" type="checkbox" value=""
+                                                       id="have_bank_tran_coupon">
+                                                <label class="form-check-label"
+                                                       for="have_bank_tran_coupon">{{__('Have a Discount Coupon Code?')}} </label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
+
                             <div class="card-body profile-user-box">
                                 <form
                                     action="{{ route('subscription.bank.transfer',\Illuminate\Support\Facades\Crypt::encrypt($subscription->id)) }}"
@@ -212,16 +217,17 @@
                                                 </div>
                                             </div>
                                         @endif
-
-                                        <div class="col-md-12 d-none coupon_div">
-                                            <div class="form-group">
-                                                <label for="card-name-on"
-                                                       class="form-label text-dark">{{__('Coupon Code')}}</label>
-                                                <input type="text" name="coupon"
-                                                       class="form-control required packageCouponCode"
-                                                       placeholder="{{__('Enter Coupon Code')}}">
+                                        @if($subscription->couponCheck()>0)
+                                            <div class="col-md-12 d-none coupon_div">
+                                                <div class="form-group">
+                                                    <label for="card-name-on"
+                                                           class="form-label text-dark">{{__('Coupon Code')}}</label>
+                                                    <input type="text" name="coupon"
+                                                           class="form-control required packageCouponCode"
+                                                           placeholder="{{__('Enter Coupon Code')}}">
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="card-name-on"
@@ -231,7 +237,8 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-12 ">
-                                            <input type="button" value="{{__('Coupon Apply')}}"  class="btn btn-warning packageCouponApplyBtn d-none coupon_div">
+                                            <input type="button" value="{{__('Coupon Apply')}}"
+                                                   class="btn btn-warning packageCouponApplyBtn d-none coupon_div">
                                             <input type="submit" value="{{__('Pay')}}" class="btn btn-primary">
                                         </div>
                                     </div>
@@ -245,14 +252,18 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5>{{__('Stripe Payment')}}</h5>
-                                <div class="setting-card action-menu">
-                                    <div class="form-group">
-                                        <div class="form-check custom-chek">
-                                            <input class="form-check-input have_coupon" type="checkbox" value="" id="have_stripe_coupon" >
-                                            <label class="form-check-label" for="have_stripe_coupon">{{__('Have a Discount Coupon Code?')}} </label>
+                                @if($subscription->couponCheck()>0)
+                                    <div class="setting-card action-menu">
+                                        <div class="form-group">
+                                            <div class="form-check custom-chek">
+                                                <input class="form-check-input have_coupon" type="checkbox" value=""
+                                                       id="have_stripe_coupon">
+                                                <label class="form-check-label"
+                                                       for="have_stripe_coupon">{{__('Have a Discount Coupon Code?')}} </label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                             <div class="card-body profile-user-box">
                                 <form
@@ -307,14 +318,18 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5>{{__('Paypal Payment')}}</h5>
-                                <div class="setting-card action-menu">
-                                    <div class="form-group">
-                                        <div class="form-check custom-chek">
-                                            <input class="form-check-input have_coupon" type="checkbox" value="" id="have_paypal_coupon" >
-                                            <label class="form-check-label" for="have_paypal_coupon">{{__('Have a Discount Coupon Code?')}} </label>
+                                @if($subscription->couponCheck()>0)
+                                    <div class="setting-card action-menu">
+                                        <div class="form-group">
+                                            <div class="form-check custom-chek">
+                                                <input class="form-check-input have_coupon" type="checkbox" value=""
+                                                       id="have_paypal_coupon">
+                                                <label class="form-check-label"
+                                                       for="have_paypal_coupon">{{__('Have a Discount Coupon Code?')}} </label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                             <div class="card-body profile-user-box">
                                 <form

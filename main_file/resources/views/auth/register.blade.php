@@ -49,6 +49,11 @@
                        placeholder="{{__('Enter Your Password')}}" required="">
                 <span class="input-group-text toggle-show fa fa-eye"></span>
             </div>
+            @error('password')
+            <span class="invalid-password text-danger" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
         <div class="form-group">
             {{Form::label('password_confirmation','Password Confirmation',array('class'=>'form-label'))}}
@@ -57,6 +62,11 @@
                        placeholder="{{__('Enter Your Confirm Password')}}" required="">
                 <span class="input-group-text toggle-show fa fa-eye"></span>
             </div>
+            @error('password_confirmation')
+            <span class="invalid-password_confirmation text-danger" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
         <div class="form-group mb-0">
             <div class="auth-remember">

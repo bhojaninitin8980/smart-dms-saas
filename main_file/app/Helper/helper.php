@@ -61,6 +61,7 @@ if (!function_exists('settingsKeys')) {
             "bank_account_number" => "",
             "bank_ifsc_code" => "",
             "bank_other_details" => "",
+            "timezone" => "",
         ];
     }
 }

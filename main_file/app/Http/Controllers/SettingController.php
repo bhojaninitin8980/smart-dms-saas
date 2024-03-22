@@ -355,6 +355,9 @@ class SettingController extends Controller
         $currencyArray = [
             'CURRENCY' => $request->currency,
             'CURRENCY_SYMBOL' => $request->currency_symbol,
+            'bank_transfer_payment' => $request->bank_transfer_payment ?? 'off',
+            'STRIPE_PAYMENT' => $request->stripe_payment ?? 'off',
+            'paypal_payment' => $request->paypal_payment ?? 'off',
         ];
         foreach ($currencyArray as $key => $val) {
             \DB::insert(

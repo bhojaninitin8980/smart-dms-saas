@@ -41,7 +41,7 @@
                 <li class="nav-profile">
                     <div class="media">
                         <div class="user-icon"><img class="img-fluid rounded-50"
-                                                    src="{{(!empty($users->avatar)? $profile.'/'.$users->avatar : $profile.'/avatar.png')}}"
+                                                    src="{{(!empty($users->profile)? $profile.'/'.$users->profile : $profile.'/avatar.png')}}"
                                                     alt="logo"></div>
                         <div class="media-body">
                             <h6>{{\Auth::user()->name}}</h6><span class="text-light">{{\Auth::user()->type}}</span>

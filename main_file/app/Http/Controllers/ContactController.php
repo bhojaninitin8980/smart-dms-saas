@@ -12,7 +12,7 @@ class ContactController extends Controller
     public function index()
     {
         if (\Auth::user()->can('manage contact') ) {
-            $contacts = Contact::where('parent_id', '=', parentId())->get();
+            $contacts = Contact::where('parent_id',\Auth::user()->id)->get();
             return view('contact.index', compact('contacts'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -48,7 +48,7 @@ class ContactController extends Controller
             $contact->contact_number = $request->contact_number;
             $contact->subject = $request->subject;
             $contact->message = $request->message;
-            $contact->parent_id = parentId();
+            $contact->parent_id = \Auth::user()->id;
             $contact->save();
 
             return redirect()->back()->with('success', __('Contact successfully created.'));
